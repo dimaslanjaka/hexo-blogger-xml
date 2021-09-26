@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "allowUnusedLabels": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUmdGlobalAccess": true,
+    "allowUnreachableCode": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "build/lib"
+  },
+  "include": ["src", "__test__"]
+}
