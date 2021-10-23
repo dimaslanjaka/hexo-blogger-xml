@@ -1,19 +1,28 @@
 /// <reference path="../types/entry.d.ts" />
-import { existsSync, mkdirSync, readFileSync } from "fs";
 import * as fs from "fs";
+import { existsSync, readFileSync } from "fs";
 import * as path from "path";
 import { JSDOM } from "jsdom";
 import sanitize from "sanitize-filename";
 import he from "he";
 import xml2js from "xml2js";
 import rimraf from "rimraf";
-import _ from "lodash";
 import { fromString } from "./html";
 import { Entry } from "../types/entry";
 import { PostHeader } from "../types/post-header";
 import url from "./url";
 import { truncate, writeFileSync } from "./util";
 import config from "../config";
+import "./JSON";
+import ParserYaml from "./yaml";
+import StringBuilder from "./StringBuilder";
+import excludeTitleArr from "./excludeTitle.json";
+
+interface objResult {
+  permalink: string;
+  headers: PostHeader;
+  content: string;
+}
 
 class BloggerParser {
   static debug = false;
@@ -21,13 +30,15 @@ class BloggerParser {
   private document: Document;
   private delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
   private xmlFile: fs.PathLike;
+  private parseXmlJsonResult: objResult[] = [];
+
   constructor(xmlFile: string | fs.PathLike) {
     if (!existsSync(xmlFile)) throw `${xmlFile} not found`;
     this.xmlFile = xmlFile;
     writeFileSync("build/hexo-blogger-xml/.gitignore", "*");
-    let xmlStr = readFileSync(xmlFile).toString();
+    const xmlStr = readFileSync(xmlFile).toString();
 
-    // Create empty DOM, the imput param here is for HTML not XML, and we don want to parse HTML
+    // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
     const dom = new JSDOM();
     // Get DOMParser, same API as in browser
     const DOMParser = dom.window.DOMParser;
@@ -40,7 +51,7 @@ class BloggerParser {
 
     writeFileSync("build/hexo-blogger-xml/rss.xml", xmlString);
     writeFileSync("build/hexo-blogger-xml/inner.xml", this.document.documentElement.innerHTML);
-    let entries = this.document.documentElement.getElementsByTagName("entry");
+    const entries = this.document.documentElement.getElementsByTagName("entry");
 
     if (entries.length) {
       writeFileSync("build/hexo-blogger-xml/entry.xml", entries[0].innerHTML);
@@ -63,68 +74,11 @@ class BloggerParser {
    * @returns void
    */
   parseEntry() {
-    let feeds = this.document.documentElement.getElementsByTagName("entry");
+    const feeds = this.document.documentElement.getElementsByTagName("entry");
     for (let index = 0; index < feeds.length; index++) {
       const element = feeds[index];
       const title = element.getElementsByTagName("title")[0].innerHTML;
-      const excludeTitle = [
-        "Template: Testing",
-        "The type of publishing done for this blog.",
-        "The list of administrators' emails for the blog.",
-        "Whether this blog contains adult content",
-        "Blog's Google Analytics account number",
-        "The number of the archive index date format",
-        "How frequently this blog should be archived",
-        "The list of authors' emails who have permission to publish.",
-        "Whether to provide an archive page for each post",
-        "Who can comment",
-        "Whether to require commenters to complete a Captcha",
-        "List of e-mail addresses to send notifications of new comments to",
-        "The type of feed to provide for blog comments",
-        "Blog comment form location",
-        "Blog comment message",
-        "Whether to enable comment moderation",
-        "Number of days after which new comments are subject to moderation",
-        "Email address to send notifications of new comments needing moderation to",
-        "Whether to show profile images in comments",
-        "Whether to show comments",
-        "Comment time stamp format number",
-        "Whether to convert line breaks into <br /> tags in post editor",
-        "Whether to convert line breaks into &lt;br /&gt; tags in post editor",
-        "The custom ads.txt content of the blog served to ads search engines.",
-        "Whether this blog serves custom ads.txt content to ads search engines.",
-        "The content served when the requested post or page is not found.",
-        "The custom robots.txt content of the blog served to search engines.",
-        "Whether this blog serves custom robots.txt content to search engines.",
-        "The number of the date header format",
-        "Default comment mode for posts",
-        "A description of the blog",
-        "Whether to show a link for users to e-mail posts",
-        "URL to redirect post feed requests to",
-        "Whether float alignment is enabled for the blog",
-        "Language for this blog",
-        'Maximum number of things to show on the main page"',
-        "Unit of things to show on the main page",
-        "The meta description of the blog served to search engines.",
-        "Whether this blog is served with meta descriptions.",
-        "The name of the blog",
-        "The type of feed to provide for per-post comments",
-        "The type of feed to provide for blog posts",
-        "Footer to append to the end of each entry in the post feed",
-        "The template for blog posts",
-        "Whether Quick Editing is enabled",
-        "The access type for the readers of the blog.",
-        "the list of emails for users who have permission to read the blog.",
-        "The list of emails for users who have permission to read the blog.Whether this blog should be indexed by search engines",
-        "whether this blog should be indexed by search engines",
-        "The list of emails for users who have permission to read the blog",
-        "Comma separated list of emails to send new blog posts to",
-        "Whether to show a related link box in the post composer",
-        "The BlogSpot subdomain under which to publish your blog",
-        "The number of the time stamp format",
-        "The time zone for this blog",
-        "Whether to show images in the Lightbox when clicked",
-      ].map((title) => {
+      const excludeTitle = excludeTitleArr.map((title) => {
         return title.toLowerCase().trim();
       });
       // skip if contains default title
@@ -132,8 +86,7 @@ class BloggerParser {
 
       /** CONTENT PROCESS START **/
       let content = element.getElementsByTagName("content")[0].innerHTML;
-      //content = he.decode(content);
-      //let parserhtml = fromString(content);
+      content = he.decode(content);
       /** CONTENT PROCESS END **/
 
       // write post with decoded entities
@@ -146,7 +99,7 @@ class BloggerParser {
       });
       obj.entry.content = content;
       obj.entry.id[0] = obj.entry.id[0].replace("tag:blogger.com,1999:", "");
-      writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
+      //writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
       writeFileSync(path.join(this.entriesDir, sanitize(title) + ".json"), JSON.stringify(obj, null, 2));
     }
     return this;
@@ -157,19 +110,15 @@ class BloggerParser {
     const get = fs.readdirSync(this.entriesDir).map((file) => {
       return path.join(this.entriesDir, file);
     });
-    if (Array.isArray(get) && get.length > 0)
+
+    const t = this;
+    const results = [];
+
+    if (Array.isArray(get) && get.length > 0) {
       get.forEach(function (file) {
-        const buildPost = {
+        const buildPost: objResult = {
           permalink: "",
-          headers: {},
-          content: "",
-        };
-        let extname = path.extname(file);
-        if (extname == ".json") {
-          let read = readFileSync(file).toString();
-          let json: Entry = JSON.parse(read);
-          // build hexo header post
-          let headers: PostHeader = {
+          headers: {
             title: "",
             webtitle: "",
             subtitle: "",
@@ -187,53 +136,184 @@ class BloggerParser {
             comments: true,
             cover: "",
             location: "",
-          };
+          },
+          content: "",
+        };
+        const extname = path.extname(file);
+        if (extname == ".json") {
+          const read = readFileSync(file).toString();
+          const json: Entry = JSON.parse(read);
+          // build hexo header post
           if (typeof json == "object") {
             buildPost.content = json.entry.content;
-            headers.title =
-              typeof json.entry.title[0] != "undefined"
-                ? json.entry.title[0]._
-                : JSON.stringify(json.entry.title, null, 2);
 
-            // post author
-            headers.author = {
-              nick: json.entry.author[0].name[0],
-              link: json.entry.author[0].uri[0],
-              email: json.entry.author[0].email[0],
-            };
+            try {
+              // post permalink
+              if (typeof json.entry.link[4] != "undefined") {
+                buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
 
-            // post categories
-            json.entry.category.forEach(function (category) {
-              let cat = category.$.term.trim();
-              if (!url.isValidURL(cat)) headers.category.push(cat);
-            });
+                const parserhtml = fromString(buildPost.content);
+                buildPost.content = t.stripFooterFeed(buildPost.content);
 
-            // post published
-            headers.date = json.entry.published[0];
-            headers.modified = json.entry.updated[0];
+                // post title
+                buildPost.headers.title = json.entry.title[0]._.trim();
 
-            // post description
-            headers.subtitle = truncate(buildPost.content, 140, ".");
-            // site title
-            headers.webtitle = config.webtitle;
+                // post thumbnail/cover
+                buildPost.headers.cover = t.getFirstImg(parserhtml);
 
-            if (typeof json.entry.link[4] != "undefined") {
-              buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
-            }
+                // post author
+                buildPost.headers.author = {
+                  nick: json.entry.author[0].name[0],
+                  link: typeof json.entry.author[0].uri != "undefined" ? json.entry.author[0].uri[0] : "",
+                  email: typeof json.entry.author[0].email != "undefined" ? json.entry.author[0].email[0] : "",
+                };
 
-            buildPost.headers = headers;
+                // post categories
+                json.entry.category.forEach(function (category) {
+                  const cat = category.$.term.trim();
+                  if (!url.isValidURL(cat)) buildPost.headers.category.push(cat);
+                });
 
-            if (buildPost.permalink.length > 0) {
-              let saveFile = path.join(
-                "build/hexo-blogger-xml/results/",
-                buildPost.permalink.replace(/\.html$/, ".json")
+                // post published
+                buildPost.headers.date = json.entry.published[0];
+                buildPost.headers.modified = json.entry.updated[0];
+
+                // post description
+                const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
+                //console.log(contentStr.textContent);
+                buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
+                // site title
+                buildPost.headers.webtitle = config.webtitle;
+
+                if (buildPost.permalink.length > 0) {
+                  const saveFile = path.join(
+                    "build/hexo-blogger-xml/results/",
+                    buildPost.permalink.replace(/\.html$/, ".json")
+                  );
+
+                  results.push(buildPost);
+                  writeFileSync(saveFile, JSON.stringify(buildPost, null, 2));
+                }
+              }
+            } catch (e) {
+              //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
+              writeFileSync(
+                path.join("build/hexo-blogger-xml/errors/", "error-" + file),
+                JSON.stringify(json, null, 2)
               );
-
-              writeFileSync(saveFile, JSON.stringify(buildPost, null, 2));
+              BloggerParser.die(e);
             }
           }
         }
       });
+    }
+
+    this.parseXmlJsonResult = results;
+    return this;
+  }
+
+  getParsedXml() {
+    return this.parseXmlJsonResult;
+  }
+
+  /**
+   * export parsed xml to folder (default source/_posts)
+   * @param dir folder posts
+   * @param callback function called each post (required return string content after modification)
+   * @example
+   * export("source/_posts", (content) => {
+   *   content = content.replace('http://', 'https://') // replace http to https for example
+   *   return content; // return back the modified content
+   * })
+   */
+  export(dir: string = "source/_posts", callback?: (arg0: string) => string) {
+    let parsedList = this.getParsedXml();
+    const process = (post: objResult) => {
+      let postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
+      //let postPathTest = path.join(dir, "test.md");
+      let postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
+      if (typeof callback == "function") post.content = callback(post.content);
+      //post.content = this.stripFooterFeed(post.content);
+      let postResult = new StringBuilder("---")
+        .appendLine(postHeader.trim())
+        .appendLine("---")
+        .append("\n\n")
+        .append(post.content)
+        .toString();
+      writeFileSync(postPath, postResult);
+    };
+
+    parsedList.forEach(process);
+
+    //process(parsedList[0]);
+  }
+
+  /**
+   * Trim Object
+   * @see {@link https://stackoverflow.com/a/51616282}
+   * @param obj
+   */
+  objTrim(obj: object) {
+    Object.keys(obj).map((k) => (obj[k] = typeof obj[k] == "string" ? obj[k].trim() : obj[k]));
+    return obj;
+  }
+
+  /**
+   * Get first image from html
+   * @param content
+   */
+  getFirstImg(content: string | JSDOM) {
+    try {
+      let parserhtml = typeof content == "string" ? fromString(content) : content;
+      let find = parserhtml.window.document.getElementsByTagName("img");
+      if (find) {
+        for (let i = 0; i < find.length; i++) {
+          let item = find.item(i);
+          if (item.src.trim().length > 0) {
+            return item.src;
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      BloggerParser.die(e);
+    }
+
+    return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
+  }
+
+  /**
+   * Remove custom messages from footer feeds
+   * @param content
+   */
+  stripFooterFeed(content: JSDOM | string): string {
+    try {
+      let parserhtml = typeof content == "string" ? fromString(content) : content;
+      // remove custom messages in footer feed
+      let find1 = parserhtml.window.document.querySelector('[class="blogger-post-footer"]');
+      if (find1) {
+        find1.remove();
+      }
+      let find2 = parserhtml.window.document.getElementsByClassName("blogger-post-footer");
+      if (find2) {
+        for (let i = 0; i < find2.length; i++) {
+          let item = find2.item(i);
+          item.remove();
+        }
+      }
+      //content = parserhtml.window.document.documentElement.innerHTML;
+      content = parserhtml.window.document.body.innerHTML;
+    } catch (e) {
+      BloggerParser.die(e);
+    }
+
+    return content.toString();
+  }
+
+  private static die(...args: any[]) {
+    console.clear();
+    args.forEach((msg) => console.log(msg + "\n\n"));
+    throw "D I E D";
   }
 }
 

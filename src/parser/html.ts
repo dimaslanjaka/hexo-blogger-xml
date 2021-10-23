@@ -10,8 +10,7 @@ export function fromFile(path: string | PathLike) {
 }
 
 export function fromString(str: string) {
-  const dom = new JSDOM(str);
-  return dom;
+  return new JSDOM(str);
 }
 
 export function title(str: string) {

@@ -10,5 +10,11 @@
     "resolveJsonModule": true,
     "outDir": "build/lib"
   },
-  "include": ["src", "__test__"]
+  "include": [
+    "src",
+    "__test__"
+  ],
+  "exclude": [
+    "src/lang"
+  ]
 }
