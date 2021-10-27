@@ -17,6 +17,8 @@ import "./JSON";
 import ParserYaml from "./yaml";
 import StringBuilder from "./StringBuilder";
 import excludeTitleArr from "./excludeTitle.json";
+import { get as getStack } from "./Error";
+import { basename, dirname } from "path";
 
 interface objResult {
   permalink: string;
@@ -26,16 +28,18 @@ interface objResult {
 
 class BloggerParser {
   static debug = false;
-  private entriesDir = "build/hexo-blogger-xml/entries";
+  entriesDir = "build/hexo-blogger-xml/entries";
   private document: Document;
-  private delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-  private xmlFile: fs.PathLike;
-  private parseXmlJsonResult: objResult[] = [];
+  parseXmlJsonResult: objResult[] = [];
+  hostname: string[] = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
 
   constructor(xmlFile: string | fs.PathLike) {
     if (!existsSync(xmlFile)) throw `${xmlFile} not found`;
-    this.xmlFile = xmlFile;
-    writeFileSync("build/hexo-blogger-xml/.gitignore", "*");
+    // reset result
+    this.parseXmlJsonResult = [];
+    // write ignore to buildDir
+    writeFileSync(path.join(dirname(this.entriesDir), ".gitignore"), "*");
+    // read xml
     const xmlStr = readFileSync(xmlFile).toString();
 
     // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
@@ -58,15 +62,27 @@ class BloggerParser {
     }
   }
 
+  setHostname(host: string[]) {
+    this.hostname = this.hostname.concat(host);
+  }
+
+  setEntriesDir(dir: string) {
+    if (dir.length > 0) this.entriesDir = dir;
+  }
+
   /**
    * Clean build dir
    */
   async clean() {
-    await new Promise((resolve) =>
+    await new Promise((resolve, reject) => {
       rimraf(this.entriesDir, (x) => {
-        resolve(this);
-      })
-    );
+        if (x) {
+          reject(x);
+        } else {
+          resolve(this);
+        }
+      });
+    });
   }
 
   /**
@@ -152,14 +168,22 @@ class BloggerParser {
               if (typeof json.entry.link[4] != "undefined") {
                 buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
 
-                const parserhtml = fromString(buildPost.content);
-                buildPost.content = t.stripFooterFeed(buildPost.content);
+                // modify html body (Content)
+                const mod = t.modifyHtml(json.entry.content);
+
+                // remove footer rss messages
+                //buildPost.content = t.stripFooterFeed(buildPost.content);
+                buildPost.content = mod.content;
+
+                // external link seo
+                //buildPost.content = t.externalLink(buildPost.content);
 
                 // post title
                 buildPost.headers.title = json.entry.title[0]._.trim();
 
                 // post thumbnail/cover
-                buildPost.headers.cover = t.getFirstImg(parserhtml);
+                //buildPost.headers.cover = t.getFirstImg(buildPost.content);
+                buildPost.headers.cover = mod.thumbnail;
 
                 // post author
                 buildPost.headers.author = {
@@ -179,9 +203,12 @@ class BloggerParser {
                 buildPost.headers.modified = json.entry.updated[0];
 
                 // post description
-                const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
+                //const parserhtml = fromString(buildPost.content);
+                //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                 //console.log(contentStr.textContent);
-                buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
+                //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
+                buildPost.headers.subtitle = mod.description;
+
                 // site title
                 buildPost.headers.webtitle = config.webtitle;
 
@@ -198,10 +225,17 @@ class BloggerParser {
             } catch (e) {
               //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
               writeFileSync(
-                path.join("build/hexo-blogger-xml/errors/", "error-" + file),
+                path.join("build/hexo-blogger-xml/errors/", "error-" + basename(file)),
                 JSON.stringify(json, null, 2)
               );
-              BloggerParser.die(e);
+              writeFileSync(
+                path.join("build/hexo-blogger-xml/errors/", "error-body-" + basename(file, ".json") + ".html"),
+                buildPost.content
+              );
+
+              //buildPost.content
+              //console.log(json.entry.content);
+              throw e;
             }
           }
         }
@@ -210,6 +244,88 @@ class BloggerParser {
 
     this.parseXmlJsonResult = results;
     return this;
+  }
+
+  /**
+   * Modify body content such as
+   * - external link
+   * - first img
+   * - post description
+   * @param content
+   */
+  modifyHtml(content: string) {
+    const t = this;
+    const parserhtml = fromString(content);
+
+    // strip footer rss messages
+    // remove custom messages in footer feed
+    const find1 = parserhtml.window.document.querySelector('[class="blogger-post-footer"]');
+    if (find1) {
+      find1.remove();
+    }
+    const find2 = parserhtml.window.document.getElementsByClassName("blogger-post-footer");
+    if (find2.length > 0) {
+      for (let i = 0; i < find2.length; i++) {
+        const item = find2.item(i);
+        item.remove();
+      }
+    }
+
+    // get first img
+    let firstImg =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
+    const find = parserhtml.window.document.getElementsByTagName("img");
+    if (find.length > 0) {
+      for (let i = 0; i < find.length; i++) {
+        const item = find.item(i);
+        if (item.src.trim().length > 0) {
+          firstImg = item.src;
+          break;
+        }
+      }
+    }
+
+    // external link seo
+    const processLink = (link: HTMLAnchorElement) => {
+      const href = t.parse_url(link.href);
+      if (href instanceof URL) {
+        let process = true;
+        t.hostname.forEach((hostnameKey) => {
+          if (href.host.includes(hostnameKey)) {
+            //console.log(hostnameKey, href.host, href.host.includes(hostnameKey));
+            process = false;
+          }
+        });
+        if (process) {
+          link.setAttribute("rel", "noopener noreferer nofollow");
+          //if (t.hostname.includes(link.href.h))
+          //console.log(link.outerHTML);
+        }
+      }
+    };
+    // find all hyperlinks
+    const links = parserhtml.window.document.getElementsByTagName("a");
+    if (links.length > 0) {
+      for (let i = 0; i < links.length; i++) {
+        processLink(links.item(i));
+      }
+    }
+
+    // post description
+    let description;
+    const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
+    //console.log(contentStr.textContent);
+    if (contentStr) {
+      description = truncate(he.decode(contentStr.textContent), 140, "").trim();
+    } else {
+      description = truncate(content, 140, "").trim();
+    }
+
+    return {
+      thumbnail: firstImg,
+      content: parserhtml.window.document.body.innerHTML,
+      description: description,
+    };
   }
 
   getParsedXml() {
@@ -227,14 +343,14 @@ class BloggerParser {
    * })
    */
   export(dir: string = "source/_posts", callback?: (arg0: string) => string) {
-    let parsedList = this.getParsedXml();
+    const parsedList = this.getParsedXml();
     const process = (post: objResult) => {
-      let postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
+      const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
       //let postPathTest = path.join(dir, "test.md");
-      let postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
+      const postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
       if (typeof callback == "function") post.content = callback(post.content);
       //post.content = this.stripFooterFeed(post.content);
-      let postResult = new StringBuilder("---")
+      const postResult = new StringBuilder("---")
         .appendLine(postHeader.trim())
         .appendLine("---")
         .append("\n\n")
@@ -258,62 +374,31 @@ class BloggerParser {
     return obj;
   }
 
-  /**
-   * Get first image from html
-   * @param content
-   */
-  getFirstImg(content: string | JSDOM) {
+  parse_url(url: string): URL | string {
     try {
-      let parserhtml = typeof content == "string" ? fromString(content) : content;
-      let find = parserhtml.window.document.getElementsByTagName("img");
-      if (find) {
-        for (let i = 0; i < find.length; i++) {
-          let item = find.item(i);
-          if (item.src.trim().length > 0) {
-            return item.src;
-            break;
-          }
-        }
-      }
+      return new URL(url);
     } catch (e) {
-      BloggerParser.die(e);
+      return url;
     }
-
-    return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
   }
 
   /**
-   * Remove custom messages from footer feeds
-   * @param content
+   * Automatic process xml and output into directory with custom callback each function
+   * @param outputDir
+   * @param callback
    */
-  stripFooterFeed(content: JSDOM | string): string {
-    try {
-      let parserhtml = typeof content == "string" ? fromString(content) : content;
-      // remove custom messages in footer feed
-      let find1 = parserhtml.window.document.querySelector('[class="blogger-post-footer"]');
-      if (find1) {
-        find1.remove();
-      }
-      let find2 = parserhtml.window.document.getElementsByClassName("blogger-post-footer");
-      if (find2) {
-        for (let i = 0; i < find2.length; i++) {
-          let item = find2.item(i);
-          item.remove();
-        }
-      }
-      //content = parserhtml.window.document.documentElement.innerHTML;
-      content = parserhtml.window.document.body.innerHTML;
-    } catch (e) {
-      BloggerParser.die(e);
-    }
-
-    return content.toString();
+  auto(file: string, outputDir = "source/__posts", callback: (content: string) => any) {
+    const parser = new BloggerParser(file);
+    //parser.setHostname("webmanajemen.com");
+    parser.clean().then(function () {
+      const parsed = parser.parseEntry().getJsonResult();
+      console.log(file, parsed.getParsedXml().length, "total posts");
+      parsed.export(outputDir, callback);
+    });
   }
 
-  private static die(...args: any[]) {
-    console.clear();
-    args.forEach((msg) => console.log(msg + "\n\n"));
-    throw "D I E D";
+  toString() {
+    return JSON.stringify(this.getParsedXml(), null, 4);
   }
 }
 

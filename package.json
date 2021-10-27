@@ -1,6 +1,6 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "description": "Import xml blogger",
   "main": "index",
   "files": [
@@ -23,9 +23,9 @@
   },
   "keywords": [
     "hexo",
-    "filter",
-    "optimize",
-    "minify"
+    "blogger",
+    "xml",
+    "import"
   ],
   "author": "Dimas Lanjaka <dimaslanjaka@gmail.com> (http://webmanajemen.com)",
   "license": "MIT",
