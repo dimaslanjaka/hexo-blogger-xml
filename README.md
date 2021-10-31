@@ -1,6 +1,9 @@
 # hexo-blogger-xml
 Import content/article from blogger to hexo
 
+# Feature
+- Migrate from blogger to hexo
+
 # Setup _config.yml
 ```yaml
 permalink: :title.html # set permalink to title to direct permalink from directory path
