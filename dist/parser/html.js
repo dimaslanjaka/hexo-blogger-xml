@@ -4,8 +4,8 @@ exports.title = exports.fromString = exports.fromFile = void 0;
 var fs_1 = require("fs");
 var jsdom_1 = require("jsdom");
 function fromFile(path) {
-    if ((0, fs_1.existsSync)(path)) {
-        var dom = new jsdom_1.JSDOM((0, fs_1.readFileSync)(path));
+    if (fs_1.existsSync(path)) {
+        var dom = new jsdom_1.JSDOM(fs_1.readFileSync(path));
         return dom;
     }
     return false;

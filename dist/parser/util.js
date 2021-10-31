@@ -38,8 +38,8 @@ var truncate = function (str, max, suffix) {
 };
 exports.truncate = truncate;
 function writeFileSync(pathfile, content) {
-    if (!(0, fs_1.existsSync)((0, path_1.dirname)(pathfile)))
-        (0, fs_1.mkdirSync)((0, path_1.dirname)(pathfile), { recursive: true });
+    if (!fs_1.existsSync(path_1.dirname(pathfile)))
+        fs_1.mkdirSync(path_1.dirname(pathfile), { recursive: true });
     fs.writeFileSync(pathfile, content);
 }
 exports.writeFileSync = writeFileSync;

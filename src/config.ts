@@ -14,7 +14,7 @@ let config = {
 };
 
 if (existsSync("xml/config.json")) {
-  let getConfig = JSON.parse(readFileSync("xml/config.json").toString());
+  const getConfig = JSON.parse(readFileSync("xml/config.json").toString());
   // replace object value if conflict
   Object.keys(config).forEach(function (key) {
     if (config[key] == null || config[key] == 0) {

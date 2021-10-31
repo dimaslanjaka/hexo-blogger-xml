@@ -8,15 +8,15 @@ var path_1 = __importDefault(require("path"));
 var Blogger_1 = __importDefault(require("./Blogger"));
 Blogger_1["default"].debug = true;
 var dir = "xml";
-if (!(0, fs_1.existsSync)(dir)) {
-    if ((0, fs_1.existsSync)(path_1["default"].join(process.cwd(), "xml"))) {
+if (!fs_1.existsSync(dir)) {
+    if (fs_1.existsSync(path_1["default"].join(process.cwd(), "xml"))) {
         dir = path_1["default"].join(process.cwd(), "xml");
     }
-    else if ((0, fs_1.existsSync)(path_1["default"].join(process.cwd(), "/../../", "xml"))) {
+    else if (fs_1.existsSync(path_1["default"].join(process.cwd(), "/../../", "xml"))) {
         dir = path_1["default"].join(process.cwd(), "/../../", "xml");
     }
 }
-var files = (0, fs_1.readdirSync)(dir);
+var files = fs_1.readdirSync(dir);
 files.forEach(function (file) {
     file = path_1["default"].join(dir, file);
     if (/.xml$/.test(file)) {

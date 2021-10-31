@@ -19,7 +19,7 @@ export interface gulpConfig extends LooseObject {
   callback: (arg0: string, arg1: PostHeader) => string;
 }
 
-module.exports = function (bloggerConfig: gulpConfig) {
+function gulpFunction(bloggerConfig: gulpConfig) {
   if (!bloggerConfig.hasOwnProperty("input") || !bloggerConfig.hasOwnProperty("output")) {
     return;
   }
@@ -27,4 +27,7 @@ module.exports = function (bloggerConfig: gulpConfig) {
     const xml = path.resolve(bloggerConfig.input[inputKey]);
     ProcessXML(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
   }
-};
+}
+
+module.exports = gulpFunction;
+export default gulpFunction;

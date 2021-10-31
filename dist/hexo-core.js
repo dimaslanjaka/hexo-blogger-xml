@@ -31,7 +31,7 @@ module.exports = function (hexo) {
         var root = hexo.base_dir;
         for (var xmlKey in xmlList) {
             var xml = path_1["default"].resolve(path_1["default"].join(root, xmlList[xmlKey]));
-            if ((0, fs_1.existsSync)(xml)) {
+            if (fs_1.existsSync(xml)) {
                 console.log("processing", xml);
                 var parser = new Blogger_1["default"](xml);
                 if (bloggerConfig.hostname.length > 0) {
@@ -41,10 +41,10 @@ module.exports = function (hexo) {
                 console.log(parsed.getParsedXml().length, "total posts");
                 if (typeof bloggerConfig.callback == "string") {
                     var scriptCall = path_1["default"].resolve(path_1["default"].join(root, bloggerConfig.callback));
-                    if (!(0, fs_1.existsSync)(scriptCall)) {
+                    if (!fs_1.existsSync(scriptCall)) {
                         scriptCall = path_1["default"].resolve(path_1["default"].join(process.cwd(), bloggerConfig.callback));
                     }
-                    if ((0, fs_1.existsSync)(scriptCall)) {
+                    if (fs_1.existsSync(scriptCall)) {
                         parsed["export"](bloggerConfig.output, require(scriptCall));
                     }
                 }

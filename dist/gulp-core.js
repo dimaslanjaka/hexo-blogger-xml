@@ -11,6 +11,6 @@ module.exports = function (bloggerConfig) {
     }
     for (var inputKey in bloggerConfig.input) {
         var xml = path_1["default"].resolve(bloggerConfig.input[inputKey]);
-        (0, core_1.process)(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+        core_1.process(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
     }
 };

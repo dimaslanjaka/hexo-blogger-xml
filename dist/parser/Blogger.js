@@ -50,18 +50,18 @@ var BloggerParser = /** @class */ (function () {
         this.entriesDir = path.join(this.buildDir, "entries");
         this.parseXmlJsonResult = [];
         this.hostname = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
-        if (!(0, fs_1.existsSync)(xmlFile))
+        if (!fs_1.existsSync(xmlFile))
             throw xmlFile + " not found";
         // reset result
         this.parseXmlJsonResult = [];
         // clean build dir
         this.clean();
         // write ignore to buildDir
-        (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(this.entriesDir), ".gitignore"), "*");
-        (0, fs_1.mkdirSync)(this.entriesDir, { recursive: true });
-        (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date());
+        util_1.writeFileSync(path.join(path_1.dirname(this.entriesDir), ".gitignore"), "*");
+        fs_1.mkdirSync(this.entriesDir, { recursive: true });
+        util_1.writeFileSync(path.join(this.entriesDir, this.id), new Date());
         // read xml
-        var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
+        var xmlStr = fs_1.readFileSync(xmlFile).toString();
         // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
         var dom = new jsdom_1.JSDOM();
         // Get DOMParser, same API as in browser
@@ -71,11 +71,11 @@ var BloggerParser = /** @class */ (function () {
         this.document = parser.parseFromString(xmlStr, "text/xml");
         // save the xml after modifications
         var xmlString = this.document.documentElement.outerHTML;
-        (0, util_1.writeFileSync)("build/hexo-blogger-xml/rss.xml", xmlString);
-        (0, util_1.writeFileSync)("build/hexo-blogger-xml/inner.xml", this.document.documentElement.innerHTML);
+        util_1.writeFileSync("build/hexo-blogger-xml/rss.xml", xmlString);
+        util_1.writeFileSync("build/hexo-blogger-xml/inner.xml", this.document.documentElement.innerHTML);
         var entries = this.document.documentElement.getElementsByTagName("entry");
         if (entries.length) {
-            (0, util_1.writeFileSync)("build/hexo-blogger-xml/entry.xml", entries[0].innerHTML);
+            util_1.writeFileSync("build/hexo-blogger-xml/entry.xml", entries[0].innerHTML);
         }
     }
     BloggerParser.prototype.setHostname = function (host) {
@@ -108,7 +108,7 @@ var BloggerParser = /** @class */ (function () {
         };
         //console.log(this.entriesDir);
         deleteFolderRecursive(this.entriesDir);
-        (0, rimraf_1["default"])(t.entriesDir, function (error) {
+        rimraf_1["default"](t.entriesDir, function (error) {
             if (error)
                 throw error;
         });
@@ -144,7 +144,7 @@ var BloggerParser = /** @class */ (function () {
             obj.entry.content = content;
             obj.entry.id[0] = obj.entry.id[0].replace("tag:blogger.com,1999:", "");
             //writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
-            (0, util_1.writeFileSync)(path.join(this_1.entriesDir, (0, sanitize_filename_1["default"])(title) + ".json"), JSON.stringify(obj, null, 2));
+            util_1.writeFileSync(path.join(this_1.entriesDir, sanitize_filename_1["default"](title) + ".json"), JSON.stringify(obj, null, 2));
         };
         var this_1 = this;
         for (var index = 0; index < feeds.length; index++) {
@@ -154,7 +154,7 @@ var BloggerParser = /** @class */ (function () {
     };
     BloggerParser.prototype.getJsonResult = function () {
         var _this = this;
-        if (!(0, fs_1.existsSync)(this.entriesDir))
+        if (!fs_1.existsSync(this.entriesDir))
             throw "Entries Dir Not Found, previous process failed";
         var get = fs.readdirSync(this.entriesDir).map(function (file) {
             return path.join(_this.entriesDir, file);
@@ -188,7 +188,7 @@ var BloggerParser = /** @class */ (function () {
                 };
                 var extname = path.extname(file);
                 if (extname == ".json") {
-                    var read = (0, fs_1.readFileSync)(file).toString();
+                    var read = fs_1.readFileSync(file).toString();
                     var json = JSON.parse(read);
                     // build hexo header post
                     if (typeof json == "object") {
@@ -235,14 +235,14 @@ var BloggerParser = /** @class */ (function () {
                                 if (buildPost.permalink.length > 0) {
                                     var saveFile = path.join("build/hexo-blogger-xml/results/", buildPost.permalink.replace(/\.html$/, ".json"));
                                     results.push(buildPost);
-                                    (0, util_1.writeFileSync)(saveFile, JSON.stringify(buildPost, null, 2));
+                                    util_1.writeFileSync(saveFile, JSON.stringify(buildPost, null, 2));
                                 }
                             }
                         }
                         catch (e) {
                             //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
-                            (0, util_1.writeFileSync)(path.join("build/hexo-blogger-xml/errors/", "error-" + (0, path_1.basename)(file)), JSON.stringify(json, null, 2));
-                            (0, util_1.writeFileSync)(path.join("build/hexo-blogger-xml/errors/", "error-body-" + (0, path_1.basename)(file, ".json") + ".html"), buildPost.content);
+                            util_1.writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error-" + path_1.basename(file)), JSON.stringify(json, null, 2));
+                            util_1.writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error-body-" + path_1.basename(file, ".json") + ".html"), buildPost.content);
                             //buildPost.content
                             //console.log(json.entry.content);
                             throw e;
@@ -263,7 +263,7 @@ var BloggerParser = /** @class */ (function () {
      */
     BloggerParser.prototype.modifyHtml = function (content) {
         var t = this;
-        var parserhtml = (0, html_1.fromString)(content);
+        var parserhtml = html_1.fromString(content);
         // strip footer rss messages
         // remove custom messages in footer feed
         var find1 = parserhtml.window.document.querySelector('[class="blogger-post-footer"]');
@@ -319,10 +319,10 @@ var BloggerParser = /** @class */ (function () {
         var contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
         //console.log(contentStr.textContent);
         if (contentStr) {
-            description = (0, util_1.truncate)(he_1["default"].decode(contentStr.textContent), 140, "").trim();
+            description = util_1.truncate(he_1["default"].decode(contentStr.textContent), 140, "").trim();
         }
         else {
-            description = (0, util_1.truncate)(content, 140, "").trim();
+            description = util_1.truncate(content, 140, "").trim();
         }
         return {
             thumbnail: firstImg,
@@ -361,7 +361,7 @@ var BloggerParser = /** @class */ (function () {
                 .append("\n\n")
                 .append(post.content)
                 .toString();
-            (0, util_1.writeFileSync)(postPath, postResult);
+            util_1.writeFileSync(postPath, postResult);
         };
         parsedList.forEach(process);
         //process(parsedList[0]);
