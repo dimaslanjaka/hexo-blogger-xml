@@ -1,5 +1,5 @@
 # hexo-blogger-xml
-Import content from blogger
+Import content/article from blogger to hexo
 
 # Setup _config.yml
 ```yaml
