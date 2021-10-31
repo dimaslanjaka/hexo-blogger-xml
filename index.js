@@ -1,3 +1,4 @@
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
 //hexo.extend.filter.register("after_render:html", require("./dist/hexo.test.js"), 5);
-require("./dist/hexo-core.js")(hexo);
+if (typeof hexo != "undefined") require("./dist/hexo-core.js")(hexo);
+module.exports.gulp = require("./dist/gulp-core");

@@ -2,8 +2,9 @@ import { existsSync, mkdirSync, writeFileSync } from "fs";
 import Hexo from "hexo";
 import path from "path";
 import BloggerParser from "./parser/Blogger";
+import { LooseObject } from "./types/post-header";
 
-interface BloggerXmlConfig extends ObjectConstructor {
+export interface BloggerXmlConfig extends LooseObject {
   /**
    * Blogger xml files
    */
@@ -33,6 +34,12 @@ module.exports = function (hexo: Hexo) {
     return;
   }
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
+  if (!bloggerConfig.hasOwnProperty("hostname")) {
+    bloggerConfig.hostname = [];
+  }
+  if (!bloggerConfig.hasOwnProperty("callback")) {
+    bloggerConfig.callback = null;
+  }
   const xmlList = bloggerConfig.input;
 
   hexo.on("ready", function () {
@@ -46,13 +53,13 @@ module.exports = function (hexo: Hexo) {
       if (existsSync(xml)) {
         console.log("processing", xml);
         const parser = new BloggerParser(xml);
-        if (bloggerConfig.hasOwnProperty("hostname") && bloggerConfig.hostname.length > 0) {
+        if (bloggerConfig.hostname.length > 0) {
           parser.setHostname(bloggerConfig.hostname);
         }
         const parsed = parser.parseEntry().getJsonResult();
         console.log(parsed.getParsedXml().length, "total posts");
 
-        if (bloggerConfig.hasOwnProperty("callback")) {
+        if (typeof bloggerConfig.callback == "string") {
           let scriptCall = path.resolve(path.join(root, bloggerConfig.callback));
           if (!existsSync(scriptCall)) {
             scriptCall = path.resolve(path.join(process.cwd(), bloggerConfig.callback));
