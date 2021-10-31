@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "outDir": "build/lib"
+    "outDir": "dist"
   },
   "include": ["src", "__test__"],
   "exclude": ["src/lang"]
