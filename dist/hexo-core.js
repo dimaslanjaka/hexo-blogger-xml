@@ -17,6 +17,12 @@ module.exports = function (hexo) {
         return;
     }
     var bloggerConfig = config.blogger_xml;
+    if (!bloggerConfig.hasOwnProperty("hostname")) {
+        bloggerConfig.hostname = [];
+    }
+    if (!bloggerConfig.hasOwnProperty("callback")) {
+        bloggerConfig.callback = null;
+    }
     var xmlList = bloggerConfig.input;
     hexo.on("ready", function () {
         console.log("blogger import xml started", bloggerConfig);
@@ -28,12 +34,12 @@ module.exports = function (hexo) {
             if ((0, fs_1.existsSync)(xml)) {
                 console.log("processing", xml);
                 var parser = new Blogger_1["default"](xml);
-                if (bloggerConfig.hasOwnProperty("hostname") && bloggerConfig.hostname.length > 0) {
+                if (bloggerConfig.hostname.length > 0) {
                     parser.setHostname(bloggerConfig.hostname);
                 }
                 var parsed = parser.parseEntry().getJsonResult();
                 console.log(parsed.getParsedXml().length, "total posts");
-                if (bloggerConfig.hasOwnProperty("callback")) {
+                if (typeof bloggerConfig.callback == "string") {
                     var scriptCall = path_1["default"].resolve(path_1["default"].join(root, bloggerConfig.callback));
                     if (!(0, fs_1.existsSync)(scriptCall)) {
                         scriptCall = path_1["default"].resolve(path_1["default"].join(process.cwd(), bloggerConfig.callback));
