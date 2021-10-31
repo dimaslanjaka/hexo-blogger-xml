@@ -25,9 +25,6 @@ function processXml(file: any) {
   console.log("process", path.resolve(file));
   const parser = new BloggerParser(file);
   parser.setHostname(["webmanajemen.com"]);
-  parser.clean().catch((e) => {
-    console.error(e);
-  });
   const parsed = parser.parseEntry().getJsonResult();
   console.log(parsed.getParsedXml().length, "total posts");
   parsed.export("build/hexo-blogger-xml/export", (content) => {

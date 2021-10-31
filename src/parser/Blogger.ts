@@ -1,6 +1,6 @@
 /// <reference path="../types/entry.d.ts" />
 import * as fs from "fs";
-import { existsSync, readFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync } from "fs";
 import * as path from "path";
 import { JSDOM } from "jsdom";
 import sanitize from "sanitize-filename";
@@ -19,6 +19,7 @@ import StringBuilder from "./StringBuilder";
 import excludeTitleArr from "./excludeTitle.json";
 import { get as getStack } from "./Error";
 import { basename, dirname } from "path";
+import _ from "lodash";
 
 interface objResult {
   permalink: string;
@@ -28,17 +29,29 @@ interface objResult {
 
 class BloggerParser {
   static debug = false;
-  entriesDir = "build/hexo-blogger-xml/entries";
+  /**
+   * ID Process
+   */
+  id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  buildDir = "build/hexo-blogger-xml";
+  entriesDir = path.join(this.buildDir, "entries");
   private document: Document;
   parseXmlJsonResult: objResult[] = [];
   hostname: string[] = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
 
   constructor(xmlFile: string | fs.PathLike) {
     if (!existsSync(xmlFile)) throw `${xmlFile} not found`;
+
     // reset result
     this.parseXmlJsonResult = [];
+
+    // clean build dir
+    this.clean();
+
     // write ignore to buildDir
     writeFileSync(path.join(dirname(this.entriesDir), ".gitignore"), "*");
+    mkdirSync(this.entriesDir, { recursive: true });
+    writeFileSync(path.join(this.entriesDir, this.id), new Date());
     // read xml
     const xmlStr = readFileSync(xmlFile).toString();
 
@@ -73,16 +86,30 @@ class BloggerParser {
   /**
    * Clean build dir
    */
-  async clean() {
-    await new Promise((resolve, reject) => {
-      rimraf(this.entriesDir, (x) => {
-        if (x) {
-          reject(x);
-        } else {
-          resolve(this);
-        }
-      });
+  clean() {
+    const t = this;
+    const deleteFolderRecursive = function (directoryPath) {
+      if (fs.existsSync(directoryPath)) {
+        fs.readdirSync(directoryPath).forEach((file, index) => {
+          const curPath = path.join(directoryPath, file);
+          if (fs.lstatSync(curPath).isDirectory()) {
+            // recurse
+            deleteFolderRecursive(curPath);
+          } else {
+            // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(directoryPath);
+      }
+    };
+
+    //console.log(this.entriesDir);
+    deleteFolderRecursive(this.entriesDir);
+    rimraf(t.entriesDir, (error) => {
+      if (error) throw error;
     });
+    return this;
   }
 
   /**
@@ -342,13 +369,15 @@ class BloggerParser {
    *   return content; // return back the modified content
    * })
    */
-  export(dir: string = "source/_posts", callback?: (arg0: string) => string) {
+  export(dir: string = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
     const parsedList = this.getParsedXml();
     const process = (post: objResult) => {
       const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
       //let postPathTest = path.join(dir, "test.md");
       const postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
-      if (typeof callback == "function") post.content = callback(post.content);
+      if (typeof callback == "function") {
+        post.content = callback(post.content, post.headers);
+      }
       //post.content = this.stripFooterFeed(post.content);
       const postResult = new StringBuilder("---")
         .appendLine(postHeader.trim())
@@ -390,11 +419,10 @@ class BloggerParser {
   auto(file: string, outputDir = "source/__posts", callback: (content: string) => any) {
     const parser = new BloggerParser(file);
     //parser.setHostname("webmanajemen.com");
-    parser.clean().then(function () {
-      const parsed = parser.parseEntry().getJsonResult();
-      console.log(file, parsed.getParsedXml().length, "total posts");
-      parsed.export(outputDir, callback);
-    });
+    parser.clean();
+    const parsed = parser.parseEntry().getJsonResult();
+    console.log(file, parsed.getParsedXml().length, "total posts");
+    parsed.export(outputDir, callback);
   }
 
   toString() {
