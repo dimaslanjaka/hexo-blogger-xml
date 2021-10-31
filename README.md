@@ -16,7 +16,7 @@ blogger_xml:
     - "git.webmanajemen.com"
   # Output directory
   output: "source/_posts"
-  # xml path relative path from hexo root directory
+  # blogger xml path relative path from hexo root directory, you can insert multiple xml
   input:
     - "../xml/test.xml" 
     - "./directory/another.xml" 
