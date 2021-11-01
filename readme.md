@@ -4,6 +4,7 @@ Import content/article from blogger to hexo without losing SEO
 # Feature
 - Migrate from blogger to hexo
 - Migrate blogger permalink to hexo permalink without losing SEO
+- Gulp function supported
 
 # Requirements
 - Node 12.x 14.x
@@ -29,8 +30,8 @@ npm i hexo-blogger-xml
 # Setup Hexo _config.yml
 ```yaml
 permalink: :title.html # set permalink to title to direct permalink from directory path
-pretty_urls: 
-  trailing_html: true # Set true to keep `.html` from permalink 
+pretty_urls:
+  trailing_html: true # Set true to keep `.html` from permalink
 
 blogger_xml:
   # site title (optional), will set on header.webtitle each post
@@ -38,7 +39,7 @@ blogger_xml:
   # default thumbnail if no image in post, will set on header.cover each post
   thumbnail: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
   # script path relative path from hexo root directory
-  callback: "./scripts/post_callback.js" 
+  callback: "./scripts/post_callback.js"
   # Your blog domain and subdomain to seo external link, and bellow list is an internal link based on domains
   hostname:
     - "webmanajemen.com"
@@ -47,8 +48,8 @@ blogger_xml:
   output: "source/_posts"
   # blogger xml path relative path from hexo root directory, you can insert multiple xml
   input:
-    - "../xml/test.xml" 
-    - "./directory/another.xml" 
+    - "../xml/test.xml"
+    - "./directory/another.xml"
 ```
 
 # Setup .gitignore to your project
@@ -69,7 +70,7 @@ permalink: /2021/09/post-with-description.html
 ![](img/ss-hexo-post.png)
 
 ## Project with this package
-<a href="https://github.com/dimaslanjaka/dimaslanjaka.github.io/tree/compiler" alt="github">Github <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20px" height="20px" /></a> | 
+<a href="https://github.com/dimaslanjaka/dimaslanjaka.github.io/tree/compiler" alt="github">Github <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20px" height="20px" /></a> |
 [dimaslanjaka.github.io](https://dimaslanjaka.github.io)
 
 ## Source Code
