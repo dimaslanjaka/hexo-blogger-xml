@@ -47,6 +47,7 @@ jobs:
           cp -rf ./src ./build/src
           cp -rf ./gulpfile.ts ./build/gulpfile.ts
           cp -rf ./img ./build/img
+          cp -rf ./.gitignore ./build/.gitignore
           npx gulp
           echo "try test build package using npm"
           cd build && npm install
