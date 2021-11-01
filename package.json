@@ -1,0 +1,95 @@
+{
+  "name": "hexo-blogger-xml",
+  "version": "1.0.2",
+  "description": "Import xml blogger",
+  "main": "index",
+  "files": [
+    "lib/",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "npx ts-node src/test.ts",
+    "eslint": "eslint ."
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "engines": {
+    "node": ">= 8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dimaslanjaka/hexo-blogger-xml.git"
+  },
+  "keywords": [
+    "hexo",
+    "blogger",
+    "xml",
+    "import"
+  ],
+  "author": "Dimas Lanjaka <dimaslanjaka@gmail.com> (http://webmanajemen.com)",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.4",
+    "clean-css": "^4.2.1",
+    "favicons": "^5.3.0",
+    "feedparser": "^2.2.10",
+    "fs-extra": "^7.0.1",
+    "he": "^1.2.0",
+    "html-minifier": "^4.0.0",
+    "imagemin": "^6.1.0",
+    "imagemin-gifsicle": "^6.0.1",
+    "imagemin-jpeg-recompress": "^6.0.0",
+    "imagemin-jpegtran": "^6.0.0",
+    "imagemin-optipng": "^6.0.0",
+    "imagemin-pngquant": "^7.0.0",
+    "imagemin-svgo": "^7.0.0",
+    "imagemin-webp": "^5.0.0",
+    "jquery": "^3.6.0",
+    "jsdom": "^17.0.0",
+    "lodash": "^4.17.21",
+    "md5-file": "^4.0.0",
+    "minimatch": "^3.0.4",
+    "object-assign": "^4.1.1",
+    "request": "^2.88.2",
+    "rimraf": "^3.0.2",
+    "sanitize-filename": "^1.6.3",
+    "sax": "^1.2.4",
+    "stream-to-array": "^2.3.0",
+    "uglify-js": "~3.5.11",
+    "underscore": "^1.13.1",
+    "useref": "^1.4.1",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@types/he": "^1.1.2",
+    "@types/hexo": "^3.8.7",
+    "@types/jquery": "^3.5.7",
+    "@types/lodash": "^4.14.175",
+    "@types/node": "^16.11.0",
+    "@types/rimraf": "^3.0.2",
+    "@types/sax": "^1.2.3",
+    "@types/xml2js": "^0.4.9",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "gulp": "^4.0.2",
+    "hexo": "^3.8.0",
+    "hexo-generator-archive": "^0.1.5",
+    "hexo-generator-category": "^0.1.3",
+    "hexo-generator-index": "^0.2.1",
+    "hexo-generator-tag": "^0.2.0",
+    "hexo-renderer-ejs": "^0.3.1",
+    "hexo-renderer-marked": "^0.3.2",
+    "hexo-renderer-stylus": "^0.3.3",
+    "minimist": "^1.2.0",
+    "mocha": "^6.1.4",
+    "path": "^0.12.7",
+    "prettier": "^2.4.1",
+    "semantic-release": "^15.13.3",
+    "terser": "^5.7.1",
+    "ts-node": "^10.3.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4",
+    "xml2js": "^0.4.23"
+  }
+}
