@@ -42,7 +42,6 @@ jobs:
           cp -rf ./index.js ./build/index.js
           cp -rf ./*.json ./build/
           cp -rf ./README.md ./build/readme.md
-          echo "Source Code > [Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)" >> ./build/readme.md
           cp -rf ./demo ./build/demo
           cp -rf ./src ./build/src
           npx gulp
