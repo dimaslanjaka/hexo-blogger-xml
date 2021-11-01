@@ -44,6 +44,7 @@ jobs:
           cp ./README.md ./build/readme.md
           echo "Source Code > [Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)" >> ./build/readme.md
           cp ./demo ./build/demo
+          cp ./src ./build/src
           npx gulp
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
