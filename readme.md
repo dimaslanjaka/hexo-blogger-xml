@@ -11,6 +11,9 @@ Import content/article from blogger to hexo
 # Feature
 - Migrate from blogger to hexo
 
+# Requirements
+- Node 12.x 14.x
+
 # Setup _config.yml
 ```yaml
 permalink: :title.html # set permalink to title to direct permalink from directory path
@@ -41,3 +44,4 @@ blogger_xml:
 
 ## Source Code
 > [Source Code Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)
+
