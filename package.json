@@ -1,17 +1,18 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Import xml blogger to hexo",
   "main": "index",
   "files": [
-    "lib/",
+    "dist",
+    "src",
     "index.js"
   ],
   "scripts": {
-    "test": "npx ts-node src/test.ts && npx gulp",
+    "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
     "eslint": "eslint .",
     "prepublish": "npx tsc -p tsconfig.publish.json",
-    "no-preinstall": "npx tsc -p tsconfig.publish.json"
+    "postinstall": "npx gulp tsc"
   },
   "directories": {
     "lib": "./lib"
@@ -51,7 +52,9 @@
     "@types/xml2js": "^0.4.9",
     "eslint": "^5.16.0",
     "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "hexo": "^3.8.0",
+    "merge2": "^1.4.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4",
     "xml2js": "^0.4.23"

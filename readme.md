@@ -17,11 +17,11 @@ npm i -g node-gyp typescript ts-node
 ```
 
 # Installation
-Using Git Repository
+Using Git Repository (Development)
 ```shell
 npm i git+https://github.com/dimaslanjaka/hexo-blogger-xml.git
 ```
-Using NPM Repository
+Using NPM Repository (Production)
 ```shell
 npm i hexo-blogger-xml
 ```
@@ -94,3 +94,7 @@ permalink: /2021/09/post-with-description.html
 ## [1.0.4] - 2021-10-1
 
 - Fix gulp method
+
+## [1.0.6] - 2021-10-1
+
+- Fix no files

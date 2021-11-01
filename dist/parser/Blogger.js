@@ -22,7 +22,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-/// <reference path="../types/entry.d.ts" />
 var fs = __importStar(require("fs"));
 var fs_1 = require("fs");
 var path = __importStar(require("path"));
