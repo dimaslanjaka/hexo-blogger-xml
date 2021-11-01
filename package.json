@@ -17,7 +17,8 @@
     "test:gulp": "npx gulp",
     "eslint": "eslint .",
     "postinstall-old": "npx gulp tsc",
-    "postinstall-new": "node ./postinstall.js"
+    "postinstall-new": "node ./postinstall.js",
+    "build:publish": "tsc -p tsconfig.publish.json"
   },
   "directories": {
     "lib": "./dist"
