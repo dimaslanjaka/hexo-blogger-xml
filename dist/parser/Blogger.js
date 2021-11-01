@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -40,27 +55,30 @@ var StringBuilder_1 = __importDefault(require("./StringBuilder"));
 var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
 var path_1 = require("path");
 var node_username_1 = __importDefault(require("./node-username"));
-var BloggerParser = /** @class */ (function () {
+var events_1 = require("events");
+var BloggerParser = /** @class */ (function (_super) {
+    __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
+        var _this = _super.call(this) || this;
         /**
          * ID Process
          */
-        this.id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.buildDir = "build/hexo-blogger-xml";
-        this.entriesDir = path.join(this.buildDir, "entries");
-        this.parseXmlJsonResult = [];
-        this.hostname = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
+        _this.id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        _this.buildDir = "build/hexo-blogger-xml";
+        _this.entriesDir = path.join(_this.buildDir, "entries");
+        _this.parseXmlJsonResult = [];
+        _this.hostname = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
         if (!(0, fs_1.existsSync)(xmlFile))
             throw xmlFile + " not found";
         // reset result
-        this.parseXmlJsonResult = [];
+        _this.parseXmlJsonResult = [];
         // clean build dir
-        this.clean();
+        _this.clean();
         // write ignore to buildDir
-        (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(this.entriesDir), ".gitignore"), "*");
-        (0, fs_1.mkdirSync)(this.entriesDir, { recursive: true });
+        (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(_this.entriesDir), ".gitignore"), "*");
+        (0, fs_1.mkdirSync)(_this.entriesDir, { recursive: true });
         if ((0, node_username_1["default"])() == "dimaslanjaka") {
-            (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date().toString());
+            (0, util_1.writeFileSync)(path.join(_this.entriesDir, _this.id), new Date().toString());
         }
         // read xml
         var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
@@ -70,15 +88,16 @@ var BloggerParser = /** @class */ (function () {
         var DOMParser = dom.window.DOMParser;
         var parser = new DOMParser();
         // Create document by parsing XML
-        this.document = parser.parseFromString(xmlStr, "text/xml");
+        _this.document = parser.parseFromString(xmlStr, "text/xml");
         // save the xml after modifications
-        var xmlString = this.document.documentElement.outerHTML;
+        var xmlString = _this.document.documentElement.outerHTML;
         (0, util_1.writeFileSync)("build/hexo-blogger-xml/rss.xml", xmlString);
-        (0, util_1.writeFileSync)("build/hexo-blogger-xml/inner.xml", this.document.documentElement.innerHTML);
-        var entries = this.document.documentElement.getElementsByTagName("entry");
+        (0, util_1.writeFileSync)("build/hexo-blogger-xml/inner.xml", _this.document.documentElement.innerHTML);
+        var entries = _this.document.documentElement.getElementsByTagName("entry");
         if (entries.length) {
             (0, util_1.writeFileSync)("build/hexo-blogger-xml/entry.xml", entries[0].innerHTML);
         }
+        return _this;
     }
     BloggerParser.prototype.setHostname = function (host) {
         this.hostname = this.hostname.concat(host);
@@ -350,7 +369,7 @@ var BloggerParser = /** @class */ (function () {
         var _this = this;
         if (dir === void 0) { dir = "source/_posts"; }
         var parsedList = this.getParsedXml();
-        var process = function (post) {
+        var processResult = function (post) {
             var postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
             //let postPathTest = path.join(dir, "test.md");
             //console.log(post.headers);
@@ -369,8 +388,15 @@ var BloggerParser = /** @class */ (function () {
             //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
             (0, util_1.writeFileSync)(postPath, postResult);
         };
-        parsedList.forEach(process);
-        //process(parsedList[0]);
+        parsedList.forEach(function (i, idx, array) {
+            processResult(i);
+            if (idx === array.length - 1) {
+                //console.log("Last callback call at index " + idx + " with value " + i);
+                _this.emit("lastExport", { item: i, id: idx, array: array });
+            }
+        });
+        //processResult(parsedList[0]);
+        return this;
     };
     /**
      * Trim Object
@@ -408,5 +434,5 @@ var BloggerParser = /** @class */ (function () {
     };
     BloggerParser.debug = false;
     return BloggerParser;
-}());
+}(events_1.EventEmitter));
 exports["default"] = BloggerParser;

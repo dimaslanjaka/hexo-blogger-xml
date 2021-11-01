@@ -1,28 +1,52 @@
 import { PostHeader } from "./types/post-header";
 import { existsSync } from "fs";
-import BloggerParser from "./parser/Blogger";
 import chalk from "chalk";
+import { EventEmitter } from "events";
+import BloggerParser from "./parser/Blogger";
 
-export function process(
-  xml: string,
-  output: string,
-  hostname?: string[],
-  // eslint-disable-next-line no-unused-vars
-  callback?: (arg0: string, arg1: PostHeader) => string
-) {
-  //console.log(existsSync(xml), xml.endsWith(".xml"), xml);
-  if (existsSync(xml) && xml.endsWith(".xml")) {
-    console.log("processing", chalk.magenta(xml));
-    const parser = new BloggerParser(xml);
-    if (Array.isArray(hostname) && hostname.length > 0) {
-      parser.setHostname(hostname);
-    }
+declare interface core {
+  on<U extends keyof core>(event: U, listener: core[U]): this;
+  on(event: "init", listener: () => any): this;
+  on(event: "finish", listener: (arg0: BloggerParser) => any): this;
+  //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
+}
 
-    const parsed = parser.parseEntry().getJsonResult();
-    console.log(parsed.getParsedXml().length, "total posts");
+class core extends EventEmitter {
+  constructor() {
+    super();
+    this.emit("init");
+  }
 
-    if (typeof callback == "function") {
-      parsed.export(output, callback);
+  process(
+    xml: string,
+    output: string,
+    hostname?: string[],
+    // eslint-disable-next-line no-unused-vars
+    callback?: (arg0: string, arg1: PostHeader) => string
+  ) {
+    const t = this;
+    //console.log(existsSync(xml), xml.endsWith(".xml"), xml);
+    if (existsSync(xml) && xml.endsWith(".xml")) {
+      console.log("processing", chalk.magenta(xml));
+      const parser = new BloggerParser(xml);
+      if (Array.isArray(hostname) && hostname.length > 0) {
+        parser.setHostname(hostname);
+      }
+
+      // listen process event
+      parser.on("lastExport", function (obj) {
+        //console.log(obj);
+        t.emit("finish", { parser: parsed });
+      });
+
+      const parsed = parser.parseEntry().getJsonResult();
+      //console.log(parsed.getParsedXml().length, "total posts");
+
+      if (typeof callback == "function") {
+        parsed.export(output, callback);
+      }
     }
   }
 }
+
+export default core;

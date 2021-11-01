@@ -13,6 +13,16 @@ export interface gulpConfig extends LooseObject {
      */
     hostname?: string[];
     callback: (arg0: string, arg1: PostHeader) => string;
+    on?: {
+        /**
+         * On Process Started
+         */
+        init?: () => any;
+        /**
+         * On Process Finished
+         */
+        finish?: () => any;
+    };
 }
 declare function gulpFunction(bloggerConfig: gulpConfig): void;
 export default gulpFunction;

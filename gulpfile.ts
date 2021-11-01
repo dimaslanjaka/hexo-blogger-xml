@@ -3,12 +3,12 @@ import { PostHeader } from "./src/types/post-header";
 import { readdirSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
-import ts from "gulp-typescript";
 import gulp from "gulp";
-import merge from "merge2";
 import { exec } from "child_process";
+//import ts from "gulp-typescript";
+//import merge from "merge2";
 
-function defaultTask(cb) {
+function defaultTask(cb: () => void) {
   gulpCore({
     input: readdirSync(join(__dirname, "xml")).map((xml) => {
       return join(__dirname, "xml", xml);
@@ -24,13 +24,15 @@ function defaultTask(cb) {
   cb();
 }
 
-function compileTs(done) {
+function compileTs(done: () => void) {
   //const tsProject = ts.createProject("tsconfig.publish.json");
   //const tsResult = gulp.src("src/**/*.{ts,json}").pipe(tsProject());
   //return merge([tsResult.dts.pipe(gulp.dest("dist")), tsResult.js.pipe(gulp.dest("dist"))]);
   exec("tsc -p tsconfig.publish.json");
   done();
 }
+
+function gulpCoreStream() {}
 
 gulp.task("tsc", gulp.series(compileTs));
 gulp.task("default", gulp.series(defaultTask));

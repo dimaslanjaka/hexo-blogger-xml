@@ -2,12 +2,17 @@
 import * as fs from "fs";
 import { PostHeader } from "../types/post-header";
 import "./JSON";
+import { EventEmitter } from "events";
 interface objResult {
     permalink: string;
     headers: PostHeader;
     content: string;
 }
-declare class BloggerParser {
+declare interface BloggerParser {
+    on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
+    on(event: "lastExport", listener: (arg: object) => any): this;
+}
+declare class BloggerParser extends EventEmitter {
     static debug: boolean;
     /**
      * ID Process
@@ -54,7 +59,7 @@ declare class BloggerParser {
      *   return content; // return back the modified content
      * })
      */
-    export(dir?: string, callback?: (arg0: string, arg1: PostHeader) => string): void;
+    export(dir?: string, callback?: (arg0: string, arg1: PostHeader) => string): this;
     /**
      * Trim Object
      * @see {@link https://stackoverflow.com/a/51616282}
