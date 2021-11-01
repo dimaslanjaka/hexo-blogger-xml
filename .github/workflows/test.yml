@@ -1,4 +1,4 @@
-name: NodeJS with Gulp
+name: Test Demo
 
 on:
   push:
@@ -9,11 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x] # 16.x unsupported
+
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
       - name: Get npm cache directory
         id: npm-cache-dir
         run: echo "::set-output name=dir::$(npm config get cache)"
@@ -33,23 +35,7 @@ jobs:
             ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Build
-        run: |
-          npm i -g typescript
-          npm install
-          tsc -p tsconfig.json
-          cp -rfi ./*.{json,js} ./build/
-          cat ./README.md ./CHANGELOG.md > ./build/readme.md
-          cp -rfi ./demo ./build/demo
-          cp -rfi ./src ./build/src
-          cp -rfi ./gulpfile.ts ./build/gulpfile.ts
-          cp -rfi ./img ./build/img
-          cp -rfi ./.gitignore ./build/.gitignore
-          npx gulp
-      - name: test build package using npm
-        run: cd build && npm install
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: master # The branch the action should deploy to.
-          folder: build # The folder the action should deploy.
+      - name: Install Global Packages
+        run: npm i -g typescript gulp-cli hexo-cli
+      - name: Test Hexo Demo
+        run: cd demo && npm install
