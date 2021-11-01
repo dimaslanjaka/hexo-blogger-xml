@@ -1,5 +1,6 @@
 import path from "path";
 import core from "./core";
+import BloggerParser from "./parser/Blogger";
 import { LooseObject, PostHeader } from "./types/post-header";
 
 export interface gulpConfig extends LooseObject {
@@ -25,7 +26,7 @@ export interface gulpConfig extends LooseObject {
     /**
      * On Process Finished
      */
-    finish?: () => any;
+    finish?: (arg0: BloggerParser) => any;
   };
 }
 

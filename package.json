@@ -11,7 +11,10 @@
     "gulpfile.ts"
   ],
   "scripts": {
-    "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
+    "test": "npm run test:ts && npm run test:gulp",
+    "pretest": "rm -rf dist build",
+    "test:ts": "npx ts-node src/test.ts",
+    "test:gulp": "npx gulp",
     "eslint": "eslint .",
     "postinstall-old": "npx gulp tsc",
     "postinstall-new": "node ./postinstall.js"

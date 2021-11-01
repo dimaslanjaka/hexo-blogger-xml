@@ -43,6 +43,7 @@ var core = /** @class */ (function (_super) {
             // listen process event
             parser.on("lastExport", function (obj) {
                 //console.log(obj);
+                //console.log("Last Export", "Finish");
                 t.emit("finish", { parser: parsed_1 });
             });
             var parsed_1 = parser.parseEntry().getJsonResult();
