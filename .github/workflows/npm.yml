@@ -46,6 +46,8 @@ jobs:
           cp -rf ./demo ./build/demo
           cp -rf ./src ./build/src
           npx gulp
+          echo "try test build package using npm"
+          cd build && npm install
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
