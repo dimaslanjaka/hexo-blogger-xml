@@ -20,6 +20,9 @@ if (typeof version == "object") {
           console.log("Build Typescript Successfully");
           exec("npm publish", (err, stdout, stderr) => {
             console.log("Packages Published Successfully");
+            exec("git add .", (err) => {
+              if (!err) exec(`git commit -m "Update release ${version.toString()}"`);
+            });
           });
         } else {
           console.log("Publish Failed, Rollback version");
