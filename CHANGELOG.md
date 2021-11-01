@@ -18,6 +18,10 @@
 
 - Fix gulp method
 
-## [1.0.6] - 2021-10-1
+## [1.0.7] - 2021-10-1
 
 - Fix no files
+
+## [1.0.8] - 2021-10-1
+
+- Fix broken post header

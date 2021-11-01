@@ -376,17 +376,20 @@ class BloggerParser {
     const process = (post: objResult) => {
       const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
       //let postPathTest = path.join(dir, "test.md");
+      //console.log(post.headers);
       const postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
+      //console.log(postHeader);
       if (typeof callback == "function") {
         post.content = callback(post.content, post.headers);
       }
       //post.content = this.stripFooterFeed(post.content);
       const postResult = new StringBuilder("---")
-        .appendLine(postHeader.trim())
+        .appendLine(postHeader)
         .appendLine("---")
         .append("\n\n")
         .append(post.content)
         .toString();
+      //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
       writeFileSync(postPath, postResult);
     };
 
