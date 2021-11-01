@@ -248,7 +248,10 @@ class BloggerParser extends EventEmitter {
                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                 //console.log(contentStr.textContent);
                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                buildPost.headers.subtitle = trim_whitespaces(remove_double_quotes(mod.description));
+                buildPost.headers.subtitle = trim_whitespaces(remove_double_quotes(mod.description)).replace(
+                  /[^a-zA-Z., ]/gm,
+                  ""
+                );
 
                 // site title
                 buildPost.headers.webtitle = config.webtitle;
