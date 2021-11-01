@@ -41,7 +41,7 @@ jobs:
           cp -rfi ./src ./build/src
           cp -rfi ./gulpfile.ts ./build/gulpfile.ts
           cp -rfi ./img ./build/img
-          cp -rfi ./.gitignore ./build/.gitignore
+          cp -rfi ./toBuild/.gitignore ./build/.gitignore
           npx gulp
       - name: test build package using npm
         run: cd build && npm install
