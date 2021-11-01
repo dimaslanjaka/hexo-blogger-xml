@@ -366,7 +366,7 @@ var BloggerParser = /** @class */ (function () {
                 .append("\n\n")
                 .append(post.content)
                 .toString();
-            //const postResult = `---\n${postHeader}`;
+            //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
             (0, util_1.writeFileSync)(postPath, postResult);
         };
         parsedList.forEach(process);
