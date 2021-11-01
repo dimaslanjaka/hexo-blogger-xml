@@ -15,6 +15,6 @@
     "declarationDir": "build/dist/definitions",
     "outDir": "build/dist"
   },
-  "include": ["src", "__test__"],
+  "include": ["src", "__test__", "publish.js"],
   "exclude": ["src/lang"]
 }
