@@ -11,7 +11,7 @@
     "test": "npx ts-node src/test.ts && npx gulp",
     "eslint": "eslint .",
     "prepublish": "npx tsc -p tsconfig.publish.json",
-    "preinstall": "npx tsc -p tsconfig.publish.json"
+    "no-preinstall": "npx tsc -p tsconfig.publish.json"
   },
   "directories": {
     "lib": "./lib"
