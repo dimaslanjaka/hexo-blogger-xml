@@ -11,7 +11,10 @@ function gulpFunction(bloggerConfig) {
     }
     for (var inputKey in bloggerConfig.input) {
         var xml = path_1["default"].resolve(bloggerConfig.input[inputKey]);
-        (0, core_1.process)(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+        if (xml.endsWith(".xml")) {
+            //console.log("gulp hexo-blogger-xml processing", xml);
+            (0, core_1.process)(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+        }
     }
 }
 module.exports = gulpFunction;

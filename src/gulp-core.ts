@@ -25,7 +25,10 @@ function gulpFunction(bloggerConfig: gulpConfig) {
   }
   for (const inputKey in bloggerConfig.input) {
     const xml = path.resolve(bloggerConfig.input[inputKey]);
-    ProcessXML(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+    if (xml.endsWith(".xml")) {
+      //console.log("gulp hexo-blogger-xml processing", xml);
+      ProcessXML(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+    }
   }
 }
 

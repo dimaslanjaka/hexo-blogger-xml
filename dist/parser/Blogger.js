@@ -40,6 +40,7 @@ var yaml_1 = __importDefault(require("./yaml"));
 var StringBuilder_1 = __importDefault(require("./StringBuilder"));
 var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
 var path_1 = require("path");
+var node_username_1 = __importDefault(require("./node-username"));
 var BloggerParser = /** @class */ (function () {
     function BloggerParser(xmlFile) {
         /**
@@ -59,7 +60,9 @@ var BloggerParser = /** @class */ (function () {
         // write ignore to buildDir
         (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(this.entriesDir), ".gitignore"), "*");
         (0, fs_1.mkdirSync)(this.entriesDir, { recursive: true });
-        (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date().toString());
+        if ((0, node_username_1["default"])() == "dimaslanjaka") {
+            (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date().toString());
+        }
         // read xml
         var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
         // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML

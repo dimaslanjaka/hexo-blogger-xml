@@ -1,6 +1,7 @@
 import { PostHeader } from "./types/post-header";
 import { existsSync } from "fs";
 import BloggerParser from "./parser/Blogger";
+import chalk from "chalk";
 
 export function process(
   xml: string,
@@ -9,8 +10,9 @@ export function process(
   // eslint-disable-next-line no-unused-vars
   callback?: (arg0: string, arg1: PostHeader) => string
 ) {
-  if (existsSync(xml)) {
-    console.log("processing", xml);
+  //console.log(existsSync(xml), xml.endsWith(".xml"), xml);
+  if (existsSync(xml) && xml.endsWith(".xml")) {
+    console.log("processing", chalk.magenta(xml));
     const parser = new BloggerParser(xml);
     if (Array.isArray(hostname) && hostname.length > 0) {
       parser.setHostname(hostname);

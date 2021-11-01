@@ -1,8 +1,1 @@
-interface JSON {
-    /**
-     * safely handles circular references
-     * @param obj
-     * @param indent
-     */
-    safeStringify(obj: any, indent?: number): any;
-}
+export declare function simpleStringify(object: any): string;

@@ -80,3 +80,7 @@ permalink: /2021/09/post-with-description.html
 ## [1.0.3] - 2021-10-1
 
 - Add support custom thumbnail and site title
+
+## [1.0.4] - 2021-10-1
+
+- Fix gulp method
