@@ -1,4 +1,4 @@
-/// <reference path="../../../../src/types/entry.d.ts" />
+/// <reference path="../../../src/types/entry.d.ts" />
 /// <reference types="node" />
 import * as fs from "fs";
 import { PostHeader } from "../types/post-header";
