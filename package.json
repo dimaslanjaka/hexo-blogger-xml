@@ -11,7 +11,6 @@
   "scripts": {
     "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
     "eslint": "eslint .",
-    "prepublish": "npx tsc -p tsconfig.publish.json",
     "postinstall": "npx gulp tsc"
   },
   "directories": {
