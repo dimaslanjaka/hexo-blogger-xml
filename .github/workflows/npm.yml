@@ -42,7 +42,7 @@ jobs:
           tsc -p tsconfig.json
           cp -rf ./index.js ./build/index.js
           cp -rf ./*.json ./build/
-          cp -rf ./README.md ./build/readme.md
+          cat ./CHANGELOG.md ./README.md > ./build/readme.md
           cp -rf ./demo ./build/demo
           cp -rf ./src ./build/src
           npx gulp
