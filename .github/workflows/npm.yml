@@ -39,12 +39,12 @@ jobs:
         run: |
           npm install
           tsc -p tsconfig.json
-          cp ./index.js ./build/index.js
-          cp ./*.json ./build/
-          cp ./README.md ./build/readme.md
+          cp -rf ./index.js ./build/index.js
+          cp -rf ./*.json ./build/
+          cp -rf ./README.md ./build/readme.md
           echo "Source Code > [Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)" >> ./build/readme.md
-          cp ./demo ./build/demo
-          cp ./src ./build/src
+          cp -rf ./demo ./build/demo
+          cp -rf ./src ./build/src
           npx gulp
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
