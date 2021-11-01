@@ -40,7 +40,6 @@ jobs:
           npm i -g typescript
           npm install
           tsc -p tsconfig.json
-          cp -rf ./index.js ./build/index.js
           cp -rf ./*.json ./build/
           cat ./README.md ./CHANGELOG.md > ./build/readme.md
           cp -rf ./demo ./build/demo
