@@ -59,7 +59,7 @@ var BloggerParser = /** @class */ (function () {
         // write ignore to buildDir
         (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(this.entriesDir), ".gitignore"), "*");
         (0, fs_1.mkdirSync)(this.entriesDir, { recursive: true });
-        (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date());
+        (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date().toString());
         // read xml
         var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
         // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
