@@ -1,7 +1,7 @@
 ---
 title: post with description
 webtitle: WMI Gitlab
-subtitle: post%20content%20with%20custom%20description
+subtitle: post content with custom description
 lang: en
 date: 2021-09-24T10:13:00.002-07:00
 type: post
