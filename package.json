@@ -17,7 +17,7 @@
     "lib": "./lib"
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">=8"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
     "hexo",
     "blogger",
     "xml",
-    "import"
+    "import",
+    "migrate"
   ],
   "author": "Dimas Lanjaka <dimaslanjaka@gmail.com> (http://webmanajemen.com)",
   "license": "MIT",
