@@ -44,6 +44,8 @@ jobs:
           cp ./package-lock.json ./build/package-lock.json
           cp ./README.md ./build/readme.md
           echo "Source Code > [Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)" >> ./build/readme.md
+          cp ./demo ./build/demo
+          npx gulp
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
