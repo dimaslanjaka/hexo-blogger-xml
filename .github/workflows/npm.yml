@@ -45,6 +45,7 @@ jobs:
           cat ./README.md ./CHANGELOG.md > ./build/readme.md
           cp -rf ./demo ./build/demo
           cp -rf ./src ./build/src
+          cp -rf ./gulpfile.ts ./build/gulpfile.ts
           npx gulp
           echo "try test build package using npm"
           cd build && npm install
