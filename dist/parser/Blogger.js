@@ -22,7 +22,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-/// <reference path="../types/entry.d.ts" />
 var fs = __importStar(require("fs"));
 var fs_1 = require("fs");
 var path = __importStar(require("path"));
@@ -40,6 +39,7 @@ var yaml_1 = __importDefault(require("./yaml"));
 var StringBuilder_1 = __importDefault(require("./StringBuilder"));
 var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
 var path_1 = require("path");
+var node_username_1 = __importDefault(require("./node-username"));
 var BloggerParser = /** @class */ (function () {
     function BloggerParser(xmlFile) {
         /**
@@ -59,7 +59,9 @@ var BloggerParser = /** @class */ (function () {
         // write ignore to buildDir
         (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(this.entriesDir), ".gitignore"), "*");
         (0, fs_1.mkdirSync)(this.entriesDir, { recursive: true });
-        (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date());
+        if ((0, node_username_1["default"])() == "dimaslanjaka") {
+            (0, util_1.writeFileSync)(path.join(this.entriesDir, this.id), new Date().toString());
+        }
         // read xml
         var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
         // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
@@ -81,6 +83,7 @@ var BloggerParser = /** @class */ (function () {
     BloggerParser.prototype.setHostname = function (host) {
         this.hostname = this.hostname.concat(host);
     };
+    // noinspection JSUnusedGlobalSymbols
     BloggerParser.prototype.setEntriesDir = function (dir) {
         if (dir.length > 0)
             this.entriesDir = dir;
@@ -92,6 +95,7 @@ var BloggerParser = /** @class */ (function () {
         var t = this;
         var deleteFolderRecursive = function (directoryPath) {
             if (fs.existsSync(directoryPath)) {
+                // eslint-disable-next-line no-unused-vars
                 fs.readdirSync(directoryPath).forEach(function (file, index) {
                     var curPath = path.join(directoryPath, file);
                     if (fs.lstatSync(curPath).isDirectory()) {
@@ -106,7 +110,6 @@ var BloggerParser = /** @class */ (function () {
                 fs.rmdirSync(directoryPath);
             }
         };
-        //console.log(this.entriesDir);
         deleteFolderRecursive(this.entriesDir);
         (0, rimraf_1["default"])(t.entriesDir, function (error) {
             if (error)

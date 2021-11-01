@@ -16,4 +16,12 @@ export interface BloggerXmlConfig extends LooseObject {
      * Script to process each post content
      */
     callback?: string;
+    /**
+     * Site title
+     */
+    site_title?: string;
+    /**
+     * Default thumbnail if no image inside post
+     */
+    thumbnail?: string;
 }

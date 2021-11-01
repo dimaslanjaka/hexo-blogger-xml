@@ -12,7 +12,7 @@
     "removeComments": false,
     "declaration": true,
     "declarationMap": false,
-    "declarationDir": "build/dist/types",
+    "declarationDir": "build/dist/definitions",
     "outDir": "build/dist"
   },
   "include": ["src", "__test__"],

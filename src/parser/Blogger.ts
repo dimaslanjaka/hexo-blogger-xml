@@ -1,4 +1,3 @@
-/// <reference path="../types/entry.d.ts" />
 import * as fs from "fs";
 import { existsSync, mkdirSync, readFileSync } from "fs";
 import * as path from "path";
