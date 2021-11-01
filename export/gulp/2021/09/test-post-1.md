@@ -1,7 +1,7 @@
 ---
 title: test post 1
 webtitle: WMI Gitlab
-subtitle: test post 1 content
+subtitle: test post  content
 lang: en
 date: 2021-09-22T11:54:00.005-07:00
 type: post
