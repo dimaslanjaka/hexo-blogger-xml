@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Automatic Publish Package" type="NodeJSConfigurationType" path-to-js-file="publish.js" working-dir="$PROJECT_DIR$">
+    <method v="2">
+      <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" CONFIG_PATH="$PROJECT_DIR$/tsconfig.json" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="compile tsconfig.publish.json" run_configuration_type="ShConfigurationType" />
+    </method>
+  </configuration>
+</component>
