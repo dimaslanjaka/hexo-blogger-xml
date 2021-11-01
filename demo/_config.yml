@@ -105,6 +105,7 @@ deploy:
   type: ''
 
 blogger_xml:
+  site_title: "My Site Title"
   callback: "./scripts/post_callback.js"
   hostname:
     - "webmanajemen.com"
