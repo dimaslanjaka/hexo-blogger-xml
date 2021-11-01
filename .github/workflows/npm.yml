@@ -37,6 +37,7 @@ jobs:
             ${{ runner.os }}-node-
       - name: Build
         run: |
+          npm i -g typescript
           npm install
           tsc -p tsconfig.json
           cp -rf ./index.js ./build/index.js
