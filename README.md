@@ -16,7 +16,17 @@ npm config set python /path/python_dir/python
 npm i -g node-gyp typescript ts-node
 ```
 
-# Setup _config.yml
+# Installation
+Using Git Repository
+```shell
+npm i git+https://github.com/dimaslanjaka/hexo-blogger-xml.git
+```
+Using NPM Repository
+```shell
+npm i hexo-blogger-xml
+```
+
+# Setup Hexo _config.yml
 ```yaml
 permalink: :title.html # set permalink to title to direct permalink from directory path
 pretty_urls: 
