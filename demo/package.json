@@ -12,6 +12,9 @@
   "hexo": {
     "version": "5.4.0"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
     "hexo": "^5.0.0",
