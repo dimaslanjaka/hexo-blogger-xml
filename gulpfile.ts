@@ -34,5 +34,6 @@ function compileTs(done) {
 
 gulp.task("tsc", gulp.series(compileTs));
 gulp.task("default", defaultTask);
-exports.default = defaultTask;
-exports.tsc = compileTs;
+
+//exports.default = defaultTask;
+//exports.tsc = compileTs;
