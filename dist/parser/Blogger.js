@@ -56,6 +56,8 @@ var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
 var path_1 = require("path");
 var node_username_1 = __importDefault(require("./node-username"));
 var events_1 = require("events");
+var mysql_real_escape_string_1 = __importDefault(require("./mysql_real_escape_string"));
+var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
 var BloggerParser = /** @class */ (function (_super) {
     __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
@@ -251,7 +253,7 @@ var BloggerParser = /** @class */ (function (_super) {
                                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                                 //console.log(contentStr.textContent);
                                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                                buildPost.headers.subtitle = mod.description.replace(/[\\$'"]/g, "\\$&");
+                                buildPost.headers.subtitle = (0, trim_whitespaces_1["default"])((0, mysql_real_escape_string_1["default"])(mod.description));
                                 // site title
                                 buildPost.headers.webtitle = config_1["default"].webtitle;
                                 if (buildPost.permalink.length > 0) {
