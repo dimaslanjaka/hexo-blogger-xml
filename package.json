@@ -11,7 +11,8 @@
   "scripts": {
     "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
     "eslint": "eslint .",
-    "postinstall": "npx gulp tsc"
+    "postinstall-old": "npx gulp tsc",
+    "postinstall": "node ./postinstall.js"
   },
   "directories": {
     "lib": "./dist"
