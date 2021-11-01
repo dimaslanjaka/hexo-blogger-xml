@@ -1,13 +1,16 @@
-const fs = require("fs");
+const path = require("path");
+const gulpFunction = require("./dist/gulp-core");
+const { existsSync } = require("fs");
+
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
 //hexo.extend.filter.register("after_render:html", require("./dist/hexo.test.js"), 5);
 if (typeof hexo != "undefined") {
-  if (fs.existsSync("./build/dist/hexo-core.js")) {
-    // development mode
-    require("./build/dist/hexo-core.js")(hexo);
+  if (existsSync(path.join(__dirname, "./build/dist/hexo-core.js"))) {
+    //console.log("development mode");
+    require(path.join(__dirname, "./build/dist/hexo-core.js"))(hexo);
   } else {
-    // publish mode
-    require("./dist/hexo-core.js")(hexo);
+    //console.log("production mode");
+    require(path.join(__dirname, "./dist/hexo-core.js"))(hexo);
   }
 }
 
@@ -15,8 +18,6 @@ if (typeof hexo != "undefined") {
  * gulp function
  * @type {(function(gulpConfig): void)}
  */
-const gulpFunction = require("./dist/gulp-core");
-const { existsSync } = require("fs");
 module.exports = {
   gulp: gulpFunction,
 };

@@ -17,9 +17,7 @@ import "./JSON";
 import ParserYaml from "./yaml";
 import StringBuilder from "./StringBuilder";
 import excludeTitleArr from "./excludeTitle.json";
-import { get as getStack } from "./Error";
 import { basename, dirname } from "path";
-import _ from "lodash";
 
 interface objResult {
   permalink: string;
@@ -80,6 +78,7 @@ class BloggerParser {
     this.hostname = this.hostname.concat(host);
   }
 
+  // noinspection JSUnusedGlobalSymbols
   setEntriesDir(dir: string) {
     if (dir.length > 0) this.entriesDir = dir;
   }
@@ -91,6 +90,7 @@ class BloggerParser {
     const t = this;
     const deleteFolderRecursive = function (directoryPath) {
       if (fs.existsSync(directoryPath)) {
+        // eslint-disable-next-line no-unused-vars
         fs.readdirSync(directoryPath).forEach((file, index) => {
           const curPath = path.join(directoryPath, file);
           if (fs.lstatSync(curPath).isDirectory()) {
@@ -105,7 +105,6 @@ class BloggerParser {
       }
     };
 
-    //console.log(this.entriesDir);
     deleteFolderRecursive(this.entriesDir);
     rimraf(t.entriesDir, (error) => {
       if (error) throw error;

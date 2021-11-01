@@ -5,7 +5,7 @@ function defaultTask(cb) {
     input: ["./xml/test.xml"],
     output: "./build/export/gulp",
     callback(content: string, headers: PostHeader): string {
-      console.log(headers.title);
+      console.log("gulp process post", headers.title);
       return content;
     },
     hostname: ["webmanajemen.com", "web-manajemen.blogspot.com", "dimaslanjaka.github.io"],
