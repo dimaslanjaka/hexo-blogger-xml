@@ -18,6 +18,8 @@ import StringBuilder from "./StringBuilder";
 import excludeTitleArr from "./excludeTitle.json";
 import { basename, dirname } from "path";
 import getUsername from "./node-username";
+import { EventEmitter } from "events";
+//let EventEmitter = require("events").EventEmitter;
 
 interface objResult {
   permalink: string;
@@ -25,7 +27,13 @@ interface objResult {
   content: string;
 }
 
-class BloggerParser {
+declare interface BloggerParser {
+  on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
+  on(event: "lastExport", listener: (arg: object) => any): this;
+  //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
+}
+
+class BloggerParser extends EventEmitter {
   static debug = false;
   /**
    * ID Process
@@ -38,6 +46,7 @@ class BloggerParser {
   hostname: string[] = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
 
   constructor(xmlFile: string | fs.PathLike) {
+    super();
     if (!existsSync(xmlFile)) throw `${xmlFile} not found`;
 
     // reset result
@@ -373,7 +382,7 @@ class BloggerParser {
    */
   export(dir: string = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
     const parsedList = this.getParsedXml();
-    const process = (post: objResult) => {
+    const processResult = (post: objResult) => {
       const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
       //let postPathTest = path.join(dir, "test.md");
       //console.log(post.headers);
@@ -393,9 +402,16 @@ class BloggerParser {
       writeFileSync(postPath, postResult);
     };
 
-    parsedList.forEach(process);
+    parsedList.forEach((i, idx, array) => {
+      processResult(i);
+      if (idx === array.length - 1) {
+        //console.log("Last callback call at index " + idx + " with value " + i);
+        this.emit("lastExport", { item: i, id: idx, array: array });
+      }
+    });
 
-    //process(parsedList[0]);
+    //processResult(parsedList[0]);
+    return this;
   }
 
   /**

@@ -1,5 +1,5 @@
 import path from "path";
-import { process as ProcessXML } from "./core";
+import core from "./core";
 import { LooseObject, PostHeader } from "./types/post-header";
 
 export interface gulpConfig extends LooseObject {
@@ -17,6 +17,16 @@ export interface gulpConfig extends LooseObject {
   hostname?: string[];
   // eslint-disable-next-line no-unused-vars
   callback: (arg0: string, arg1: PostHeader) => string;
+  on?: {
+    /**
+     * On Process Started
+     */
+    init?: () => any;
+    /**
+     * On Process Finished
+     */
+    finish?: () => any;
+  };
 }
 
 function gulpFunction(bloggerConfig: gulpConfig) {
@@ -27,7 +37,12 @@ function gulpFunction(bloggerConfig: gulpConfig) {
     const xml = path.resolve(bloggerConfig.input[inputKey]);
     if (xml.endsWith(".xml")) {
       //console.log("gulp hexo-blogger-xml processing", xml);
-      ProcessXML(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
+      let start = new core();
+      if (bloggerConfig.hasOwnProperty("on")) {
+        if (typeof bloggerConfig.on.finish == "function") start.on("finish", bloggerConfig.on.finish);
+        if (typeof bloggerConfig.on.init == "function") start.on("init", bloggerConfig.on.init);
+      }
+      start.process(xml, bloggerConfig.output, bloggerConfig.hostname, bloggerConfig.callback);
     }
   }
 }
