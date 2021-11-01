@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/demo/themes/landscape" vcs="" />
-    <mapping directory="$PROJECT_DIR$/php/wordpress-blogger-importer" vcs="" />
-    <mapping directory="$PROJECT_DIR$/src/id-tesaurus" vcs="" />
   </component>
 </project>
