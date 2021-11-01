@@ -37,6 +37,9 @@ build/hexo-blogger-xml
 # How to export blogger articles/content
 ![](img/blogger-export.png)
 
+# Preview This Plugin
+![](img/ss-terminal.png)
+
 ## Project with this package
 <a href="https://github.com/dimaslanjaka/dimaslanjaka.github.io/tree/compiler" alt="github">Github <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20px" height="20px" /></a> | 
 [dimaslanjaka.github.io](https://dimaslanjaka.github.io)
