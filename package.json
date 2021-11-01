@@ -6,7 +6,8 @@
   "files": [
     "dist",
     "src",
-    "index.js"
+    "index.js",
+    "postinstall.js"
   ],
   "scripts": {
     "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
