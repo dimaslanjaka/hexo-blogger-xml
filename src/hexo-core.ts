@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync } from "fs";
 import Hexo from "hexo";
 import path from "path";
 import BloggerParser from "./parser/Blogger";
@@ -80,20 +80,3 @@ module.exports = function (hexo: Hexo) {
     }
   });
 };
-
-function simpleStringify(object) {
-  const simpleObject = {};
-  for (const prop in object) {
-    if (!object.hasOwnProperty(prop)) {
-      continue;
-    }
-    if (typeof object[prop] == "object") {
-      continue;
-    }
-    if (typeof object[prop] == "function") {
-      continue;
-    }
-    simpleObject[prop] = object[prop];
-  }
-  return JSON.stringify(simpleObject, null, 2); // returns cleaned up JSON
-}

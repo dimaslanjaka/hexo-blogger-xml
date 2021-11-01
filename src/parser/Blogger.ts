@@ -18,6 +18,7 @@ import ParserYaml from "./yaml";
 import StringBuilder from "./StringBuilder";
 import excludeTitleArr from "./excludeTitle.json";
 import { basename, dirname } from "path";
+import getUsername from "./node-username";
 
 interface objResult {
   permalink: string;
@@ -49,7 +50,9 @@ class BloggerParser {
     // write ignore to buildDir
     writeFileSync(path.join(dirname(this.entriesDir), ".gitignore"), "*");
     mkdirSync(this.entriesDir, { recursive: true });
-    writeFileSync(path.join(this.entriesDir, this.id), new Date().toString());
+    if (getUsername() == "dimaslanjaka") {
+      writeFileSync(path.join(this.entriesDir, this.id), new Date().toString());
+    }
 
     // read xml
     const xmlStr = readFileSync(xmlFile).toString();
