@@ -17,11 +17,11 @@ npm i -g node-gyp typescript ts-node
 ```
 
 # Installation
-Using Git Repository
+Using Git Repository (Development)
 ```shell
 npm i git+https://github.com/dimaslanjaka/hexo-blogger-xml.git
 ```
-Using NPM Repository
+Using NPM Repository (Production)
 ```shell
 npm i hexo-blogger-xml
 ```
