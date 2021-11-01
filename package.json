@@ -1,8 +1,8 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Import xml blogger to hexo",
-  "main": "index",
+  "main": "dist/index",
   "files": [
     "dist",
     "src",
@@ -14,7 +14,7 @@
     "postinstall": "npx gulp tsc"
   },
   "directories": {
-    "lib": "./lib"
+    "lib": "./dist"
   },
   "engines": {
     "node": ">=8"

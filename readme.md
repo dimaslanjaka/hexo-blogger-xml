@@ -95,6 +95,10 @@ permalink: /2021/09/post-with-description.html
 
 - Fix gulp method
 
-## [1.0.6] - 2021-10-1
+## [1.0.7] - 2021-10-1
 
 - Fix no files
+
+## [1.0.8] - 2021-10-1
+
+- Fix broken post header

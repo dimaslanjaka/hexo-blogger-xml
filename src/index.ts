@@ -1,5 +1,5 @@
 const path = require("path");
-const gulpFunction = require("./dist/gulp-core");
+import gulpCore from "./gulp-core";
 const { existsSync } = require("fs");
 
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
@@ -19,5 +19,11 @@ if (typeof hexo != "undefined") {
  * @type {(function(gulpConfig): void)}
  */
 module.exports = {
-  gulp: gulpFunction,
+  gulpCore,
+};
+
+// eslint-disable-next-line no-unused-vars
+//export import gulp = require("./gulp-core");
+export = {
+  gulpCore,
 };

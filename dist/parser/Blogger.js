@@ -353,17 +353,20 @@ var BloggerParser = /** @class */ (function () {
         var process = function (post) {
             var postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
             //let postPathTest = path.join(dir, "test.md");
+            //console.log(post.headers);
             var postHeader = yaml_1["default"].fromObject(_this.objTrim(post.headers));
+            //console.log(postHeader);
             if (typeof callback == "function") {
                 post.content = callback(post.content, post.headers);
             }
             //post.content = this.stripFooterFeed(post.content);
             var postResult = new StringBuilder_1["default"]("---")
-                .appendLine(postHeader.trim())
+                .appendLine(postHeader)
                 .appendLine("---")
                 .append("\n\n")
                 .append(post.content)
                 .toString();
+            //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
             (0, util_1.writeFileSync)(postPath, postResult);
         };
         parsedList.forEach(process);
