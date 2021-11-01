@@ -1,3 +1,4 @@
+import BloggerParser from "./parser/Blogger";
 import { LooseObject, PostHeader } from "./types/post-header";
 export interface gulpConfig extends LooseObject {
     /**
@@ -13,6 +14,16 @@ export interface gulpConfig extends LooseObject {
      */
     hostname?: string[];
     callback: (arg0: string, arg1: PostHeader) => string;
+    on?: {
+        /**
+         * On Process Started
+         */
+        init?: () => any;
+        /**
+         * On Process Finished
+         */
+        finish?: (arg0: BloggerParser) => any;
+    };
 }
 declare function gulpFunction(bloggerConfig: gulpConfig): void;
 export default gulpFunction;

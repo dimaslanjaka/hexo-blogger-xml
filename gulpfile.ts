@@ -19,9 +19,14 @@ function defaultTask(cb: () => void) {
       return content;
     },
     hostname: ["webmanajemen.com", "web-manajemen.blogspot.com", "dimaslanjaka.github.io"],
+    on: {
+      finish: function (parser) {
+        cb();
+      },
+    },
   });
   // place code for your default task here
-  cb();
+  //cb();
 }
 
 function compileTs(done: () => void) {

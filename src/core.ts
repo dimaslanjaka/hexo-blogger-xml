@@ -36,6 +36,7 @@ class core extends EventEmitter {
       // listen process event
       parser.on("lastExport", function (obj) {
         //console.log(obj);
+        //console.log("Last Export", "Finish");
         t.emit("finish", { parser: parsed });
       });
 
