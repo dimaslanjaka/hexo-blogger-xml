@@ -2,9 +2,9 @@ name: NodeJS with Gulp
 
 on:
   push:
-    branches: [ compiler ]
+    branches: [compiler]
   pull_request:
-    branches: [ compiler ]
+    branches: [compiler]
 
 jobs:
   build:
@@ -48,8 +48,10 @@ jobs:
           cp -rf ./img ./build/img
           cp -rf ./.gitignore ./build/.gitignore
           npx gulp
-          echo "try test build package using npm"
-          cd build && npm install
+      - name: test build package using npm
+        run: cd build && npm install
+      - name: test demo
+        run: cd build/demo && npm install
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
