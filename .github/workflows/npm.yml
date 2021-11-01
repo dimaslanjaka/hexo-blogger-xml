@@ -24,7 +24,8 @@ jobs:
           path: |
             ${{ steps.npm-cache-dir.outputs.dir }}
             ./node_modules
-            ./docs
+            ./dist
+            ./build
             ~/.npm
           key: |
             ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
