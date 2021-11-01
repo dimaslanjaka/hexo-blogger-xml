@@ -1,19 +1,20 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Import xml blogger to hexo",
   "main": "dist/index",
   "files": [
     "dist",
     "src",
     "index.js",
-    "postinstall.js"
+    "postinstall.js",
+    "gulpfile.ts"
   ],
   "scripts": {
     "test": "rm -rf dist build && npx ts-node src/test.ts && npx gulp",
     "eslint": "eslint .",
     "postinstall-old": "npx gulp tsc",
-    "postinstall": "node ./postinstall.js"
+    "postinstall-new": "node ./postinstall.js"
   },
   "directories": {
     "lib": "./dist"
