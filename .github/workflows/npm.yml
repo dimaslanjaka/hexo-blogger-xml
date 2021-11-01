@@ -40,8 +40,7 @@ jobs:
           npm install
           tsc -p tsconfig.json
           cp ./index.js ./build/index.js
-          cp ./package.json ./build/package.json
-          cp ./package-lock.json ./build/package-lock.json
+          cp ./*.json ./build/
           cp ./README.md ./build/readme.md
           echo "Source Code > [Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)" >> ./build/readme.md
           cp ./demo ./build/demo
