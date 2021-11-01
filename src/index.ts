@@ -8,9 +8,12 @@ if (typeof hexo != "undefined") {
   if (existsSync(path.join(__dirname, "./build/dist/hexo-core.js"))) {
     //console.log("development mode");
     require(path.join(__dirname, "./build/dist/hexo-core.js"))(hexo);
-  } else {
+  } else if (existsSync(path.join(__dirname, "./dist/hexo-core.js"))) {
     //console.log("production mode");
     require(path.join(__dirname, "./dist/hexo-core.js"))(hexo);
+  } else if (existsSync(path.join(__dirname, "./hexo-core.js"))) {
+    //console.log("production mode");
+    require(path.join(__dirname, "./hexo-core.js"))(hexo);
   }
 }
 
