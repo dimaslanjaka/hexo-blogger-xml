@@ -52,6 +52,7 @@ class BloggerParser {
     writeFileSync(path.join(dirname(this.entriesDir), ".gitignore"), "*");
     mkdirSync(this.entriesDir, { recursive: true });
     writeFileSync(path.join(this.entriesDir, this.id), new Date().toString());
+
     // read xml
     const xmlStr = readFileSync(xmlFile).toString();
 
