@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import * as path from "path";
+import { existsSync, readFileSync } from "fs";
+import { BloggerXmlConfig } from "./hexo-core";
 
 let config = {
   /**
@@ -23,6 +23,16 @@ if (existsSync("xml/config.json")) {
   });
   // merge object
   config = Object.assign(config, getConfig);
+}
+
+if (typeof hexo != "undefined") {
+  const bloggerConfig: BloggerXmlConfig = hexo.config.blogger_xml;
+  if (bloggerConfig.hasOwnProperty("thumbnail")) {
+    config.thumbnail = bloggerConfig.thumbnail;
+  }
+  if (bloggerConfig.hasOwnProperty("site_title")) {
+    config.webtitle = bloggerConfig.site_title;
+  }
 }
 
 export default config;

@@ -22,4 +22,13 @@ if ((0, fs_1.existsSync)("xml/config.json")) {
     // merge object
     config = Object.assign(config, getConfig_1);
 }
+if (typeof hexo != "undefined") {
+    var bloggerConfig = hexo.config.blogger_xml;
+    if (bloggerConfig.hasOwnProperty("thumbnail")) {
+        config.thumbnail = bloggerConfig.thumbnail;
+    }
+    if (bloggerConfig.hasOwnProperty("site_title")) {
+        config.webtitle = bloggerConfig.site_title;
+    }
+}
 exports["default"] = config;

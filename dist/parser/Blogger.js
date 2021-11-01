@@ -81,6 +81,7 @@ var BloggerParser = /** @class */ (function () {
     BloggerParser.prototype.setHostname = function (host) {
         this.hostname = this.hostname.concat(host);
     };
+    // noinspection JSUnusedGlobalSymbols
     BloggerParser.prototype.setEntriesDir = function (dir) {
         if (dir.length > 0)
             this.entriesDir = dir;
@@ -92,6 +93,7 @@ var BloggerParser = /** @class */ (function () {
         var t = this;
         var deleteFolderRecursive = function (directoryPath) {
             if (fs.existsSync(directoryPath)) {
+                // eslint-disable-next-line no-unused-vars
                 fs.readdirSync(directoryPath).forEach(function (file, index) {
                     var curPath = path.join(directoryPath, file);
                     if (fs.lstatSync(curPath).isDirectory()) {
@@ -106,7 +108,6 @@ var BloggerParser = /** @class */ (function () {
                 fs.rmdirSync(directoryPath);
             }
         };
-        //console.log(this.entriesDir);
         deleteFolderRecursive(this.entriesDir);
         (0, rimraf_1["default"])(t.entriesDir, function (error) {
             if (error)
