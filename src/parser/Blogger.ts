@@ -20,6 +20,7 @@ import { basename, dirname } from "path";
 import getUsername from "./node-username";
 import { EventEmitter } from "events";
 import mysql_real_escape_string from "./mysql_real_escape_string";
+import trim_whitespaces from "./trim_whitespaces";
 //let EventEmitter = require("events").EventEmitter;
 
 interface objResult {
@@ -246,7 +247,7 @@ class BloggerParser extends EventEmitter {
                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                 //console.log(contentStr.textContent);
                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                buildPost.headers.subtitle = mysql_real_escape_string(mod.description);
+                buildPost.headers.subtitle = trim_whitespaces(mysql_real_escape_string(mod.description));
 
                 // site title
                 buildPost.headers.webtitle = config.webtitle;
