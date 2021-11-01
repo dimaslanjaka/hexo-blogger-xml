@@ -6,6 +6,7 @@ Import content/article from blogger to hexo
 
 # Requirements
 - Node 12.x 14.x
+- Python 2.7 or 3.3
 
 # Setup _config.yml
 ```yaml
