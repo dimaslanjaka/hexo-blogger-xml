@@ -9,3 +9,7 @@
 ## [1.0.2] - 2021-10-1
 
 - Fix Node 14.x
+
+## [1.0.3] - 2021-10-1
+
+- Add support custom thumbnail and site title
