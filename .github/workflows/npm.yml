@@ -50,8 +50,8 @@ jobs:
           npx gulp
       - name: test build package using npm
         run: cd build && npm install
-      - name: test demo
-        run: cd build/demo && npm install
+      #- name: test demo
+      #run: cd build/demo && npm install
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
