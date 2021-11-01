@@ -16,13 +16,35 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: echo "::set-output name=dir::$(npm config get cache)"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
+      - name: Cache NPM dependencies
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.npm-cache-dir.outputs.dir }}
+            ./node_modules
+            ~/.npm
+          key: |
+            ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Build
         run: |
           npm install
           tsc -p tsconfig.json
+          cp ./index.js ./build/index.js
+          cp ./package.json ./build/package.json
+          cp ./package-lock.json ./build/package-lock.json
+          cp ./README.md ./build/readme.md
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: master # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.

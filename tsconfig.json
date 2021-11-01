@@ -12,8 +12,8 @@
     "removeComments": false,
     "declaration": true,
     "declarationMap": false,
-    "declarationDir": "dist/types",
-    "outDir": "dist"
+    "declarationDir": "build/dist/types",
+    "outDir": "build/dist"
   },
   "include": ["src", "__test__"],
   "exclude": ["src/lang"]
