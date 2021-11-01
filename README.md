@@ -28,8 +28,13 @@ blogger_xml:
     - "../xml/test.xml" 
     - "./directory/another.xml" 
 ```
+# Setup .gitignore to your project
+```gitignore
+# this is build directory of hexo-blogger-xml
+build/hexo-blogger-xml
+```
 
-# How to export
+# How to export blogger articles/content
 ![](img/blogger-export.png)
 
 ## Project with this package
