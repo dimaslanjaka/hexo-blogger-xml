@@ -249,7 +249,7 @@ class BloggerParser extends EventEmitter {
                 //console.log(contentStr.textContent);
                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
                 buildPost.headers.subtitle = trim_whitespaces(remove_double_quotes(mod.description)).replace(
-                  /[^a-zA-Z., ]/gm,
+                  new RegExp("[^a-zA-Z.\, ]", "m"),
                   ""
                 );
 
