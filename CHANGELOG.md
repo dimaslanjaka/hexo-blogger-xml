@@ -19,4 +19,8 @@
 - Fix no files
 
 ## [1.0.8] - 2021-10-1
-- Fix broken post header
+- Fix broken post header## [1.0.16] November 4, 2021
+-86e7c34d : Update changelog
+-ea0ccfb0 : Update configuration
+-36291bb2 : Update changelog
+-1b0ee83c : +changelog

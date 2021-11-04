@@ -36,6 +36,9 @@ if (typeof version == "object") {
           version.result.build--;
           packages.version = version.toString();
           writeFileSync("./package.json", JSON.stringify(packages, null, 2));
+
+          console.log(stderr);
+          throw err;
         }
       });
     }
