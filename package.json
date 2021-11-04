@@ -11,16 +11,14 @@
     "gulpfile.ts"
   ],
   "scripts": {
-    "test": "npm run test:ts && npm run test:gulp",
     "pretest": "rm -rf dist build",
+    "test": "npm run build && npm run test:ts && npm run test:gulp",
     "test:ts": "npx ts-node src/test.ts",
     "test:gulp": "npx gulp",
     "eslint": "eslint .",
-    "postinstall-old": "npx gulp tsc",
-    "postinstall-new": "node ./postinstall.js",
     "build": "npm run build:dev && npm run build:prod",
     "build:prod": "tsc -p tsconfig.publish.json",
-    "build:dev": "tsc -p tsconfig.publish.json"
+    "build:dev": "tsc -p tsconfig.json"
   },
   "directories": {
     "lib": "./dist"
