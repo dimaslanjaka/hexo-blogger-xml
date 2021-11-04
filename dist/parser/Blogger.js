@@ -243,7 +243,7 @@ var BloggerParser = /** @class */ (function (_super) {
                                 json.entry.category.forEach(function (category) {
                                     var cat = category.$.term.trim();
                                     if (!url_1["default"].isValidURL(cat))
-                                        buildPost.headers.category.push(cat);
+                                        buildPost.headers.tags.push(cat);
                                 });
                                 // post published
                                 buildPost.headers.date = json.entry.published[0];
@@ -253,7 +253,7 @@ var BloggerParser = /** @class */ (function (_super) {
                                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                                 //console.log(contentStr.textContent);
                                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                                buildPost.headers.subtitle = (0, trim_whitespaces_1["default"])((0, remove_double_quotes_1["default"])(mod.description)).replace(new RegExp("[^a-zA-Z.\, ]", "m"), "");
+                                buildPost.headers.subtitle = (0, trim_whitespaces_1["default"])((0, remove_double_quotes_1["default"])(mod.description)).replace(new RegExp("[^a-zA-Z., ]", "m"), "");
                                 // site title
                                 buildPost.headers.webtitle = config_1["default"].webtitle;
                                 if (buildPost.permalink.length > 0) {
