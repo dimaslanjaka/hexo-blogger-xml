@@ -236,7 +236,7 @@ class BloggerParser extends EventEmitter {
                 // post categories
                 json.entry.category.forEach(function (category) {
                   const cat = category.$.term.trim();
-                  if (!url.isValidURL(cat)) buildPost.headers.category.push(cat);
+                  if (!url.isValidURL(cat)) buildPost.headers.tags.push(cat);
                 });
 
                 // post published
@@ -249,7 +249,7 @@ class BloggerParser extends EventEmitter {
                 //console.log(contentStr.textContent);
                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
                 buildPost.headers.subtitle = trim_whitespaces(remove_double_quotes(mod.description)).replace(
-                  new RegExp("[^a-zA-Z.\, ]", "m"),
+                  new RegExp("[^a-zA-Z., ]", "m"),
                   ""
                 );
 

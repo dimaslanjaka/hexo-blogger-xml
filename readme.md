@@ -76,6 +76,7 @@ permalink: /2021/09/post-with-description.html
 ## Source Code
 > [Source Code Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)
 
+<hr/>
 # CHANGELOG
 
 ## [1.0.0] - 2021-10-1
