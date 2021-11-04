@@ -17,10 +17,11 @@ if (typeof version == "object") {
       version.result.build++;
       packages.version = version.toString();
       writeFileSync("./package.json", JSON.stringify(packages, null, 2));
-      console.log("Publishing");
+      console.log("Compiling...");
       exec("tsc -p tsconfig.publish.json", (err, stdout, stderr) => {
         if (!err) {
           console.log("Build Typescript Successfully");
+          console.log("Publishing");
           exec("npm publish", (err, stdout, stderr) => {
             console.log("Packages Published Successfully");
 
