@@ -18,7 +18,9 @@
         "eslint": "eslint .",
         "postinstall-old": "npx gulp tsc",
         "postinstall-new": "node ./postinstall.js",
-        "build:publish": "tsc -p tsconfig.publish.json"
+        "build": "npm run build:dev && npm run build:prod",
+        "build:prod": "tsc -p tsconfig.publish.json",
+        "build:dev": "tsc -p tsconfig.publish.json"
     },
     "directories": {
         "lib": "./dist"
