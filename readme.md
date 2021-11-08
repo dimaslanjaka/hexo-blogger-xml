@@ -38,7 +38,7 @@ blogger_xml:
   site_title: "WMI"
   # default thumbnail if no image in post, will set on header.cover each post
   thumbnail: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
-  # script path relative path from hexo root directory
+  # script path relative path from hexo base_dir directory. ex: source/callback.js
   callback: "./scripts/post_callback.js"
   # Your blog domain and subdomain to seo external link, and bellow list is an internal link based on domains
   hostname:
