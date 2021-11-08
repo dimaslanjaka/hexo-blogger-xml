@@ -1,6 +1,9 @@
 # hexo-blogger-xml
 Import content/article from blogger to hexo without losing SEO
 
+![compiler build status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/npm.yml/badge.svg?branch=compiler)
+![compiler test status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/test.yml/badge.svg?branch=compiler)
+
 # Feature
 - Migrate from blogger to hexo
 - Migrate blogger permalink to hexo permalink without losing SEO
