@@ -41,6 +41,7 @@ module.exports = function (hexo: Hexo) {
   if (!config.hasOwnProperty("blogger_xml")) {
     return;
   }
+
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
   if (!bloggerConfig.hasOwnProperty("hostname")) {
     bloggerConfig.hostname = [];
