@@ -75,7 +75,7 @@ function updateChangelog(callback) {
         });
         var changelog = join(__dirname, "CHANGELOG.md");
         var readChangelog = readFileSync(changelog).toString().trim();
-        readChangelog += build.trim();
+        readChangelog += build;
         writeFileSync(changelog, readChangelog);
         if (typeof callback == "function")
             callback();
