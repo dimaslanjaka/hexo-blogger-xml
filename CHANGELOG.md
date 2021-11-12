@@ -30,5 +30,3 @@
 
 ## [1.0.18] November 12, 2021
 -6d1e92d3 : Update docs
--ff593338 : Update release 1.0.17
--25b7ee47 : fix invalid source/__posts to source/_posts
