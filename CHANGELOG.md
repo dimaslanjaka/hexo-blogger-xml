@@ -24,3 +24,6 @@
 -ea0ccfb0 : Update configuration
 -36291bb2 : Update changelog
 -1b0ee83c : +changelog
+
+## [1.0.17] November 12, 2021
+-25b7ee47 : fix invalid source/__posts to source/_posts
