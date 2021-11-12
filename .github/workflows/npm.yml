@@ -37,14 +37,17 @@ jobs:
           tsc -p tsconfig.json
           cp -rfi ./*.{json,js} ./build/
           cat ./README.md ./CHANGELOG.md > ./build/readme.md
+          echo "Copying ./demo ./build/demo"
           cp -rfi ./demo ./build/demo
           cp -rfi ./src ./build/src
           cp -rfi ./gulpfile.ts ./build/gulpfile.ts
           cp -rfi ./img ./build/img
           cp -rfi ./toBuild/.gitignore ./build/.gitignore
           npx gulp
-      - name: test build package using npm
+      - name: Test build package using npm
         run: cd build && npm install
+      - name: Test hexo demo (./build/demo)
+        run: cd build/demo && npm install && hexo generate
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
