@@ -68,7 +68,7 @@ function updateChangelog(callback) {
         function (str) {
             return str.trim();
         });
-        var date = Moment().format("LL");
+        var date = Moment().format("YYYY-MM-DD HH:mm:ss");
         var build = "\n\n## [" + packages.version + "] " + date + "\n";
         std.forEach(function (str) {
             build += "-" + str + "\n";
