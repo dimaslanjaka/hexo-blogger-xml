@@ -112,4 +112,4 @@ blogger_xml:
     - "git.webmanajemen.com"
   output: "source/_posts"
   input:
-    - "../xml/test.xml"
+    - "xml/test.xml"
