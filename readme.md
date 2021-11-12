@@ -64,6 +64,25 @@ build/hexo-blogger-xml
 # How to export blogger articles/content
 ![](img/blogger-export.png)
 
+# How to keep blogger seo to new domain
+
+- Open blogger theme
+- Edit HTML, add below codes to `<head></head>`
+```html
+<script type='text/javascript'>
+  // <![CDATA[
+  if (window.location.host == "web-manajemen.blogspot.com") {
+    let href = window.location.href;
+    let url = new URL(href);
+    url.host = "www.webmanajemen.com"; // change your domain host
+    url.hostname = "www.webmanajemen.com"; // change your domain host
+    let newhref = url.protocol + "//" + url.host + url.pathname + url.search + url.hash;
+    window.location.replace(newhref);
+  }
+  // ]]>
+</script>
+```
+
 # Preview This Plugin
 terminal
 ![](img/ss-terminal.png)
@@ -106,3 +125,9 @@ permalink: /2021/09/post-with-description.html
 -ea0ccfb0 : Update configuration
 -36291bb2 : Update changelog
 -1b0ee83c : +changelog
+
+## [1.0.17] November 12, 2021
+-25b7ee47 : fix invalid source/__posts to source/_posts
+
+## [1.0.18] November 12, 2021
+-6d1e92d3 : Update docs

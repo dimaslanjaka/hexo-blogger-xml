@@ -9,7 +9,7 @@ var Moment = require("moment");
 var join = require("path").join;
 if (typeof version == "object") {
     rl.question("Overwrite? [yes]/no: ", function (answer) {
-        if ((answer.toLowerCase() === "no") | (answer.toLowerCase() === "n")) {
+        if (answer.toLowerCase() === "no" || answer.toLowerCase() === "n") {
             console.log("Publish Cancel");
         }
         else {

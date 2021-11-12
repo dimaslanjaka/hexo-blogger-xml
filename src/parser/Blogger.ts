@@ -443,7 +443,7 @@ class BloggerParser extends EventEmitter {
    * @param outputDir
    * @param callback
    */
-  auto(file: string, outputDir = "source/__posts", callback: (content: string) => any) {
+  auto(file: string, outputDir = "source/_posts", callback: (content: string) => any) {
     const parser = new BloggerParser(file);
     //parser.setHostname("webmanajemen.com");
     parser.clean();
