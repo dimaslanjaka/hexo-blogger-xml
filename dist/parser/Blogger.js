@@ -465,7 +465,7 @@ var BloggerParser = /** @class */ (function (_super) {
    */
   BloggerParser.prototype.auto = function (file, outputDir, callback) {
     if (outputDir === void 0) {
-      outputDir = "source/__posts";
+      outputDir = "source/_posts";
     }
     var parser = new BloggerParser(file);
     //parser.setHostname("webmanajemen.com");
