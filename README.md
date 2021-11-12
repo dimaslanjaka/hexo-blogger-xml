@@ -64,6 +64,25 @@ build/hexo-blogger-xml
 # How to export blogger articles/content
 ![](img/blogger-export.png)
 
+# How to keep blogger seo to new domain
+
+- Open blogger theme
+- Edit HTML, add below codes to `<head></head>`
+```html
+<script type='text/javascript'>
+  // <![CDATA[
+  if (window.location.host == "web-manajemen.blogspot.com") {
+    let href = window.location.href;
+    let url = new URL(href);
+    url.host = "www.webmanajemen.com"; // change your domain host
+    url.hostname = "www.webmanajemen.com"; // change your domain host
+    let newhref = url.protocol + "//" + url.host + url.pathname + url.search + url.hash;
+    window.location.replace(newhref);
+  }
+  // ]]>
+</script>
+```
+
 # Preview This Plugin
 terminal
 ![](img/ss-terminal.png)
