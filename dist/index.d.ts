@@ -1,5 +1,1 @@
-import gulpCore from "./gulp-core";
-declare const _default: {
-    gulpCore: typeof gulpCore;
-};
-export = _default;
+export { default as gulpCore } from "./gulp-core";

@@ -1,6 +1,6 @@
-const path = require("path");
-import gulpCore from "./gulp-core";
-const { existsSync } = require("fs");
+import path from "path";
+export { default as gulpCore } from "./gulp-core";
+import { existsSync } from "fs";
 
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
 //hexo.extend.filter.register("after_render:html", require("./dist/hexo.test.js"), 5);
@@ -16,17 +16,3 @@ if (typeof hexo != "undefined") {
     require(path.join(__dirname, "./hexo-core.js"))(hexo);
   }
 }
-
-/**
- * gulp function
- * @type {(function(gulpConfig): void)}
- */
-module.exports = {
-  gulpCore,
-};
-
-// eslint-disable-next-line no-unused-vars
-//export import gulp = require("./gulp-core");
-export = {
-  gulpCore,
-};
