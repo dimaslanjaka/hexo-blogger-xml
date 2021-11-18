@@ -38,7 +38,7 @@ var getUsernameFromOsUserInfo = function () {
 // eslint-disable-next-line no-unused-vars
 var cleanWindowsCommand = function (string) { return string.replace(/^.*\\/, ""); };
 // eslint-disable-next-line no-unused-vars
-var makeUsernameFromId = function (userId) { return "no-username-" + userId; };
+var makeUsernameFromId = function (userId) { return "no-username-".concat(userId); };
 function getUsername() {
     var test1 = getEnvironmentVariable();
     var test2 = getUsernameFromOsUserInfo();

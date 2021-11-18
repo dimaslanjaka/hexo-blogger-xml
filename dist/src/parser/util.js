@@ -34,7 +34,7 @@ var fs = __importStar(require("fs"));
  * @returns
  */
 var truncate = function (str, max, suffix) {
-    return str.length < max ? str : "" + str.substr(0, str.substr(0, max - suffix.length).lastIndexOf(" ")) + suffix;
+    return str.length < max ? str : "".concat(str.substr(0, str.substr(0, max - suffix.length).lastIndexOf(" "))).concat(suffix);
 };
 exports.truncate = truncate;
 function writeFileSync(pathfile, content) {

@@ -71,7 +71,7 @@ var BloggerParser = /** @class */ (function (_super) {
         _this.parseXmlJsonResult = [];
         _this.hostname = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
         if (!(0, fs_1.existsSync)(xmlFile))
-            throw xmlFile + " not found";
+            throw "".concat(xmlFile, " not found");
         // reset result
         _this.parseXmlJsonResult = [];
         // clean build dir

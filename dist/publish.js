@@ -28,7 +28,7 @@ if (typeof version == "object") {
                         updateChangelog(function () {
                             exec("git add .", function (err) {
                                 if (!err)
-                                    exec("git commit -m \"Update release " + version.toString() + "\"");
+                                    exec("git commit -m \"Update release ".concat(version.toString(), "\""));
                             });
                         });
                     });
@@ -69,9 +69,9 @@ function updateChangelog(callback) {
             return str.trim();
         });
         var date = Moment().format("YYYY-MM-DD HH:mm:ss");
-        var build = "\n\n## [" + packages.version + "] " + date + "\n";
+        var build = "\n\n## [".concat(packages.version, "] ").concat(date, "\n");
         std.forEach(function (str) {
-            build += "-" + str + "\n";
+            build += "-".concat(str, "\n");
         });
         var changelog = join(__dirname, "CHANGELOG.md");
         var readChangelog = readFileSync(changelog).toString().trim();
