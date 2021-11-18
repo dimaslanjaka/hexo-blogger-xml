@@ -36,7 +36,7 @@ jobs:
           npm install
           tsc -p tsconfig.json
           cp -rfi ./*.{json,js} ./build/
-          cat ./README.md ./CHANGELOG.md > ./build/readme.md 
+          cat ./README.md ./CHANGELOG.md > ./build/readme.md
           cp -rfi ./src ./build/src
           cp -rfi ./gulpfile.ts ./build/gulpfile.ts
           cp -rfi ./img ./build/img
@@ -44,8 +44,8 @@ jobs:
           npx gulp
       - name: Test build package using npm
         run: cd build && npm install
-      - name: Test hexo demo (./build/demo)
-        run: cd build/demo && npm install && npx hexo generate
+      #- name: Test hexo demo (./build/demo)
+        #run: cd build/demo && npm install && npx hexo generate
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
