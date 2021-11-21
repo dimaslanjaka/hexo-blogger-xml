@@ -24,11 +24,13 @@ if ((0, fs_1.existsSync)("xml/config.json")) {
 }
 if (typeof hexo != "undefined") {
     var bloggerConfig = hexo.config.blogger_xml;
-    if (bloggerConfig.hasOwnProperty("thumbnail")) {
-        config.thumbnail = bloggerConfig.thumbnail;
-    }
-    if (bloggerConfig.hasOwnProperty("site_title")) {
-        config.webtitle = bloggerConfig.site_title;
+    if (bloggerConfig) {
+        if (bloggerConfig.hasOwnProperty("thumbnail")) {
+            config.thumbnail = bloggerConfig.thumbnail;
+        }
+        if (bloggerConfig.hasOwnProperty("site_title")) {
+            config.webtitle = bloggerConfig.site_title;
+        }
     }
 }
 exports["default"] = config;
