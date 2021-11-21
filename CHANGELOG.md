@@ -30,3 +30,6 @@
 
 ## [1.0.18] November 12, 2021
 -6d1e92d3 : Update docs
+
+## [1.0.19] 2021-11-21 22:45:08
+-9e7265a7 : fix throwing if configuration not set
