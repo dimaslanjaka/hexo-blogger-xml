@@ -61,6 +61,30 @@ blogger_xml:
 build/hexo-blogger-xml
 ```
 
+# Using GULP Example
+view this repo workflow gulp [gulpfile.ts](./gulpfile.ts)
+```typescript
+//import gulpCore from "./packages/hexo-blogger-xml/src/gulp-core";
+import { gulpCore } from "hexo-blogger-xml";
+import path from "path";
+gulp.task("blogger", function (done) {
+  const mainXML = path.resolve("demo/xml/test.xml");
+  gulpCore({
+    input: [mainXML],
+    output: "./src-posts",
+    hostname: ["webmanajemen.com", "www.webmanajemen.com", "dimaslanjaka.github.io"],
+    callback: require("./demo/xml/post_callback"),
+    on: {
+      finish: (parser) => {
+        console.log("Blogger gulp finished");
+      },
+    },
+  });
+
+  done();
+});
+```
+
 # How to export blogger articles/content
 ![](img/blogger-export.png)
 
@@ -98,7 +122,7 @@ permalink: /2021/09/post-with-description.html
 
 [![Build And Tests](https://github.com/dimaslanjaka/dimaslanjaka.github.io/actions/workflows/page.yml/badge.svg?branch=compiler)](https://github.com/dimaslanjaka/dimaslanjaka.github.io/actions/workflows/page.yml)
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label&style=flat-square)](https://github.com/dimaslanjaka/dimaslanjaka.github.io/tree/compiler)
-[![webmanajemen.com](https://img.shields.io/website.svg?down_color=red&down_message=down&style=flat-square&up_color=green&up_message=up&label=webmanajemen.com&cacheSeconds=999&url=http%3A%2F%2Fwebmanajemen.com)](https://webmanajemen.com) 
+[![webmanajemen.com](https://img.shields.io/website.svg?down_color=red&down_message=down&style=flat-square&up_color=green&up_message=up&label=webmanajemen.com&cacheSeconds=999&url=http%3A%2F%2Fwebmanajemen.com)](https://webmanajemen.com)
 
 ## hexo-adsense
 [![npm version](https://badge.fury.io/js/hexo-adsense.svg?style=flat-square)](https://badge.fury.io/js/hexo-adsense)
