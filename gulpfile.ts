@@ -25,19 +25,16 @@ function defaultTask(cb: () => void) {
       },
     },
   });
-  // place code for your default task here
-  //cb();
 }
 
 function compileTs(done: () => void) {
+  //not compiling json files, skip
   //const tsProject = ts.createProject("tsconfig.publish.json");
   //const tsResult = gulp.src("src/**/*.{ts,json}").pipe(tsProject());
   //return merge([tsResult.dts.pipe(gulp.dest("dist")), tsResult.js.pipe(gulp.dest("dist"))]);
   exec("tsc -p tsconfig.publish.json");
   done();
 }
-
-function gulpCoreStream() {}
 
 gulp.task("tsc", gulp.series(compileTs));
 gulp.task("default", gulp.series(defaultTask));
