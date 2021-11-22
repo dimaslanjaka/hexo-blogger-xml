@@ -33,3 +33,6 @@
 
 ## [1.0.19] 2021-11-21 22:45:08
 -9e7265a7 : fix throwing if configuration not set
+
+## [1.0.20] 2021-11-22 20:40:48
+-160b0f75 : migrate xml2js merge2 to dependencies
