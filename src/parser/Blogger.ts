@@ -32,7 +32,7 @@ interface objResult {
 
 declare interface BloggerParser {
   on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-  on(event: "lastExport", listener: (arg: object) => any): this;
+  on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
   //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
 }
 
@@ -101,11 +101,11 @@ class BloggerParser extends EventEmitter {
    * Clean build dir
    */
   clean() {
-    const t = this;
+    const self = this;
     const deleteFolderRecursive = function (directoryPath: fs.PathLike) {
       if (fs.existsSync(directoryPath)) {
         // eslint-disable-next-line no-unused-vars
-        fs.readdirSync(directoryPath).forEach((file, index) => {
+        fs.readdirSync(directoryPath).forEach((file) => {
           const curPath = path.join(directoryPath.toString(), file);
           if (fs.lstatSync(curPath).isDirectory()) {
             // recurse
@@ -120,7 +120,7 @@ class BloggerParser extends EventEmitter {
     };
 
     deleteFolderRecursive(this.entriesDir);
-    rimraf(t.entriesDir, (error) => {
+    rimraf(self.entriesDir, (error) => {
       if (error) throw error;
     });
     return this;
@@ -168,7 +168,7 @@ class BloggerParser extends EventEmitter {
       return path.join(this.entriesDir, file);
     });
 
-    const t = this;
+    const self = this;
     const results = [];
 
     if (Array.isArray(get) && get.length > 0) {
@@ -210,7 +210,7 @@ class BloggerParser extends EventEmitter {
                 buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
 
                 // modify html body (Content)
-                const mod = t.modifyHtml(json.entry.content);
+                const mod = self.modifyHtml(json.entry.content);
 
                 // remove footer rss messages
                 //buildPost.content = t.stripFooterFeed(buildPost.content);
@@ -304,7 +304,7 @@ class BloggerParser extends EventEmitter {
    * @param content
    */
   modifyHtml(content: string) {
-    const t = this;
+    const self = this;
     const parserhtml = fromString(content);
 
     // strip footer rss messages
@@ -337,10 +337,10 @@ class BloggerParser extends EventEmitter {
 
     // external link seo
     const processLink = (link: HTMLAnchorElement) => {
-      const href = t.parse_url(link.href);
+      const href = self.parse_url(link.href);
       if (href instanceof URL) {
         let process = true;
-        t.hostname.forEach((hostnameKey) => {
+        self.hostname.forEach((hostnameKey) => {
           if (href.host.includes(hostnameKey)) {
             //console.log(hostnameKey, href.host, href.host.includes(hostnameKey));
             process = false;
@@ -392,7 +392,7 @@ class BloggerParser extends EventEmitter {
    *   return content; // return back the modified content
    * })
    */
-  export(dir: string = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
+  export(dir = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
     const parsedList = this.getParsedXml();
     const processResult = (post: objResult) => {
       const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
@@ -431,7 +431,7 @@ class BloggerParser extends EventEmitter {
    * @see {@link https://stackoverflow.com/a/51616282}
    * @param obj
    */
-  objTrim(obj: object) {
+  objTrim(obj: Record<any, any>) {
     Object.keys(obj).map((k) => (obj[k] = typeof obj[k] == "string" ? obj[k].trim() : obj[k]));
     return obj;
   }
