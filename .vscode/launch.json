@@ -5,6 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "command": "cd ../../ && gulp blogger",
+      "name": "Gulp Test",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "npx tsc -p tsconfig.json",
       "name": "Compile tsconfig.json",
       "request": "launch",
@@ -17,21 +23,29 @@
       "type": "node-terminal"
     },
     {
-      "args": ["default"],
+      "args": [
+        "default"
+      ],
       "name": "Gulp default",
       "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
       "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "type": "pwa-node"
     },
     {
       "type": "pwa-node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "program": "${workspaceFolder}/dist/test",
       "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/build/dist/**/*.js"]
+      "outFiles": [
+        "${workspaceFolder}/build/dist/**/*.js"
+      ]
     }
   ]
 }

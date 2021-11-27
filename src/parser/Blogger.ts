@@ -19,10 +19,10 @@ import excludeTitleArr from "./excludeTitle.json";
 import { basename, dirname } from "path";
 import getUsername from "./node-username";
 import { EventEmitter } from "events";
-import mysql_real_escape_string from "./mysql_real_escape_string";
 import trim_whitespaces from "./trim_whitespaces";
 import remove_double_quotes from "./remove_double_quotes";
-//let EventEmitter = require("events").EventEmitter;
+import "../../../hexo-seo/packages/js-prototypes/src/String";
+import langID from "./lang/id.json";
 
 interface objResult {
   permalink: string;
@@ -102,11 +102,11 @@ class BloggerParser extends EventEmitter {
    */
   clean() {
     const t = this;
-    const deleteFolderRecursive = function (directoryPath) {
+    const deleteFolderRecursive = function (directoryPath: fs.PathLike) {
       if (fs.existsSync(directoryPath)) {
         // eslint-disable-next-line no-unused-vars
         fs.readdirSync(directoryPath).forEach((file, index) => {
-          const curPath = path.join(directoryPath, file);
+          const curPath = path.join(directoryPath.toString(), file);
           if (fs.lstatSync(curPath).isDirectory()) {
             // recurse
             deleteFolderRecursive(curPath);
@@ -221,6 +221,12 @@ class BloggerParser extends EventEmitter {
 
                 // post title
                 buildPost.headers.title = json.entry.title[0]._.trim();
+
+                // post language simple
+                const titleTest = buildPost.headers.title.toLocaleLowerCase();
+                if (new RegExp(langID.join("|"), "gmu").test(titleTest)) {
+                  buildPost.headers.lang = "id";
+                }
 
                 // post thumbnail/cover
                 //buildPost.headers.cover = t.getFirstImg(buildPost.content);
