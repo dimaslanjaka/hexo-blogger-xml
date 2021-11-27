@@ -224,7 +224,7 @@ class BloggerParser extends EventEmitter {
 
                 // post language simple
                 const titleTest = buildPost.headers.title.toLocaleLowerCase();
-                if (new RegExp(langID.join("|"), "gmu").test(titleTest)) {
+                if (new RegExp("s?" + langID.join("|") + "s?", "gmu").test(titleTest)) {
                   buildPost.headers.lang = "id";
                 }
 
