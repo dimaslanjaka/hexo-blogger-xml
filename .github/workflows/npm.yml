@@ -27,9 +27,9 @@ jobs:
             ./dist
             ~/.npm
           key: |
-            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-nodejs-
       - name: Build
         run: |
           npm i -g typescript npm gulp-cli
