@@ -1,6 +1,6 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Import xml blogger to hexo",
   "main": "dist/index",
   "files": [
@@ -12,7 +12,8 @@
     "CHANGELOG.md",
     "README.md",
     "tsconfig.json",
-    "tsconfig.publish.json"
+    "tsconfig.publish.json",
+    "packages"
   ],
   "scripts": {
     "pretest": "rm -rf dist build",
