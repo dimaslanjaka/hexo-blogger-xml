@@ -46,7 +46,7 @@ jobs:
       - name: Test build package using npm
         run: cd build && npm install
       #- name: Test hexo demo (./build/demo)
-        #run: cd build/demo && npm install && npx hexo generate
+      #run: cd build/demo && npm install && npx hexo generate
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
