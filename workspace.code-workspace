@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../hexo-seo/packages/js-prototypes"
+		}
+	],
+	"settings": {}
+}

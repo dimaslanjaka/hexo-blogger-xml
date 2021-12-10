@@ -21,7 +21,7 @@ import getUsername from "./node-username";
 import { EventEmitter } from "events";
 import trim_whitespaces from "./trim_whitespaces";
 import remove_double_quotes from "./remove_double_quotes";
-import "../../../hexo-seo/packages/js-prototypes/src/String";
+import "js-prototypes/src/String";
 import langID from "./lang/id.json";
 
 interface objResult {
