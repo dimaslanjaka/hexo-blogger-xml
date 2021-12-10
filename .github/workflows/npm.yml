@@ -27,16 +27,17 @@ jobs:
             ./dist
             ~/.npm
           key: |
-            ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-npm-
       - name: Build
         run: |
           npm i -g typescript
           npm install
           tsc -p tsconfig.json
           cp -rfi ./*.{json,js} ./build/
-          cat ./README.md ./CHANGELOG.md > ./build/readme.md
+          #cat ./README.md ./CHANGELOG.md > ./build/readme.md
+          cat ./README.md <(echo) ./CHANGELOG.md > ./build/readme.md
           cp -rfi ./src ./build/src
           cp -rfi ./gulpfile.ts ./build/gulpfile.ts
           cp -rfi ./img ./build/img
