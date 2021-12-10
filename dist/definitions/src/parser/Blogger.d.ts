@@ -3,6 +3,7 @@ import * as fs from "fs";
 import { PostHeader } from "../types/post-header";
 import "./JSON";
 import { EventEmitter } from "events";
+import "../../packages/js-prototypes/src/String";
 interface objResult {
     permalink: string;
     headers: PostHeader;
@@ -10,7 +11,7 @@ interface objResult {
 }
 declare interface BloggerParser {
     on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-    on(event: "lastExport", listener: (arg: object) => any): this;
+    on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
 }
 declare class BloggerParser extends EventEmitter {
     static debug: boolean;
@@ -65,7 +66,7 @@ declare class BloggerParser extends EventEmitter {
      * @see {@link https://stackoverflow.com/a/51616282}
      * @param obj
      */
-    objTrim(obj: object): object;
+    objTrim(obj: Record<any, any>): Record<any, any>;
     parse_url(url: string): URL | string;
     /**
      * Automatic process xml and output into directory with custom callback each function

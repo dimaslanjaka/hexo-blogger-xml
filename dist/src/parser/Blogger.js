@@ -58,6 +58,8 @@ var node_username_1 = __importDefault(require("./node-username"));
 var events_1 = require("events");
 var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
 var remove_double_quotes_1 = __importDefault(require("./remove_double_quotes"));
+require("../../packages/js-prototypes/src/String");
+var id_json_1 = __importDefault(require("./lang/id.json"));
 var BloggerParser = /** @class */ (function (_super) {
     __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
@@ -113,12 +115,12 @@ var BloggerParser = /** @class */ (function (_super) {
      * Clean build dir
      */
     BloggerParser.prototype.clean = function () {
-        var t = this;
+        var self = this;
         var deleteFolderRecursive = function (directoryPath) {
             if (fs.existsSync(directoryPath)) {
                 // eslint-disable-next-line no-unused-vars
-                fs.readdirSync(directoryPath).forEach(function (file, index) {
-                    var curPath = path.join(directoryPath, file);
+                fs.readdirSync(directoryPath).forEach(function (file) {
+                    var curPath = path.join(directoryPath.toString(), file);
                     if (fs.lstatSync(curPath).isDirectory()) {
                         // recurse
                         deleteFolderRecursive(curPath);
@@ -132,7 +134,7 @@ var BloggerParser = /** @class */ (function (_super) {
             }
         };
         deleteFolderRecursive(this.entriesDir);
-        (0, rimraf_1["default"])(t.entriesDir, function (error) {
+        (0, rimraf_1["default"])(self.entriesDir, function (error) {
             if (error)
                 throw error;
         });
@@ -183,7 +185,7 @@ var BloggerParser = /** @class */ (function (_super) {
         var get = fs.readdirSync(this.entriesDir).map(function (file) {
             return path.join(_this.entriesDir, file);
         });
-        var t = this;
+        var self = this;
         var results = [];
         if (Array.isArray(get) && get.length > 0) {
             get.forEach(function (file) {
@@ -222,7 +224,7 @@ var BloggerParser = /** @class */ (function (_super) {
                             if (typeof json.entry.link[4] != "undefined") {
                                 buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
                                 // modify html body (Content)
-                                var mod = t.modifyHtml(json.entry.content);
+                                var mod = self.modifyHtml(json.entry.content);
                                 // remove footer rss messages
                                 //buildPost.content = t.stripFooterFeed(buildPost.content);
                                 buildPost.content = mod.content;
@@ -230,6 +232,11 @@ var BloggerParser = /** @class */ (function (_super) {
                                 //buildPost.content = t.externalLink(buildPost.content);
                                 // post title
                                 buildPost.headers.title = json.entry.title[0]._.trim();
+                                // post language simple
+                                var titleTest = buildPost.headers.title.toLocaleLowerCase();
+                                if (new RegExp("s?" + id_json_1["default"].join("|") + "s?", "gmu").test(titleTest)) {
+                                    buildPost.headers.lang = "id";
+                                }
                                 // post thumbnail/cover
                                 //buildPost.headers.cover = t.getFirstImg(buildPost.content);
                                 buildPost.headers.cover = mod.thumbnail;
@@ -286,7 +293,7 @@ var BloggerParser = /** @class */ (function (_super) {
      * @param content
      */
     BloggerParser.prototype.modifyHtml = function (content) {
-        var t = this;
+        var self = this;
         var parserhtml = (0, html_1.fromString)(content);
         // strip footer rss messages
         // remove custom messages in footer feed
@@ -315,10 +322,10 @@ var BloggerParser = /** @class */ (function (_super) {
         }
         // external link seo
         var processLink = function (link) {
-            var href = t.parse_url(link.href);
+            var href = self.parse_url(link.href);
             if (href instanceof URL) {
                 var process_1 = true;
-                t.hostname.forEach(function (hostnameKey) {
+                self.hostname.forEach(function (hostnameKey) {
                     if (href.host.includes(hostnameKey)) {
                         //console.log(hostnameKey, href.host, href.host.includes(hostnameKey));
                         process_1 = false;
