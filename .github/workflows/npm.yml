@@ -39,7 +39,6 @@ jobs:
           npm install
           tsc -p tsconfig.json
           cp -rfi ./*.{json,js} ./build/
-          #cat ./README.md ./CHANGELOG.md > ./build/readme.md
           cat ./README.md <(echo) ./CHANGELOG.md > ./build/readme.md
           cp -rfi ./src ./build/src
           cp -rfi ./gulpfile.ts ./build/gulpfile.ts
