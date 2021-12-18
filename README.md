@@ -95,17 +95,27 @@ gulp.task("blogger", function (done) {
 ```html
 <script type='text/javascript'>
   // <![CDATA[
-  if (window.location.host == "web-manajemen.blogspot.com") {
-    let href = window.location.href;
-    let url = new URL(href);
-    url.host = "www.webmanajemen.com"; // change your domain host
-    url.hostname = "www.webmanajemen.com"; // change your domain host
-    let newhref = url.protocol + "//" + url.host + url.pathname + url.search + url.hash;
-    window.location.replace(newhref);
-  }
+    let hostname = "web-manajemen.blogspot.com"; // your blogger hostname/domain
+    let pathnames = ["/p/search.html", "/p/a.html", "/p/gallery.html", "/p/privacy.html", "/p/tos.html", "/p/proxy-extractor-online.html", "/p/redirect.html", "/p/simple-websocket.html"]; // redirect custom pages, otherwise retains on blogger
+    function redirectNow() {
+      let href = window.location.href;
+      let url = new URL(href);
+      url.host = "www.webmanajemen.com";
+      url.hostname = "www.webmanajemen.com";
+      let newhref =
+        url.protocol + "//" + url.host + url.pathname + url.search + url.hash;
+      window.location.replace(newhref);
+    }
+    if (
+      window.location.host == hostname &&
+      pathnames.includes(window.location.pathname)
+    ) {
+      redirectNow();
+    }
   // ]]>
 </script>
 ```
+- or using [this template](blogger redirect theme/blogger-redirect-theme.xml)
 
 # Preview This Plugin
 terminal
