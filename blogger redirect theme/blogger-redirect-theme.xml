@@ -8,7 +8,7 @@
     </title>
     <link href='https://www.webmanajemen.com' rel='canonical' />
     <link expr:href='data:blog.homepageUrl' rel='openid.delegate' />
-    <link expr:href='data:blog.url' rel='alternative' />
+    <link expr:href='data:blog.url' rel='alternate' />
 
     <b:if cond='data:view.isSingleItem'>
       <!-- REDIRECT -->
