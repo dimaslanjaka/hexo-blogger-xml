@@ -116,6 +116,7 @@ gulp.task("blogger", function (done) {
 </script>
 ```
 - or using [this template](blogger redirect theme/blogger-redirect-theme.xml)
+- Change Redirect Feed URL to new domain feed url
 
 # Preview This Plugin
 terminal
