@@ -1,0 +1,115 @@
+{
+    "entry": {
+        "$": {
+            "xmlns": "http://www.w3.org/2005/Atom"
+        },
+        "id": [
+            "blog-5851622161565243701.post-188384024914323791"
+        ],
+        "published": [
+            "2021-09-22T11:55:18.788-07:00"
+        ],
+        "updated": [
+            "2021-09-22T11:55:18.788-07:00"
+        ],
+        "category": [
+            {
+                "$": {
+                    "scheme": "http://schemas.google.com/g/2005#kind",
+                    "term": "http://schemas.google.com/blogger/2008/kind#comment"
+                }
+            }
+        ],
+        "title": [
+            {
+                "_": "this is reply test 1",
+                "$": {
+                    "type": "text"
+                }
+            }
+        ],
+        "content": "this is reply test 1",
+        "link": [
+            {
+                "$": {
+                    "rel": "edit",
+                    "type": "application/atom+xml",
+                    "href": "https://www.blogger.com/feeds/5851622161565243701/8056994515286213711/comments/default/188384024914323791"
+                }
+            },
+            {
+                "$": {
+                    "rel": "self",
+                    "type": "application/atom+xml",
+                    "href": "https://www.blogger.com/feeds/5851622161565243701/8056994515286213711/comments/default/188384024914323791"
+                }
+            },
+            {
+                "$": {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "http://blogger-export-import.blogspot.com/2021/09/test-post-1.html?showComment=1632336918788#c188384024914323791",
+                    "title": ""
+                }
+            },
+            {
+                "$": {
+                    "rel": "related",
+                    "type": "application/atom+xml",
+                    "href": "https://www.blogger.com/feeds/5851622161565243701/8056994515286213711/comments/default/2722626703326997800"
+                }
+            }
+        ],
+        "author": [
+            {
+                "name": [
+                    "Dimas Lanjaka"
+                ],
+                "uri": [
+                    "https://www.blogger.com/profile/07981649157148639830"
+                ],
+                "email": [
+                    "noreply@blogger.com"
+                ],
+                "gd:image": [
+                    {
+                        "$": {
+                            "xmlns:gd": "http://schemas.google.com/g/2005",
+                            "rel": "http://schemas.google.com/g/2005#thumbnail",
+                            "width": "35",
+                            "height": "35",
+                            "src": "//www.blogger.com/img/blogger_logo_round_35.png"
+                        }
+                    }
+                ]
+            }
+        ],
+        "thr:in-reply-to": [
+            {
+                "$": {
+                    "xmlns:thr": "http://purl.org/syndication/thread/1.0",
+                    "href": "https://blogger-export-import.blogspot.com/2021/09/test-post-1.html",
+                    "ref": "tag:blogger.com,1999:blog-5851622161565243701.post-8056994515286213711",
+                    "source": "https://www.blogger.com/feeds/5851622161565243701/posts/default/8056994515286213711",
+                    "type": "text/html"
+                }
+            }
+        ],
+        "gd:extendedProperty": [
+            {
+                "$": {
+                    "xmlns:gd": "http://schemas.google.com/g/2005",
+                    "name": "blogger.itemClass",
+                    "value": "pid-2097644375"
+                }
+            },
+            {
+                "$": {
+                    "xmlns:gd": "http://schemas.google.com/g/2005",
+                    "name": "blogger.displayTime",
+                    "value": "September 22, 2021 at 11:55 AM"
+                }
+            }
+        ]
+    }
+}

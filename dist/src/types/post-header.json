@@ -1,0 +1,28 @@
+{
+    /** Post title */
+    "title": "Macros Auto Click Bluestacks",
+    "webtitle": "The Legend Of Neverland",
+    /** Post meta description */
+    "subtitle": "Macros Auto Click Bluestacks for the legend of neverland download",
+    /** Post language */
+    "lang": "en",
+    /** Post Published Date */
+    "date": "2021-9-7",
+    /** Post modified date */
+    "modified": "",
+    "type": "post",
+    /** Post Tags */
+    "tags": ["Macros", "Auto Click"],
+    /** Author */
+    "author": {
+        "nick": "Maulinda Agustina",
+        "link": "<Your Profile Link Here>",
+        "email": "maulinda.agustina@gmail.com"
+    },
+    /** Categories */
+    "category": ["Games", "The Legend Of Neverland", "Bluestacks"],
+    "comments": true,
+    /** Post Thumbnail */
+    "cover": "https://cdn-www.bluestacks.com/bs-images/BlueStacks_Macros_Banner_EN.jpg",
+    "location": "Indonesia"
+}
