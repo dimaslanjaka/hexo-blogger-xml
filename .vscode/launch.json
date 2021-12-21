@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "command": "npx hexo server --development",
+      "name": "[DEV] Demo Server",
+      "cwd": "${workspaceFolder}/test/demo/",
+      "env": {
+        "NODE_OPTIONS": "development"
+      },
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "cd ../../ && gulp blogger",
       "name": "Gulp Test",
       "request": "launch",
