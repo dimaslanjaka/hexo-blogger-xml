@@ -10,10 +10,11 @@ var Blogger_1 = __importDefault(require("./parser/Blogger"));
  * Hexo preprocessor
  * @param hexo
  */
-module.exports = function (hexo) {
+var hexoCore = function (hexo) {
     var config = hexo.config;
     // if config blogger_xml found, continue process otherwise cancel by return
-    if (!config.hasOwnProperty("blogger_xml")) {
+    if (!config["blogger_xml"]) {
+        hexo.log.error("hexo blogger xml not set");
         return;
     }
     var bloggerConfig = config.blogger_xml;
@@ -30,10 +31,10 @@ module.exports = function (hexo) {
         //writeFileSync("build/test/hexo.json", simpleStringify(hexo));
         var root = hexo.base_dir;
         for (var xmlKey in xmlList) {
-            var xml = path_1["default"].resolve(path_1["default"].join(root, xmlList[xmlKey]));
-            if ((0, fs_1.existsSync)(xml)) {
-                console.log("processing", xml);
-                var parser = new Blogger_1["default"](xml);
+            var xmlPath = path_1["default"].join(root, xmlList[xmlKey]);
+            if ((0, fs_1.existsSync)(xmlPath)) {
+                console.log("processing", xmlPath);
+                var parser = new Blogger_1["default"](xmlPath);
                 if (bloggerConfig.hostname.length > 0) {
                     parser.setHostname(bloggerConfig.hostname);
                 }
@@ -52,3 +53,5 @@ module.exports = function (hexo) {
         }
     });
 };
+exports["default"] = hexoCore;
+module.exports = hexoCore;
