@@ -193,3 +193,5 @@ permalink: /2021/09/post-with-description.html
 
 ## [1.0.20] 2021-11-22 20:40:48
 -160b0f75 : migrate xml2js merge2 to dependencies
+
+## [1.0.22] 2021-12-21 22:30:21
