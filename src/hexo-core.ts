@@ -1,6 +1,6 @@
 import { existsSync } from "fs";
 import Hexo from "hexo";
-import path from "path";
+import path, { join } from "path";
 import BloggerParser from "./parser/Blogger";
 import { LooseObject } from "./types/post-header";
 
@@ -59,7 +59,7 @@ const hexoCore = function (hexo: Hexo) {
 
     const root = hexo.base_dir;
     for (const xmlKey in xmlList) {
-      const xmlPath = path.join(root, xmlList[xmlKey]);
+      const xmlPath = join(root.toString(), xmlList[xmlKey].toString());
       if (existsSync(xmlPath)) {
         console.log("processing", xmlPath);
         const parser = new BloggerParser(xmlPath);
