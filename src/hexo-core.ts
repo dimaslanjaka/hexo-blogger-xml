@@ -35,10 +35,11 @@ export interface BloggerXmlConfig extends LooseObject {
  * Hexo preprocessor
  * @param hexo
  */
-module.exports = function (hexo: Hexo) {
+const hexoCore = function (hexo: Hexo) {
   const config = hexo.config;
   // if config blogger_xml found, continue process otherwise cancel by return
-  if (!config.hasOwnProperty("blogger_xml")) {
+  if (!config["blogger_xml"]) {
+    hexo.log.error("hexo blogger xml not set");
     return;
   }
 
@@ -58,10 +59,10 @@ module.exports = function (hexo: Hexo) {
 
     const root = hexo.base_dir;
     for (const xmlKey in xmlList) {
-      const xml = path.resolve(path.join(root, xmlList[xmlKey]));
-      if (existsSync(xml)) {
-        console.log("processing", xml);
-        const parser = new BloggerParser(xml);
+      const xmlPath = path.join(root, xmlList[xmlKey]);
+      if (existsSync(xmlPath)) {
+        console.log("processing", xmlPath);
+        const parser = new BloggerParser(xmlPath);
         if (bloggerConfig.hostname.length > 0) {
           parser.setHostname(bloggerConfig.hostname);
         }
@@ -81,3 +82,5 @@ module.exports = function (hexo: Hexo) {
     }
   });
 };
+export default hexoCore;
+module.exports = hexoCore;

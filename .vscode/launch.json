@@ -9,7 +9,7 @@
       "name": "[DEV] Demo Server",
       "cwd": "${workspaceFolder}/test/demo/",
       "env": {
-        "NODE_OPTIONS": "development"
+        "NODE_ENV": "development"
       },
       "request": "launch",
       "type": "node-terminal"
