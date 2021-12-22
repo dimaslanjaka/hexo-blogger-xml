@@ -50,7 +50,7 @@ const hexoCore = function (hexo: Hexo) {
   }
 
   let continueParse = true;
-  const cacheloc = join(config.source_dir, "hexo-blogger-xml.json");
+  const cacheloc = join(config.source_dir.toString(), "hexo-blogger-xml.json");
   if (existsSync(cacheloc)) {
     const readDate: CacheLog = JSON.parse(readFileSync(cacheloc).toString());
     if (readDate.lastWrite && readDate.paths.length) {
@@ -76,7 +76,7 @@ const hexoCore = function (hexo: Hexo) {
       paths: [],
     };
 
-    const root = hexo.base_dir;
+    const root = hexo.base_dir.toString();
     for (const xmlKey in xmlList) {
       const xmlPath = join(root.toString(), xmlList[xmlKey].toString());
       if (existsSync(xmlPath)) {
