@@ -66,7 +66,8 @@ build/hexo-blogger-xml
 # Using GULP Example
 view this repo workflow gulp [gulpfile.ts](./gulpfile.ts)
 ```typescript
-//import gulpCore from "./packages/hexo-blogger-xml/src/gulp-core";
+//use typescript compiler replace import bellow
+//import gulpCore from "hexo-blogger-xml/src/gulp-core";
 import { gulpCore } from "hexo-blogger-xml";
 import path from "path";
 gulp.task("blogger", function (done) {
@@ -157,6 +158,7 @@ permalink: /2021/09/post-with-description.html
 [![Minimum node.js version](https://badgen.net/npm/node/hexo-blogger-xml?style=flat-square)](https://npmjs.com/package/hexo-blogger-xml)
 ![GitHub repo size](https://img.shields.io/github/repo-size/dimaslanjaka/hexo-blogger-xml?label=Repository%20Size&style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/dimaslanjaka/hexo-blogger-xml?color=blue&label=Last%20Commit&style=flat-square)
+
 # CHANGELOG
 
 ## [1.0.0] - 2021-10-1
