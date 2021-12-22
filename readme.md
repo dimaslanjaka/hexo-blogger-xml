@@ -64,7 +64,7 @@ build/hexo-blogger-xml
 > this plugin run once. If you want to rewrite the posts, you should remove `source/hexo-blogger-xml.json`
 
 # Using GULP Example
-view this repo workflow gulp [gulpfile.ts](./gulpfile.ts)
+view this repo workflow gulp [gulpfile.ts](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler/gulpfile.ts)
 ```typescript
 //use typescript compiler replace import bellow
 //import gulpCore from "hexo-blogger-xml/src/gulp-core";
@@ -93,7 +93,7 @@ npx gulp blogger
 ```
 
 # How to export blogger articles/content
-![](img/blogger-export.png)
+![how to export blogger to hexo](img/blogger-export.png)
 
 # How to keep blogger seo to new domain
 
@@ -122,7 +122,7 @@ npx gulp blogger
   // ]]>
 </script>
 ```
-- or using [this template](blogger redirect theme/blogger-redirect-theme.xml)
+- or using [this template](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler/blogger redirect theme/blogger-redirect-theme.xml)
 - Change Redirect Feed URL to new domain feed url
 
 # Preview This Plugin
