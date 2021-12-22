@@ -44,13 +44,13 @@ const hexoCore = function (hexo: Hexo) {
   }
 
   const lastParse = false;
-  const cacheloc = join(hexo.config.public_dir);
+  const cacheloc = join(config.public_dir);
 
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
   if (!bloggerConfig['hostname']) {
     bloggerConfig.hostname = [];
   }
-  if (!bloggerConfig[callback]) {
+  if (!bloggerConfig['callback']) {
     bloggerConfig.callback = null;
   }
   const xmlList = bloggerConfig.input;
