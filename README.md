@@ -66,7 +66,8 @@ build/hexo-blogger-xml
 # Using GULP Example
 view this repo workflow gulp [gulpfile.ts](./gulpfile.ts)
 ```typescript
-//import gulpCore from "./packages/hexo-blogger-xml/src/gulp-core";
+//use typescript compiler replace import bellow
+//import gulpCore from "hexo-blogger-xml/src/gulp-core";
 import { gulpCore } from "hexo-blogger-xml";
 import path from "path";
 gulp.task("blogger", function (done) {
