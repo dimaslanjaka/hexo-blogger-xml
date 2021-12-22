@@ -87,6 +87,10 @@ gulp.task("blogger", function (done) {
   done();
 });
 ```
+run with:
+```
+npx gulp blogger
+```
 
 # How to export blogger articles/content
 ![](img/blogger-export.png)
