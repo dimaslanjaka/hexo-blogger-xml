@@ -37,9 +37,9 @@ function gulpFunction(bloggerConfig: gulpConfig) {
   for (const inputKey in bloggerConfig.input) {
     const xml = path.resolve(bloggerConfig.input[inputKey]);
     if (xml.endsWith(".xml")) {
-      //console.log("gulp hexo-blogger-xml processing", xml);
+      //console.log("[hexo-blogger-xml][gulp] processing", xml);
       let start = new core();
-      if (bloggerConfig.hasOwnProperty("on")) {
+      if (bloggerConfig.on) {
         if (typeof bloggerConfig.on.finish == "function") start.on("finish", bloggerConfig.on.finish);
         if (typeof bloggerConfig.on.init == "function") start.on("init", bloggerConfig.on.init);
       }

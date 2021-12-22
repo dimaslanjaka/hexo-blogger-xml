@@ -33,6 +33,7 @@ interface objResult {
 declare interface BloggerParser {
   on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
   on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
+  on(event: 'write-post', listener: (arg: string) => any): void;
   //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
 }
 
@@ -362,7 +363,7 @@ class BloggerParser extends EventEmitter {
     }
 
     // post description
-    let description;
+    let description: string;
     const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
     //console.log(contentStr.textContent);
     if (contentStr) {
@@ -393,6 +394,7 @@ class BloggerParser extends EventEmitter {
    * })
    */
   export(dir = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
+    const self = this;
     const parsedList = this.getParsedXml();
     const processResult = (post: objResult) => {
       const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
@@ -412,6 +414,7 @@ class BloggerParser extends EventEmitter {
         .toString();
       //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
       writeFileSync(postPath, postResult);
+      self.emit('write-post', postPath);
     };
 
     parsedList.forEach((i, idx, array) => {

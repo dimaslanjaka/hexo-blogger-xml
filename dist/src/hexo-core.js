@@ -25,6 +25,7 @@ exports.__esModule = true;
 var fs_1 = require("fs");
 var path_1 = __importStar(require("path"));
 var Blogger_1 = __importDefault(require("./parser/Blogger"));
+var util_1 = require("./parser/util");
 /**
  * Hexo preprocessor
  * @param hexo
@@ -36,11 +37,16 @@ var hexoCore = function (hexo) {
         hexo.log.error("hexo blogger xml not set");
         return;
     }
-    var lastParse = false;
-    var cacheloc = (0, path_1.join)(config.source_dir, 'hexo-blogger-xml.json');
+    var continueParse = true;
+    var cacheloc = (0, path_1.join)(config.source_dir, "hexo-blogger-xml.json");
     if ((0, fs_1.existsSync)(cacheloc)) {
         var readDate = JSON.parse((0, fs_1.readFileSync)(cacheloc).toString());
+        if (readDate.lastWrite && readDate.paths.length) {
+            continueParse = false;
+        }
     }
+    if (!continueParse)
+        return;
     var bloggerConfig = config.blogger_xml;
     if (!bloggerConfig.hostname) {
         bloggerConfig.hostname = [];
@@ -51,14 +57,20 @@ var hexoCore = function (hexo) {
     var xmlList = bloggerConfig.input;
     hexo.on("ready", function () {
         console.log("blogger import xml started", bloggerConfig);
-        //mkdirSync("build/test", { recursive: true });
-        //writeFileSync("build/test/hexo.json", simpleStringify(hexo));
+        var createLog = {
+            lastWrite: undefined,
+            paths: []
+        };
         var root = hexo.base_dir;
         for (var xmlKey in xmlList) {
             var xmlPath = (0, path_1.join)(root.toString(), xmlList[xmlKey].toString());
             if ((0, fs_1.existsSync)(xmlPath)) {
                 console.log("processing", xmlPath);
                 var parser = new Blogger_1["default"](xmlPath);
+                parser.on("write-post", function (postPath) {
+                    console.log("post written", postPath);
+                    createLog.paths.push(postPath);
+                });
                 if (bloggerConfig.hostname.length > 0) {
                     parser.setHostname(bloggerConfig.hostname);
                 }
@@ -75,6 +87,8 @@ var hexoCore = function (hexo) {
                 }
             }
         }
+        createLog.lastWrite = new Date(Date.now());
+        (0, util_1.writeFileSync)(cacheloc, JSON.stringify(createLog));
     });
 };
 exports["default"] = hexoCore;

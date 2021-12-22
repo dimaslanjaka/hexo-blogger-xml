@@ -1,6 +1,6 @@
 {
     "name": "hexo-blogger-xml",
-    "version": "1.0.22",
+    "version": "1.0.23",
     "description": "Import xml blogger to hexo",
     "main": "index.js",
     "files": [

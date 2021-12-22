@@ -61,6 +61,8 @@ blogger_xml:
 build/hexo-blogger-xml
 ```
 
+> this plugin run once. If you want to rewrite the posts, you should remove `source/hexo-blogger-xml.json`
+
 # Using GULP Example
 view this repo workflow gulp [gulpfile.ts](./gulpfile.ts)
 ```typescript
@@ -195,3 +197,5 @@ permalink: /2021/09/post-with-description.html
 -160b0f75 : migrate xml2js merge2 to dependencies
 
 ## [1.0.22] 2021-12-21 22:30:21
+
+## [1.0.23] 2021-12-23 05:46:31

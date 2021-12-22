@@ -49,11 +49,16 @@ const hexoCore = function (hexo: Hexo) {
     return;
   }
 
-  const lastParse = false;
-  const cacheloc = join(config.source_dir, 'hexo-blogger-xml.json');
+  let continueParse = true;
+  const cacheloc = join(config.source_dir, "hexo-blogger-xml.json");
   if (existsSync(cacheloc)) {
     const readDate: CacheLog = JSON.parse(readFileSync(cacheloc).toString());
+    if (readDate.lastWrite && readDate.paths.length) {
+      continueParse = false;
+    }
   }
+
+  if (!continueParse) return;
 
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
   if (!bloggerConfig.hostname) {
@@ -66,8 +71,10 @@ const hexoCore = function (hexo: Hexo) {
 
   hexo.on("ready", function () {
     console.log("blogger import xml started", bloggerConfig);
-    //mkdirSync("build/test", { recursive: true });
-    //writeFileSync("build/test/hexo.json", simpleStringify(hexo));
+    const createLog: CacheLog = {
+      lastWrite: undefined,
+      paths: [],
+    };
 
     const root = hexo.base_dir;
     for (const xmlKey in xmlList) {
@@ -75,6 +82,10 @@ const hexoCore = function (hexo: Hexo) {
       if (existsSync(xmlPath)) {
         console.log("processing", xmlPath);
         const parser = new BloggerParser(xmlPath);
+        parser.on("write-post", function (postPath) {
+          console.log("post written", postPath);
+          createLog.paths.push(postPath);
+        });
         if (bloggerConfig.hostname.length > 0) {
           parser.setHostname(bloggerConfig.hostname);
         }
@@ -92,7 +103,11 @@ const hexoCore = function (hexo: Hexo) {
         }
       }
     }
+
+    createLog.lastWrite = new Date(Date.now());
+    writeFileSync(cacheloc, JSON.stringify(createLog));
   });
 };
+
 export default hexoCore;
 module.exports = hexoCore;
