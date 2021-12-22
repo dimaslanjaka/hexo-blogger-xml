@@ -3,10 +3,10 @@ import { PostHeader } from "./src/types/post-header";
 import { readdirSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
-import gulp from "gulp";
+import gulp, { TaskFunctionCallback } from "gulp";
 import { exec } from "child_process";
 
-function defaultTask(done) {
+function defaultTask(done: TaskFunctionCallback) {
   return gulpCore({
     input: readdirSync(join(__dirname, "xml")).map((xml) => {
       return join(__dirname, "xml", xml);
@@ -25,7 +25,7 @@ function defaultTask(done) {
   });
 }
 
-function compileTs(done: () => void) {
+function compileTs(done: TaskFunctionCallback) {
   exec("tsc -p tsconfig.publish.json", done);
 }
 
