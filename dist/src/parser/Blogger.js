@@ -377,6 +377,7 @@ var BloggerParser = /** @class */ (function (_super) {
     BloggerParser.prototype["export"] = function (dir, callback) {
         var _this = this;
         if (dir === void 0) { dir = "source/_posts"; }
+        var self = this;
         var parsedList = this.getParsedXml();
         var processResult = function (post) {
             var postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
@@ -396,6 +397,7 @@ var BloggerParser = /** @class */ (function (_super) {
                 .toString();
             //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
             (0, util_1.writeFileSync)(postPath, postResult);
+            self.emit('write-post', postPath);
         };
         parsedList.forEach(function (i, idx, array) {
             processResult(i);
