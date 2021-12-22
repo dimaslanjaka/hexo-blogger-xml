@@ -61,7 +61,7 @@ var hexoCore = function (hexo) {
             lastWrite: undefined,
             paths: []
         };
-        var root = hexo.base_dir;
+        var root = hexo.base_dir.toString();
         for (var xmlKey in xmlList) {
             var xmlPath = (0, path_1.join)(root.toString(), xmlList[xmlKey].toString());
             if ((0, fs_1.existsSync)(xmlPath)) {

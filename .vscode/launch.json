@@ -15,8 +15,16 @@
       "type": "node-terminal"
     },
     {
-      "command": "cd ../../ && gulp blogger",
+      "command": "npx hexo server",
+      "name": "[PROD] Demo Server",
+      "cwd": "${workspaceFolder}/test/demo/",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "gulp blogger",
       "name": "Gulp Test",
+      "cwd": "${workspaceFolder}/../../",
       "request": "launch",
       "type": "node-terminal"
     },
