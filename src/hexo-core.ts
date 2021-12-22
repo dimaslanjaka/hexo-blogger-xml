@@ -43,11 +43,14 @@ const hexoCore = function (hexo: Hexo) {
     return;
   }
 
+  const lastParse = false;
+  const cacheloc = join(hexo.config.public_dir);
+
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
-  if (!bloggerConfig.hasOwnProperty("hostname")) {
+  if (!bloggerConfig['hostname']) {
     bloggerConfig.hostname = [];
   }
-  if (!bloggerConfig.hasOwnProperty("callback")) {
+  if (!bloggerConfig[callback]) {
     bloggerConfig.callback = null;
   }
   const xmlList = bloggerConfig.input;
