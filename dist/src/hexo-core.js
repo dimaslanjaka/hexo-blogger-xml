@@ -36,11 +36,16 @@ var hexoCore = function (hexo) {
         hexo.log.error("hexo blogger xml not set");
         return;
     }
-    var lastParse = false;
+    var continueParse = true;
     var cacheloc = (0, path_1.join)(config.source_dir, 'hexo-blogger-xml.json');
     if ((0, fs_1.existsSync)(cacheloc)) {
         var readDate = JSON.parse((0, fs_1.readFileSync)(cacheloc).toString());
+        if (readDate.lastWrite && readDate.paths.length) {
+            continueParse = false;
+        }
     }
+    if (!continueParse)
+        return;
     var bloggerConfig = config.blogger_xml;
     if (!bloggerConfig.hostname) {
         bloggerConfig.hostname = [];

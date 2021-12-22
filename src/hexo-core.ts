@@ -49,11 +49,16 @@ const hexoCore = function (hexo: Hexo) {
     return;
   }
 
-  const lastParse = false;
+  let continueParse = true;
   const cacheloc = join(config.source_dir, 'hexo-blogger-xml.json');
   if (existsSync(cacheloc)) {
     const readDate: CacheLog = JSON.parse(readFileSync(cacheloc).toString());
+    if (readDate.lastWrite && readDate.paths.length) {
+      continueParse = false;
+    }
   }
+
+  if (!continueParse) return;
 
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
   if (!bloggerConfig.hostname) {
