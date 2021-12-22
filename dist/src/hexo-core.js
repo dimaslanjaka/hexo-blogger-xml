@@ -37,12 +37,15 @@ var hexoCore = function (hexo) {
         return;
     }
     var lastParse = false;
-    var cacheloc = (0, path_1.join)(config.public_dir);
+    var cacheloc = (0, path_1.join)(config.source_dir, 'hexo-blogger-xml.json');
+    if ((0, fs_1.existsSync)(cacheloc)) {
+        var readDate = JSON.parse((0, fs_1.readFileSync)(cacheloc).toString());
+    }
     var bloggerConfig = config.blogger_xml;
-    if (!bloggerConfig['hostname']) {
+    if (!bloggerConfig.hostname) {
         bloggerConfig.hostname = [];
     }
-    if (!bloggerConfig['callback']) {
+    if (!bloggerConfig.callback) {
         bloggerConfig.callback = null;
     }
     var xmlList = bloggerConfig.input;

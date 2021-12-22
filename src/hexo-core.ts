@@ -1,7 +1,8 @@
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import Hexo from "hexo";
 import path, { join } from "path";
 import BloggerParser from "./parser/Blogger";
+import { writeFileSync } from "./parser/util";
 import { LooseObject } from "./types/post-header";
 
 export interface BloggerXmlConfig extends LooseObject {
@@ -31,6 +32,11 @@ export interface BloggerXmlConfig extends LooseObject {
   thumbnail?: string;
 }
 
+interface CacheLog {
+  lastWrite: Date;
+  paths: string[];
+}
+
 /**
  * Hexo preprocessor
  * @param hexo
@@ -44,13 +50,16 @@ const hexoCore = function (hexo: Hexo) {
   }
 
   const lastParse = false;
-  const cacheloc = join(config.public_dir);
+  const cacheloc = join(config.source_dir, 'hexo-blogger-xml.json');
+  if (existsSync(cacheloc)) {
+    const readDate: CacheLog = JSON.parse(readFileSync(cacheloc).toString());
+  }
 
   const bloggerConfig: BloggerXmlConfig = config.blogger_xml;
-  if (!bloggerConfig['hostname']) {
+  if (!bloggerConfig.hostname) {
     bloggerConfig.hostname = [];
   }
-  if (!bloggerConfig['callback']) {
+  if (!bloggerConfig.callback) {
     bloggerConfig.callback = null;
   }
   const xmlList = bloggerConfig.input;
