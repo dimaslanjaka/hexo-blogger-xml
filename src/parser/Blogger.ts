@@ -21,7 +21,7 @@ import getUsername from "./node-username";
 import { EventEmitter } from "events";
 import trim_whitespaces from "./trim_whitespaces";
 import remove_double_quotes from "./remove_double_quotes";
-import "../../packages/js-prototypes/src/String";
+import "js-prototypes";
 import langID from "./lang/id.json";
 
 interface objResult {
@@ -33,7 +33,7 @@ interface objResult {
 declare interface BloggerParser {
   on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
   on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
-  on(event: 'write-post', listener: (arg: string) => any): void;
+  on(event: "write-post", listener: (arg: string) => any): void;
   //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
 }
 
@@ -414,7 +414,7 @@ class BloggerParser extends EventEmitter {
         .toString();
       //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
       writeFileSync(postPath, postResult);
-      self.emit('write-post', postPath);
+      self.emit("write-post", postPath);
     };
 
     parsedList.forEach((i, idx, array) => {

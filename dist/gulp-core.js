@@ -12,9 +12,9 @@ function gulpFunction(bloggerConfig) {
     for (var inputKey in bloggerConfig.input) {
         var xml = path_1["default"].resolve(bloggerConfig.input[inputKey]);
         if (xml.endsWith(".xml")) {
-            //console.log("gulp hexo-blogger-xml processing", xml);
+            //console.log("[hexo-blogger-xml][gulp] processing", xml);
             var start = new core_1["default"]();
-            if (bloggerConfig.hasOwnProperty("on")) {
+            if (bloggerConfig.on) {
                 if (typeof bloggerConfig.on.finish == "function")
                     start.on("finish", bloggerConfig.on.finish);
                 if (typeof bloggerConfig.on.init == "function")

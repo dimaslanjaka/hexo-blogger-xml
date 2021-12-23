@@ -26,7 +26,9 @@ function defaultTask(done: TaskFunctionCallback) {
 }
 
 function compileTs(done: TaskFunctionCallback) {
-  exec("tsc -p tsconfig.publish.json", done);
+  exec("tsc -p tsconfig.publish.json");
+  const exclude = ["!**/.git**", "!**.gitmodules**", "!**node_modules**"];
+  return gulp.src(["./packages/**/*"].concat(exclude)).pipe(gulp.dest("./dist"));
 }
 
 gulp.task("tsc", gulp.series(compileTs));

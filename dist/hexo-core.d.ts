@@ -1,3 +1,4 @@
+import Hexo from "hexo";
 import { LooseObject } from "./types/post-header";
 export interface BloggerXmlConfig extends LooseObject {
     /**
@@ -25,3 +26,9 @@ export interface BloggerXmlConfig extends LooseObject {
      */
     thumbnail?: string;
 }
+/**
+ * Hexo preprocessor
+ * @param hexo
+ */
+declare const hexoCore: (hexo: Hexo) => void;
+export default hexoCore;
