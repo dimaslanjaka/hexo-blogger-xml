@@ -32,4 +32,4 @@ function compileTs(done: TaskFunctionCallback) {
 }
 
 gulp.task("tsc", gulp.series(compileTs));
-gulp.task("default", gulp.series(defaultTask));
+gulp.task("default", gulp.series(defaultTask, compileTs));
