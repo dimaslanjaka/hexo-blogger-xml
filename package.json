@@ -23,8 +23,7 @@
     "build": "npm run build:dev && npm run build:prod",
     "build:prod": "tsc -p tsconfig.publish.json",
     "build:dev": "tsc -p tsconfig.json",
-    "lint": "eslint --ext .js,.jsx,.ts,.d.ts,.tsx ./",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.d.ts,.tsx ./"
+    "prototypes": "npm i ./packages/js-prototypes && npm i git+https://github.com/dimaslanjaka/js-prototypes.git"
   },
   "engines": {
     "node": ">=8"
