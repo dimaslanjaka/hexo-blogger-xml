@@ -40,3 +40,5 @@
 ## [1.0.26] 2021-12-23 06:07:57
 -005c1317 : Update release 1.0.25
 - fix `toString()` that causes `path.join` wont work
+
+## [1.0.27] 2021-12-24 14:49:03
