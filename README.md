@@ -133,6 +133,9 @@ homepage
 permalink: /2021/09/post-with-description.html
 ![](img/ss-hexo-post.png)
 
+## Todo
+- [ ] Sync with https://github.com/hr6r/hexo-migrator-blogger
+
 ## Source Code
 > [Source Code Compiler](https://github.com/dimaslanjaka/hexo-blogger-xml/tree/compiler)
 
