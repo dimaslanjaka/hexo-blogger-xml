@@ -1,9 +1,10 @@
 /// <reference types="node" />
+/// <reference types="node" />
+import { EventEmitter } from 'events';
 import * as fs from 'fs';
+import 'js-prototypes';
 import { PostHeader } from '../types/post-header';
 import './JSON';
-import { EventEmitter } from 'events';
-import 'js-prototypes';
 interface objResult {
     permalink: string;
     headers: PostHeader;

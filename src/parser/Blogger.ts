@@ -1,28 +1,28 @@
+import { EventEmitter } from 'events';
 import * as fs from 'fs';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
-import * as path from 'path';
-import { JSDOM } from 'jsdom';
-import sanitize from 'sanitize-filename';
 import he from 'he';
+import 'js-prototypes';
+import { JSDOM } from 'jsdom';
+import * as path from 'path';
+import { basename, dirname } from 'path';
+import { rimrafSync } from 'rimraf';
+import sanitize from 'sanitize-filename';
 import xml2js from 'xml2js';
-import rimraf from 'rimraf';
-import { fromString } from './html';
+import config from '../config';
 import { Entry } from '../types/entry';
 import { PostHeader } from '../types/post-header';
+import excludeTitleArr from './excludeTitle.json';
+import { fromString } from './html';
+import './JSON';
+import langID from './lang/id.json';
+import getUsername from './node-username';
+import remove_double_quotes from './remove_double_quotes';
+import StringBuilder from './StringBuilder';
+import trim_whitespaces from './trim_whitespaces';
 import url from './url';
 import { truncate, writeFileSync } from './util';
-import config from '../config';
-import './JSON';
 import ParserYaml from './yaml';
-import StringBuilder from './StringBuilder';
-import excludeTitleArr from './excludeTitle.json';
-import { basename, dirname } from 'path';
-import getUsername from './node-username';
-import { EventEmitter } from 'events';
-import trim_whitespaces from './trim_whitespaces';
-import remove_double_quotes from './remove_double_quotes';
-import 'js-prototypes';
-import langID from './lang/id.json';
 
 interface objResult {
   permalink: string;
@@ -121,9 +121,7 @@ class BloggerParser extends EventEmitter {
     };
 
     deleteFolderRecursive(this.entriesDir);
-    rimraf(self.entriesDir, (error) => {
-      if (error) throw error;
-    });
+    rimrafSync(self.entriesDir);
     return this;
   }
 

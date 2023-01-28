@@ -16,7 +16,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -37,29 +41,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
+var events_1 = require("events");
 var fs = __importStar(require("fs"));
 var fs_1 = require("fs");
-var path = __importStar(require("path"));
-var jsdom_1 = require("jsdom");
-var sanitize_filename_1 = __importDefault(require("sanitize-filename"));
 var he_1 = __importDefault(require("he"));
+require("js-prototypes");
+var jsdom_1 = require("jsdom");
+var path = __importStar(require("path"));
+var path_1 = require("path");
+var rimraf_1 = require("rimraf");
+var sanitize_filename_1 = __importDefault(require("sanitize-filename"));
 var xml2js_1 = __importDefault(require("xml2js"));
-var rimraf_1 = __importDefault(require("rimraf"));
+var config_1 = __importDefault(require("../config"));
+var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
 var html_1 = require("./html");
+require("./JSON");
+var id_json_1 = __importDefault(require("./lang/id.json"));
+var node_username_1 = __importDefault(require("./node-username"));
+var remove_double_quotes_1 = __importDefault(require("./remove_double_quotes"));
+var StringBuilder_1 = __importDefault(require("./StringBuilder"));
+var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
 var url_1 = __importDefault(require("./url"));
 var util_1 = require("./util");
-var config_1 = __importDefault(require("../config"));
-require("./JSON");
 var yaml_1 = __importDefault(require("./yaml"));
-var StringBuilder_1 = __importDefault(require("./StringBuilder"));
-var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
-var path_1 = require("path");
-var node_username_1 = __importDefault(require("./node-username"));
-var events_1 = require("events");
-var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
-var remove_double_quotes_1 = __importDefault(require("./remove_double_quotes"));
-require("js-prototypes");
-var id_json_1 = __importDefault(require("./lang/id.json"));
 var BloggerParser = /** @class */ (function (_super) {
     __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
@@ -73,7 +77,7 @@ var BloggerParser = /** @class */ (function (_super) {
         _this.parseXmlJsonResult = [];
         _this.hostname = ['webmanajemen.com', 'git.webmanajemen.com', 'web-manajemen.blogspot', 'dimaslanjaka.github.io'];
         if (!(0, fs_1.existsSync)(xmlFile))
-            throw xmlFile + " not found";
+            throw "".concat(xmlFile, " not found");
         // reset result
         _this.parseXmlJsonResult = [];
         // clean build dir
@@ -134,10 +138,7 @@ var BloggerParser = /** @class */ (function (_super) {
             }
         };
         deleteFolderRecursive(this.entriesDir);
-        (0, rimraf_1["default"])(self.entriesDir, function (error) {
-            if (error)
-                throw error;
-        });
+        (0, rimraf_1.rimraf)(self.entriesDir);
         return this;
     };
     /**
