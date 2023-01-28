@@ -12,7 +12,7 @@ var versionParser = /** @class */ (function () {
             minor: 0,
             build: 0
         };
-        if (typeof str == "string")
+        if (typeof str == 'string')
             this.parseVersion(str);
     }
     /**
@@ -21,11 +21,11 @@ var versionParser = /** @class */ (function () {
      * @returns
      */
     versionParser.prototype.parseVersion = function (str) {
-        if (typeof str != "string") {
+        if (typeof str != 'string') {
             //return false;
-            throw "argument required string, found " + typeof str;
+            throw 'argument required string, found ' + typeof str;
         }
-        var arr = str.split(".");
+        var arr = str.split('.');
         // parse int or default to 0
         this.result.major = parseInt(arr[0]) || 0;
         this.result.minor = parseInt(arr[1]) || 0;

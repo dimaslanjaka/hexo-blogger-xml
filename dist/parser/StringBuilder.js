@@ -2,8 +2,8 @@
 exports.__esModule = true;
 var default_1 = /** @class */ (function () {
     function default_1(str) {
-        if (str === void 0) { str = ""; }
-        this.result = "";
+        if (str === void 0) { str = ''; }
+        this.result = '';
         this.result = str;
     }
     /**
@@ -19,7 +19,7 @@ var default_1 = /** @class */ (function () {
      * @param str
      */
     default_1.prototype.appendLine = function (str) {
-        this.result += "\n";
+        this.result += '\n';
         this.result += str;
         return this;
     };

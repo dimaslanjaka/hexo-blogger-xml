@@ -17,6 +17,6 @@ function fromString(str) {
 exports.fromString = fromString;
 function title(str) {
     var dom = new jsdom_1.JSDOM(str);
-    return dom.window.document.querySelector("title").textContent;
+    return dom.window.document.querySelector('title').textContent;
 }
 exports.title = title;

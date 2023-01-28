@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import * as fs from "fs";
-import { PostHeader } from "../types/post-header";
-import "./JSON";
-import { EventEmitter } from "events";
-import "js-prototypes";
+import * as fs from 'fs';
+import { PostHeader } from '../types/post-header';
+import './JSON';
+import { EventEmitter } from 'events';
+import 'js-prototypes';
 interface objResult {
     permalink: string;
     headers: PostHeader;
@@ -11,8 +11,8 @@ interface objResult {
 }
 declare interface BloggerParser {
     on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-    on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
-    on(event: "write-post", listener: (arg: string) => any): void;
+    on(event: 'lastExport', listener: (arg: Record<any, any>) => any): this;
+    on(event: 'write-post', listener: (arg: string) => any): void;
 }
 declare class BloggerParser extends EventEmitter {
     static debug: boolean;
@@ -47,7 +47,7 @@ declare class BloggerParser extends EventEmitter {
      */
     modifyHtml(content: string): {
         thumbnail: string;
-        content: string;
+        content: any;
         description: string;
     };
     getParsedXml(): objResult[];

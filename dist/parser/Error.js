@@ -5,7 +5,7 @@ function get(belowFn) {
     var oldLimit = Error.stackTraceLimit;
     Error.stackTraceLimit = Infinity;
     var dummyObject = {
-        stack: ""
+        stack: ''
     };
     var v8Handler = Error.prepareStackTrace;
     Error.prepareStackTrace = function (dummyObject, v8StackTrace) {
@@ -22,7 +22,7 @@ function parse(err) {
     if (!err.stack) {
         return [];
     }
-    var lines = err.stack.split("\n").slice(1);
+    var lines = err.stack.split('\n').slice(1);
     return lines
         .map(function (line) {
         if (line.match(/^\s*[-]{4,}$/)) {
@@ -45,16 +45,16 @@ function parse(err) {
         var functionName = null;
         var typeName = null;
         var methodName = null;
-        var isNative = lineMatch[5] === "native";
+        var isNative = lineMatch[5] === 'native';
         if (lineMatch[1]) {
             functionName = lineMatch[1];
-            var methodStart = functionName.lastIndexOf(".");
-            if (functionName[methodStart - 1] == ".")
+            var methodStart = functionName.lastIndexOf('.');
+            if (functionName[methodStart - 1] == '.')
                 methodStart--;
             if (methodStart > 0) {
                 object = functionName.substr(0, methodStart);
                 method = functionName.substr(methodStart + 1);
-                var objectEnd = object.indexOf(".Module");
+                var objectEnd = object.indexOf('.Module');
                 if (objectEnd > 0) {
                     functionName = functionName.substr(objectEnd + 1);
                     object = object.substr(0, objectEnd);
@@ -65,7 +65,7 @@ function parse(err) {
             typeName = object;
             methodName = method;
         }
-        if (method === "<anonymous>") {
+        if (method === '<anonymous>') {
             methodName = null;
             functionName = null;
         }
@@ -91,26 +91,26 @@ function CallSite(properties) {
     }
 }
 var strProperties = [
-    "this",
-    "typeName",
-    "functionName",
-    "methodName",
-    "fileName",
-    "lineNumber",
-    "columnNumber",
-    "function",
-    "evalOrigin",
+    'this',
+    'typeName',
+    'functionName',
+    'methodName',
+    'fileName',
+    'lineNumber',
+    'columnNumber',
+    'function',
+    'evalOrigin'
 ];
-var boolProperties = ["topLevel", "eval", "native", "constructor"];
+var boolProperties = ['topLevel', 'eval', 'native', 'constructor'];
 strProperties.forEach(function (property) {
     CallSite.prototype[property] = null;
-    CallSite.prototype["get" + property[0].toUpperCase() + property.substr(1)] = function () {
+    CallSite.prototype['get' + property[0].toUpperCase() + property.substr(1)] = function () {
         return this[property];
     };
 });
 boolProperties.forEach(function (property) {
     CallSite.prototype[property] = false;
-    CallSite.prototype["is" + property[0].toUpperCase() + property.substr(1)] = function () {
+    CallSite.prototype['is' + property[0].toUpperCase() + property.substr(1)] = function () {
         return this[property];
     };
 });

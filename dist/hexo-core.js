@@ -33,12 +33,12 @@ var util_1 = require("./parser/util");
 var hexoCore = function (hexo) {
     var config = hexo.config;
     // if config blogger_xml found, continue process otherwise cancel by return
-    if (!config["blogger_xml"]) {
-        hexo.log.error("hexo blogger xml not set");
+    if (!config['blogger_xml']) {
+        hexo.log.error('hexo blogger xml not set');
         return;
     }
     var continueParse = true;
-    var cacheloc = (0, path_1.join)(config.source_dir.toString(), "hexo-blogger-xml.json");
+    var cacheloc = (0, path_1.join)(config.source_dir.toString(), 'hexo-blogger-xml.json');
     if ((0, fs_1.existsSync)(cacheloc)) {
         var readDate = JSON.parse((0, fs_1.readFileSync)(cacheloc).toString());
         if (readDate.lastWrite && readDate.paths.length) {
@@ -55,8 +55,8 @@ var hexoCore = function (hexo) {
         bloggerConfig.callback = null;
     }
     var xmlList = bloggerConfig.input;
-    hexo.on("ready", function () {
-        console.log("blogger import xml started", bloggerConfig);
+    hexo.on('ready', function () {
+        console.log('blogger import xml started', bloggerConfig);
         var createLog = {
             lastWrite: undefined,
             paths: []
@@ -65,18 +65,18 @@ var hexoCore = function (hexo) {
         for (var xmlKey in xmlList) {
             var xmlPath = (0, path_1.join)(root.toString(), xmlList[xmlKey].toString());
             if ((0, fs_1.existsSync)(xmlPath)) {
-                console.log("processing", xmlPath);
+                console.log('processing', xmlPath);
                 var parser = new Blogger_1["default"](xmlPath);
-                parser.on("write-post", function (postPath) {
-                    console.log("post written", postPath);
+                parser.on('write-post', function (postPath) {
+                    console.log('post written', postPath);
                     createLog.paths.push(postPath);
                 });
                 if (bloggerConfig.hostname.length > 0) {
                     parser.setHostname(bloggerConfig.hostname);
                 }
                 var parsed = parser.parseEntry().getJsonResult();
-                console.log(parsed.getParsedXml().length, "total posts");
-                if (typeof bloggerConfig.callback == "string") {
+                console.log(parsed.getParsedXml().length, 'total posts');
+                if (typeof bloggerConfig.callback == 'string') {
                     var scriptCall = path_1["default"].resolve(path_1["default"].join(root, bloggerConfig.callback));
                     if (!(0, fs_1.existsSync)(scriptCall)) {
                         scriptCall = path_1["default"].resolve(path_1["default"].join(process.cwd(), bloggerConfig.callback));

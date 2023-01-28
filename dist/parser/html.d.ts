@@ -1,6 +1,5 @@
 /// <reference types="node" />
-import { PathLike } from "fs";
-import { JSDOM } from "jsdom";
-export declare function fromFile(path: string | PathLike): false | JSDOM;
-export declare function fromString(str: string): JSDOM;
-export declare function title(str: string): string;
+import { PathLike } from 'fs';
+export declare function fromFile(path: string | PathLike): any;
+export declare function fromString(str: string): any;
+export declare function title(str: string): any;

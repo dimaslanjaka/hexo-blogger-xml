@@ -1,5 +1,5 @@
-import BloggerParser from "./parser/Blogger";
-import { LooseObject, PostHeader } from "./types/post-header";
+import BloggerParser from './parser/Blogger';
+import { LooseObject, PostHeader } from './types/post-header';
 export interface gulpConfig extends LooseObject {
     /**
      * Blogger xml files

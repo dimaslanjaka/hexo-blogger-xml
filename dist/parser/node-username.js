@@ -36,7 +36,7 @@ var getUsernameFromOsUserInfo = function () {
     catch (_a) { }
 };
 // eslint-disable-next-line no-unused-vars
-var cleanWindowsCommand = function (string) { return string.replace(/^.*\\/, ""); };
+var cleanWindowsCommand = function (string) { return string.replace(/^.*\\/, ''); };
 // eslint-disable-next-line no-unused-vars
 var makeUsernameFromId = function (userId) { return "no-username-" + userId; };
 function getUsername() {
