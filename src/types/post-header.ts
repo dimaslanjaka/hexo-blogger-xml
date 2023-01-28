@@ -1,4 +1,4 @@
-import data from "./post-header.json";
+import data from './post-header.json';
 
 export interface LooseObject {
   [key: string]: any;

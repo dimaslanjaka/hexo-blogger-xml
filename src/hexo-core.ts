@@ -1,9 +1,9 @@
-import { existsSync, readFileSync } from "fs";
-import Hexo from "hexo";
-import path, { join } from "path";
-import BloggerParser from "./parser/Blogger";
-import { writeFileSync } from "./parser/util";
-import { LooseObject } from "./types/post-header";
+import { existsSync, readFileSync } from 'fs';
+import Hexo from 'hexo';
+import path, { join } from 'path';
+import BloggerParser from './parser/Blogger';
+import { writeFileSync } from './parser/util';
+import { LooseObject } from './types/post-header';
 
 export interface BloggerXmlConfig extends LooseObject {
   /**
@@ -44,13 +44,13 @@ interface CacheLog {
 const hexoCore = function (hexo: Hexo) {
   const config = hexo.config;
   // if config blogger_xml found, continue process otherwise cancel by return
-  if (!config["blogger_xml"]) {
-    hexo.log.error("hexo blogger xml not set");
+  if (!config['blogger_xml']) {
+    hexo.log.error('hexo blogger xml not set');
     return;
   }
 
   let continueParse = true;
-  const cacheloc = join(config.source_dir.toString(), "hexo-blogger-xml.json");
+  const cacheloc = join(config.source_dir.toString(), 'hexo-blogger-xml.json');
   if (existsSync(cacheloc)) {
     const readDate: CacheLog = JSON.parse(readFileSync(cacheloc).toString());
     if (readDate.lastWrite && readDate.paths.length) {
@@ -69,30 +69,30 @@ const hexoCore = function (hexo: Hexo) {
   }
   const xmlList = bloggerConfig.input;
 
-  hexo.on("ready", function () {
-    console.log("blogger import xml started", bloggerConfig);
+  hexo.on('ready', function () {
+    console.log('blogger import xml started', bloggerConfig);
     const createLog: CacheLog = {
       lastWrite: undefined,
-      paths: [],
+      paths: []
     };
 
     const root = hexo.base_dir.toString();
     for (const xmlKey in xmlList) {
       const xmlPath = join(root.toString(), xmlList[xmlKey].toString());
       if (existsSync(xmlPath)) {
-        console.log("processing", xmlPath);
+        console.log('processing', xmlPath);
         const parser = new BloggerParser(xmlPath);
-        parser.on("write-post", function (postPath) {
-          console.log("post written", postPath);
+        parser.on('write-post', function (postPath) {
+          console.log('post written', postPath);
           createLog.paths.push(postPath);
         });
         if (bloggerConfig.hostname.length > 0) {
           parser.setHostname(bloggerConfig.hostname);
         }
         const parsed = parser.parseEntry().getJsonResult();
-        console.log(parsed.getParsedXml().length, "total posts");
+        console.log(parsed.getParsedXml().length, 'total posts');
 
-        if (typeof bloggerConfig.callback == "string") {
+        if (typeof bloggerConfig.callback == 'string') {
           let scriptCall = path.resolve(path.join(root, bloggerConfig.callback));
           if (!existsSync(scriptCall)) {
             scriptCall = path.resolve(path.join(process.cwd(), bloggerConfig.callback));

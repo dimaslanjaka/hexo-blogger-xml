@@ -1,1 +1,1 @@
-import "./parser/Blogger.test";
+import './parser/Blogger.test';

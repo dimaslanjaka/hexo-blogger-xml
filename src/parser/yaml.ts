@@ -1,4 +1,4 @@
-import YAML from "yaml";
+import YAML from 'yaml';
 
 class ParserYaml {
   static fromObject(jsonObject: object) {

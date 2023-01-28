@@ -1,28 +1,28 @@
-import * as fs from "fs";
-import { existsSync, mkdirSync, readFileSync } from "fs";
-import * as path from "path";
-import { JSDOM } from "jsdom";
-import sanitize from "sanitize-filename";
-import he from "he";
-import xml2js from "xml2js";
-import rimraf from "rimraf";
-import { fromString } from "./html";
-import { Entry } from "../types/entry";
-import { PostHeader } from "../types/post-header";
-import url from "./url";
-import { truncate, writeFileSync } from "./util";
-import config from "../config";
-import "./JSON";
-import ParserYaml from "./yaml";
-import StringBuilder from "./StringBuilder";
-import excludeTitleArr from "./excludeTitle.json";
-import { basename, dirname } from "path";
-import getUsername from "./node-username";
-import { EventEmitter } from "events";
-import trim_whitespaces from "./trim_whitespaces";
-import remove_double_quotes from "./remove_double_quotes";
-import "js-prototypes";
-import langID from "./lang/id.json";
+import * as fs from 'fs';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
+import * as path from 'path';
+import { JSDOM } from 'jsdom';
+import sanitize from 'sanitize-filename';
+import he from 'he';
+import xml2js from 'xml2js';
+import rimraf from 'rimraf';
+import { fromString } from './html';
+import { Entry } from '../types/entry';
+import { PostHeader } from '../types/post-header';
+import url from './url';
+import { truncate, writeFileSync } from './util';
+import config from '../config';
+import './JSON';
+import ParserYaml from './yaml';
+import StringBuilder from './StringBuilder';
+import excludeTitleArr from './excludeTitle.json';
+import { basename, dirname } from 'path';
+import getUsername from './node-username';
+import { EventEmitter } from 'events';
+import trim_whitespaces from './trim_whitespaces';
+import remove_double_quotes from './remove_double_quotes';
+import 'js-prototypes';
+import langID from './lang/id.json';
 
 interface objResult {
   permalink: string;
@@ -32,8 +32,8 @@ interface objResult {
 
 declare interface BloggerParser {
   on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-  on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
-  on(event: "write-post", listener: (arg: string) => any): void;
+  on(event: 'lastExport', listener: (arg: Record<any, any>) => any): this;
+  on(event: 'write-post', listener: (arg: string) => any): void;
   //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
 }
 
@@ -43,11 +43,11 @@ class BloggerParser extends EventEmitter {
    * ID Process
    */
   id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  buildDir = "build/hexo-blogger-xml";
-  entriesDir = path.join(this.buildDir, "entries");
+  buildDir = 'build/hexo-blogger-xml';
+  entriesDir = path.join(this.buildDir, 'entries');
   private document: Document;
   parseXmlJsonResult: objResult[] = [];
-  hostname: string[] = ["webmanajemen.com", "git.webmanajemen.com", "web-manajemen.blogspot", "dimaslanjaka.github.io"];
+  hostname: string[] = ['webmanajemen.com', 'git.webmanajemen.com', 'web-manajemen.blogspot', 'dimaslanjaka.github.io'];
 
   constructor(xmlFile: string | fs.PathLike) {
     super();
@@ -60,9 +60,9 @@ class BloggerParser extends EventEmitter {
     this.clean();
 
     // write ignore to buildDir
-    writeFileSync(path.join(dirname(this.entriesDir), ".gitignore"), "*");
+    writeFileSync(path.join(dirname(this.entriesDir), '.gitignore'), '*');
     mkdirSync(this.entriesDir, { recursive: true });
-    if (getUsername() == "dimaslanjaka") {
+    if (getUsername() == 'dimaslanjaka') {
       writeFileSync(path.join(this.entriesDir, this.id), new Date().toString());
     }
 
@@ -75,17 +75,17 @@ class BloggerParser extends EventEmitter {
     const DOMParser = dom.window.DOMParser;
     const parser = new DOMParser();
     // Create document by parsing XML
-    this.document = parser.parseFromString(xmlStr, "text/xml");
+    this.document = parser.parseFromString(xmlStr, 'text/xml');
 
     // save the xml after modifications
     const xmlString = this.document.documentElement.outerHTML;
 
-    writeFileSync("build/hexo-blogger-xml/rss.xml", xmlString);
-    writeFileSync("build/hexo-blogger-xml/inner.xml", this.document.documentElement.innerHTML);
-    const entries = this.document.documentElement.getElementsByTagName("entry");
+    writeFileSync('build/hexo-blogger-xml/rss.xml', xmlString);
+    writeFileSync('build/hexo-blogger-xml/inner.xml', this.document.documentElement.innerHTML);
+    const entries = this.document.documentElement.getElementsByTagName('entry');
 
     if (entries.length) {
-      writeFileSync("build/hexo-blogger-xml/entry.xml", entries[0].innerHTML);
+      writeFileSync('build/hexo-blogger-xml/entry.xml', entries[0].innerHTML);
     }
   }
 
@@ -132,10 +132,10 @@ class BloggerParser extends EventEmitter {
    * @returns void
    */
   parseEntry() {
-    const feeds = this.document.documentElement.getElementsByTagName("entry");
+    const feeds = this.document.documentElement.getElementsByTagName('entry');
     for (let index = 0; index < feeds.length; index++) {
       const element = feeds[index];
-      const title = element.getElementsByTagName("title")[0].innerHTML;
+      const title = element.getElementsByTagName('title')[0].innerHTML;
       const excludeTitle = excludeTitleArr.map((title) => {
         return title.toLowerCase().trim();
       });
@@ -143,28 +143,28 @@ class BloggerParser extends EventEmitter {
       if (excludeTitle.includes(title.toLowerCase().trim())) continue;
 
       /** CONTENT PROCESS START **/
-      let content = element.getElementsByTagName("content")[0].innerHTML;
+      let content = element.getElementsByTagName('content')[0].innerHTML;
       content = he.decode(content);
       /** CONTENT PROCESS END **/
 
       // write post with decoded entities
       let obj = {
-        entry: { content: "", id: [] },
+        entry: { content: '', id: [] }
       };
       //let decodedContent = he.decode(content);
       xml2js.parseString(element.outerHTML, function (err, result) {
         obj = result;
       });
       obj.entry.content = content;
-      obj.entry.id[0] = obj.entry.id[0].replace("tag:blogger.com,1999:", "");
+      obj.entry.id[0] = obj.entry.id[0].replace('tag:blogger.com,1999:', '');
       //writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
-      writeFileSync(path.join(this.entriesDir, sanitize(title) + ".json"), JSON.stringify(obj, null, 2));
+      writeFileSync(path.join(this.entriesDir, sanitize(title) + '.json'), JSON.stringify(obj, null, 2));
     }
     return this;
   }
 
   getJsonResult() {
-    if (!existsSync(this.entriesDir)) throw "Entries Dir Not Found, previous process failed";
+    if (!existsSync(this.entriesDir)) throw 'Entries Dir Not Found, previous process failed';
     const get = fs.readdirSync(this.entriesDir).map((file) => {
       return path.join(this.entriesDir, file);
     });
@@ -175,39 +175,39 @@ class BloggerParser extends EventEmitter {
     if (Array.isArray(get) && get.length > 0) {
       get.forEach(function (file) {
         const buildPost: objResult = {
-          permalink: "",
+          permalink: '',
           headers: {
-            title: "",
-            webtitle: "",
-            subtitle: "",
-            lang: "en",
+            title: '',
+            webtitle: '',
+            subtitle: '',
+            lang: 'en',
             date: new Date().toISOString(),
-            type: "post",
+            type: 'post',
             tags: [],
             author: {
-              nick: "",
-              link: "",
-              email: "",
+              nick: '',
+              link: '',
+              email: ''
             },
             modified: new Date().toISOString(),
             category: [],
             comments: true,
-            cover: "",
-            location: "",
+            cover: '',
+            location: ''
           },
-          content: "",
+          content: ''
         };
         const extname = path.extname(file);
-        if (extname == ".json") {
+        if (extname == '.json') {
           const read = readFileSync(file).toString();
           const json: Entry = JSON.parse(read);
           // build hexo header post
-          if (typeof json == "object") {
+          if (typeof json == 'object') {
             buildPost.content = json.entry.content;
 
             try {
               // post permalink
-              if (typeof json.entry.link[4] != "undefined") {
+              if (typeof json.entry.link[4] != 'undefined') {
                 buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
 
                 // modify html body (Content)
@@ -225,8 +225,8 @@ class BloggerParser extends EventEmitter {
 
                 // post language simple
                 const titleTest = buildPost.headers.title.toLocaleLowerCase();
-                if (new RegExp("s?" + langID.join("|") + "s?", "gmu").test(titleTest)) {
-                  buildPost.headers.lang = "id";
+                if (new RegExp('s?' + langID.join('|') + 's?', 'gmu').test(titleTest)) {
+                  buildPost.headers.lang = 'id';
                 }
 
                 // post thumbnail/cover
@@ -236,8 +236,8 @@ class BloggerParser extends EventEmitter {
                 // post author
                 buildPost.headers.author = {
                   nick: json.entry.author[0].name[0],
-                  link: typeof json.entry.author[0].uri != "undefined" ? json.entry.author[0].uri[0] : "",
-                  email: typeof json.entry.author[0].email != "undefined" ? json.entry.author[0].email[0] : "",
+                  link: typeof json.entry.author[0].uri != 'undefined' ? json.entry.author[0].uri[0] : '',
+                  email: typeof json.entry.author[0].email != 'undefined' ? json.entry.author[0].email[0] : ''
                 };
 
                 // post categories
@@ -256,8 +256,8 @@ class BloggerParser extends EventEmitter {
                 //console.log(contentStr.textContent);
                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
                 buildPost.headers.subtitle = trim_whitespaces(remove_double_quotes(mod.description)).replace(
-                  new RegExp("[^a-zA-Z., ]", "m"),
-                  ""
+                  new RegExp('[^a-zA-Z., ]', 'm'),
+                  ''
                 );
 
                 // site title
@@ -265,8 +265,8 @@ class BloggerParser extends EventEmitter {
 
                 if (buildPost.permalink.length > 0) {
                   const saveFile = path.join(
-                    "build/hexo-blogger-xml/results/",
-                    buildPost.permalink.replace(/\.html$/, ".json")
+                    'build/hexo-blogger-xml/results/',
+                    buildPost.permalink.replace(/\.html$/, '.json')
                   );
 
                   results.push(buildPost);
@@ -276,11 +276,11 @@ class BloggerParser extends EventEmitter {
             } catch (e) {
               //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
               writeFileSync(
-                path.join("build/hexo-blogger-xml/errors/", "error-" + basename(file)),
+                path.join('build/hexo-blogger-xml/errors/', 'error-' + basename(file)),
                 JSON.stringify(json, null, 2)
               );
               writeFileSync(
-                path.join("build/hexo-blogger-xml/errors/", "error-body-" + basename(file, ".json") + ".html"),
+                path.join('build/hexo-blogger-xml/errors/', 'error-body-' + basename(file, '.json') + '.html'),
                 buildPost.content
               );
 
@@ -314,7 +314,7 @@ class BloggerParser extends EventEmitter {
     if (find1) {
       find1.remove();
     }
-    const find2 = parserhtml.window.document.getElementsByClassName("blogger-post-footer");
+    const find2 = parserhtml.window.document.getElementsByClassName('blogger-post-footer');
     if (find2.length > 0) {
       for (let i = 0; i < find2.length; i++) {
         const item = find2.item(i);
@@ -324,8 +324,8 @@ class BloggerParser extends EventEmitter {
 
     // get first img
     let firstImg =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
-    const find = parserhtml.window.document.getElementsByTagName("img");
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png';
+    const find = parserhtml.window.document.getElementsByTagName('img');
     if (find.length > 0) {
       for (let i = 0; i < find.length; i++) {
         const item = find.item(i);
@@ -348,14 +348,14 @@ class BloggerParser extends EventEmitter {
           }
         });
         if (process) {
-          link.setAttribute("rel", "noopener noreferer nofollow");
+          link.setAttribute('rel', 'noopener noreferer nofollow');
           //if (t.hostname.includes(link.href.h))
           //console.log(link.outerHTML);
         }
       }
     };
     // find all hyperlinks
-    const links = parserhtml.window.document.getElementsByTagName("a");
+    const links = parserhtml.window.document.getElementsByTagName('a');
     if (links.length > 0) {
       for (let i = 0; i < links.length; i++) {
         processLink(links.item(i));
@@ -364,18 +364,18 @@ class BloggerParser extends EventEmitter {
 
     // post description
     let description: string;
-    const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
+    const contentStr = parserhtml.window.document.documentElement.querySelector('div,p,span');
     //console.log(contentStr.textContent);
     if (contentStr) {
-      description = truncate(he.decode(contentStr.textContent), 140, "").trim();
+      description = truncate(he.decode(contentStr.textContent), 140, '').trim();
     } else {
-      description = truncate(content, 140, "").trim();
+      description = truncate(content, 140, '').trim();
     }
 
     return {
       thumbnail: firstImg,
       content: parserhtml.window.document.body.innerHTML,
-      description: description,
+      description: description
     };
   }
 
@@ -393,35 +393,35 @@ class BloggerParser extends EventEmitter {
    *   return content; // return back the modified content
    * })
    */
-  export(dir = "source/_posts", callback?: (arg0: string, arg1: PostHeader) => string) {
+  export(dir = 'source/_posts', callback?: (arg0: string, arg1: PostHeader) => string) {
     const self = this;
     const parsedList = this.getParsedXml();
     const processResult = (post: objResult) => {
-      const postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
+      const postPath = path.join(dir, post.permalink.replace(/.html$/, '.md'));
       //let postPathTest = path.join(dir, "test.md");
       //console.log(post.headers);
       const postHeader = ParserYaml.fromObject(this.objTrim(post.headers));
       //console.log(postHeader);
-      if (typeof callback == "function") {
+      if (typeof callback == 'function') {
         post.content = callback(post.content, post.headers);
       }
       //post.content = this.stripFooterFeed(post.content);
-      const postResult = new StringBuilder("---")
+      const postResult = new StringBuilder('---')
         .appendLine(postHeader)
-        .appendLine("---")
-        .append("\n\n")
+        .appendLine('---')
+        .append('\n\n')
         .append(post.content)
         .toString();
       //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
       writeFileSync(postPath, postResult);
-      self.emit("write-post", postPath);
+      self.emit('write-post', postPath);
     };
 
     parsedList.forEach((i, idx, array) => {
       processResult(i);
       if (idx === array.length - 1) {
         //console.log("Last callback call at index " + idx + " with value " + i);
-        this.emit("lastExport", { item: i, id: idx, array: array });
+        this.emit('lastExport', { item: i, id: idx, array: array });
       }
     });
 
@@ -435,7 +435,7 @@ class BloggerParser extends EventEmitter {
    * @param obj
    */
   objTrim(obj: Record<any, any>) {
-    Object.keys(obj).map((k) => (obj[k] = typeof obj[k] == "string" ? obj[k].trim() : obj[k]));
+    Object.keys(obj).map((k) => (obj[k] = typeof obj[k] == 'string' ? obj[k].trim() : obj[k]));
     return obj;
   }
 
@@ -452,12 +452,12 @@ class BloggerParser extends EventEmitter {
    * @param outputDir
    * @param callback
    */
-  auto(file: string, outputDir = "source/_posts", callback: (content: string) => any) {
+  auto(file: string, outputDir = 'source/_posts', callback: (content: string) => any) {
     const parser = new BloggerParser(file);
     //parser.setHostname("webmanajemen.com");
     parser.clean();
     const parsed = parser.parseEntry().getJsonResult();
-    console.log(file, parsed.getParsedXml().length, "total posts");
+    console.log(file, parsed.getParsedXml().length, 'total posts');
     parsed.export(outputDir, callback);
   }
 

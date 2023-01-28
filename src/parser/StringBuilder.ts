@@ -1,7 +1,7 @@
 export default class {
-  private result = "";
+  private result = '';
 
-  constructor(str = "") {
+  constructor(str = '') {
     this.result = str;
   }
 
@@ -19,7 +19,7 @@ export default class {
    * @param str
    */
   appendLine(str?: string) {
-    this.result += "\n";
+    this.result += '\n';
     this.result += str;
     return this;
   }

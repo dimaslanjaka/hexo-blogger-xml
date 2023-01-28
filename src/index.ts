@@ -1,11 +1,10 @@
-import path from "path";
-export { default as gulpCore } from "./gulp-core";
-import { existsSync } from "fs";
-import core from "./hexo-core";
+import core from './hexo-core';
+export * from './exports';
+export { default as gulpCore } from './gulp-core';
 
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
 //hexo.extend.filter.register("after_render:html", require("./dist/hexo.test.js"), 5);
-if (typeof hexo != "undefined") {
+if (typeof hexo != 'undefined') {
   core(hexo);
   /*if (existsSync(path.join(__dirname, "./build/dist/hexo-core.js"))) {
     //console.log("development mode");

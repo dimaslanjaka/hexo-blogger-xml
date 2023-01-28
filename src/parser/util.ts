@@ -1,6 +1,6 @@
-import { existsSync, mkdirSync } from "fs";
-import { dirname } from "path";
-import * as fs from "fs";
+import { existsSync, mkdirSync } from 'fs';
+import { dirname } from 'path';
+import * as fs from 'fs';
 
 /**
  * @example
@@ -13,7 +13,7 @@ import * as fs from "fs";
  * @returns
  */
 export const truncate = (str: string, max: number, suffix: string | any[]) =>
-  str.length < max ? str : `${str.substr(0, str.substr(0, max - suffix.length).lastIndexOf(" "))}${suffix}`;
+  str.length < max ? str : `${str.substr(0, str.substr(0, max - suffix.length).lastIndexOf(' '))}${suffix}`;
 
 export function writeFileSync(pathfile: string, content: any) {
   if (!existsSync(dirname(pathfile))) mkdirSync(dirname(pathfile), { recursive: true });
