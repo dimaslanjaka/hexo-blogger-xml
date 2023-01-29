@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
+exports.BloggerParser = void 0;
 var events_1 = require("events");
 var fs = __importStar(require("fs"));
 var fs_1 = require("fs");
@@ -447,4 +448,5 @@ var BloggerParser = /** @class */ (function (_super) {
     BloggerParser.debug = false;
     return BloggerParser;
 }(events_1.EventEmitter));
+exports.BloggerParser = BloggerParser;
 exports["default"] = BloggerParser;

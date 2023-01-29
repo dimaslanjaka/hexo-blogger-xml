@@ -30,14 +30,14 @@ interface objResult {
   content: string;
 }
 
-declare interface BloggerParser {
+export declare interface BloggerParser {
   on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
   on(event: 'lastExport', listener: (arg: Record<any, any>) => any): this;
   on(event: 'write-post', listener: (arg: string) => any): void;
   //emit<U extends keyof BloggerParser>(event: U, ...args: Parameters<BloggerParser[U]>): boolean;
 }
 
-class BloggerParser extends EventEmitter {
+export class BloggerParser extends EventEmitter {
   static debug = false;
   /**
    * ID Process
