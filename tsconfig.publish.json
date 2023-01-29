@@ -16,11 +16,6 @@
     "declarationDir": "dist",
     "outDir": "dist"
   },
-  "include": [
-    "src",
-    "__test__"
-  ],
-  "exclude": [
-    "src/lang"
-  ]
+  "include": ["./src/**/*", "./src/**/*.json"],
+  "exclude": ["**/*.runner.ts", "**/*.spec.ts", "**/*.test.ts", "**/dist/**", "**/node_modules/**"]
 }

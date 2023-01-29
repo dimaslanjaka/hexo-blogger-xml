@@ -1,4 +1,4 @@
 declare class ParserYaml {
-    static fromObject(jsonObject: object): string;
+    static fromObject(jsonObject: Record<string, any>): string;
 }
 export default ParserYaml;

@@ -1,7 +1,7 @@
-import data from "./post-header.json";
+import data from './post-header.json';
 export interface LooseObject {
     [key: string]: any;
 }
-export declare type PostHeaderDefault = typeof data;
+export type PostHeaderDefault = typeof data;
 export interface PostHeader extends LooseObject, PostHeaderDefault {
 }

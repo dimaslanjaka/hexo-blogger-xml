@@ -16,15 +16,13 @@
     "packages"
   ],
   "scripts": {
-    "pretest": "rm -rf dist build",
+    "pretest": "rm -rf dist",
     "test": "npm run build && npm run test:ts && npm run test:gulp",
     "test:ts": "npx ts-node src/test.ts",
     "test:gulp": "npx gulp",
     "eslint": "eslint .",
     "lint": "npx eslint --fix src/**/*",
-    "build": "npm run build:dev && npm run build:prod",
-    "build:prod": "tsc -p tsconfig.publish.json",
-    "build:dev": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.publish.json",
     "update:postinstall": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/postinstall.js > postinstall.js",
     "update:packer": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/packer.js > packer.js",
     "update": "run-s update:** && npx npm-check-updates -u -x hexo,chalk && node postinstall.js"

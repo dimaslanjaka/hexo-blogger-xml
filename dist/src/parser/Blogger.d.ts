@@ -1,9 +1,10 @@
 /// <reference types="node" />
-import * as fs from "fs";
-import { PostHeader } from "../types/post-header";
-import "./JSON";
-import { EventEmitter } from "events";
-import "../../packages/js-prototypes/src/String";
+/// <reference types="node" />
+import { EventEmitter } from 'events';
+import * as fs from 'fs';
+import 'js-prototypes';
+import { PostHeader } from '../types/post-header';
+import './JSON';
 interface objResult {
     permalink: string;
     headers: PostHeader;
@@ -11,7 +12,7 @@ interface objResult {
 }
 declare interface BloggerParser {
     on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-    on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
+    on(event: 'lastExport', listener: (arg: Record<any, any>) => any): this;
     on(event: 'write-post', listener: (arg: string) => any): void;
 }
 declare class BloggerParser extends EventEmitter {

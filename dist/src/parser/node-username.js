@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -36,9 +40,9 @@ var getUsernameFromOsUserInfo = function () {
     catch (_a) { }
 };
 // eslint-disable-next-line no-unused-vars
-var cleanWindowsCommand = function (string) { return string.replace(/^.*\\/, ""); };
+var cleanWindowsCommand = function (string) { return string.replace(/^.*\\/, ''); };
 // eslint-disable-next-line no-unused-vars
-var makeUsernameFromId = function (userId) { return "no-username-" + userId; };
+var makeUsernameFromId = function (userId) { return "no-username-".concat(userId); };
 function getUsername() {
     var test1 = getEnvironmentVariable();
     var test2 = getUsernameFromOsUserInfo();

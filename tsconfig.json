@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": false,
+    "composite": true,
     "allowUnusedLabels": true,
     "allowSyntheticDefaultImports": true,
     "allowUmdGlobalAccess": true,
@@ -14,15 +15,10 @@
     "removeComments": false,
     "declaration": true,
     "declarationMap": false,
-    "declarationDir": "build/dist/definitions",
-    "outDir": "build/dist"
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "tsBuildInfoFile": "./dist/tsconfig.build.tsbuildinfo"
   },
-  "include": [
-    "src",
-    "__test__",
-    "publish.js"
-  ],
-  "exclude": [
-    "src/lang"
-  ]
+  "include": ["src", "__test__", "publish.js", "**/*.json"],
+  "exclude": ["src/lang", "**/node_modules/**", "**/dist/**"]
 }

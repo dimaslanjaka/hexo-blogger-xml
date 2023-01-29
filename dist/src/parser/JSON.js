@@ -6,7 +6,7 @@ JSON.safeStringify = function (obj, indent) {
     if (indent === void 0) { indent = 2; }
     var cache = [];
     var retVal = JSON.stringify(obj, function (key, value) {
-        return typeof value === "object" && value !== null
+        return typeof value === 'object' && value !== null
             ? cache.includes(value)
                 ? undefined // Duplicate reference found, discard key
                 : cache.push(value) && value // Store value in our collection
@@ -21,10 +21,10 @@ function simpleStringify(object) {
         if (!object.hasOwnProperty(prop)) {
             continue;
         }
-        if (typeof object[prop] == "object") {
+        if (typeof object[prop] == 'object') {
             continue;
         }
-        if (typeof object[prop] == "function") {
+        if (typeof object[prop] == 'function') {
             continue;
         }
         simpleObject[prop] = object[prop];
