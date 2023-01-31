@@ -1,13 +1,14 @@
 import { EventEmitter } from 'events';
 import * as fs from 'fs';
-import { existsSync, mkdirSync, readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs-extra';
 import he from 'he';
 import 'js-prototypes';
 import { JSDOM } from 'jsdom';
 import * as path from 'path';
-import { basename, dirname, join } from 'path';
 import { rimrafSync } from 'rimraf';
 import sanitize from 'sanitize-filename';
+import utility from 'sbg-utility';
+import { basename, dirname, join } from 'upath';
 import xml2js from 'xml2js';
 import config from '../config';
 import { Entry } from '../types/entry';
@@ -60,10 +61,10 @@ export class BloggerParser extends EventEmitter {
     this.clean();
 
     // write ignore to buildDir
-    writeFileSync(path.join(dirname(this.entriesDir), '.gitignore'), '*');
-    mkdirSync(this.entriesDir, { recursive: true });
+    utility.writefile(path.join(dirname(this.entriesDir), '.gitignore'), '*');
+    // mkdirSync(this.entriesDir, { recursive: true });
     if (getUsername() == 'dimaslanjaka') {
-      writeFileSync(path.join(this.entriesDir, this.id), new Date().toString());
+      utility.writefile(path.join(this.entriesDir, this.id), new Date().toString());
     }
 
     // read xml

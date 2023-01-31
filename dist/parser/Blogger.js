@@ -44,14 +44,14 @@ exports.__esModule = true;
 exports.BloggerParser = void 0;
 var events_1 = require("events");
 var fs = __importStar(require("fs"));
-var fs_1 = require("fs");
+var fs_extra_1 = require("fs-extra");
 var he_1 = __importDefault(require("he"));
 require("js-prototypes");
 var jsdom_1 = require("jsdom");
 var path = __importStar(require("path"));
-var path_1 = require("path");
 var rimraf_1 = require("rimraf");
 var sanitize_filename_1 = __importDefault(require("sanitize-filename"));
+var upath_1 = require("upath");
 var xml2js_1 = __importDefault(require("xml2js"));
 var config_1 = __importDefault(require("../config"));
 var excludeTitle_json_1 = __importDefault(require("./excludeTitle.json"));
@@ -73,24 +73,24 @@ var BloggerParser = /** @class */ (function (_super) {
          * ID Process
          */
         _this.id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        _this.buildDir = 'build/hexo-blogger-xml';
+        _this.buildDir = 'tmp/hexo-blogger-xml';
         _this.entriesDir = path.join(_this.buildDir, 'entries');
         _this.parseXmlJsonResult = [];
         _this.hostname = ['webmanajemen.com', 'git.webmanajemen.com', 'web-manajemen.blogspot', 'dimaslanjaka.github.io'];
-        if (!(0, fs_1.existsSync)(xmlFile))
+        if (!(0, fs_extra_1.existsSync)(xmlFile))
             throw "".concat(xmlFile, " not found");
         // reset result
         _this.parseXmlJsonResult = [];
         // clean build dir
         _this.clean();
         // write ignore to buildDir
-        (0, util_1.writeFileSync)(path.join((0, path_1.dirname)(_this.entriesDir), '.gitignore'), '*');
-        (0, fs_1.mkdirSync)(_this.entriesDir, { recursive: true });
+        (0, util_1.writeFileSync)(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
+        (0, fs_extra_1.mkdirSync)(_this.entriesDir, { recursive: true });
         if ((0, node_username_1["default"])() == 'dimaslanjaka') {
             (0, util_1.writeFileSync)(path.join(_this.entriesDir, _this.id), new Date().toString());
         }
         // read xml
-        var xmlStr = (0, fs_1.readFileSync)(xmlFile).toString();
+        var xmlStr = (0, fs_extra_1.readFileSync)(xmlFile).toString();
         // Create empty DOM, the input param here is for HTML not XML, and we don want to parse HTML
         var dom = new jsdom_1.JSDOM();
         // Get DOMParser, same API as in browser
@@ -100,11 +100,11 @@ var BloggerParser = /** @class */ (function (_super) {
         _this.document = parser.parseFromString(xmlStr, 'text/xml');
         // save the xml after modifications
         var xmlString = _this.document.documentElement.outerHTML;
-        (0, util_1.writeFileSync)('build/hexo-blogger-xml/rss.xml', xmlString);
-        (0, util_1.writeFileSync)('build/hexo-blogger-xml/inner.xml', _this.document.documentElement.innerHTML);
+        (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'rss.xml'), xmlString);
+        (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'inner.xml'), _this.document.documentElement.innerHTML);
         var entries = _this.document.documentElement.getElementsByTagName('entry');
         if (entries.length) {
-            (0, util_1.writeFileSync)('build/hexo-blogger-xml/entry.xml', entries[0].innerHTML);
+            (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'entry.xml'), entries[0].innerHTML);
         }
         return _this;
     }
@@ -182,7 +182,7 @@ var BloggerParser = /** @class */ (function (_super) {
     };
     BloggerParser.prototype.getJsonResult = function () {
         var _this = this;
-        if (!(0, fs_1.existsSync)(this.entriesDir))
+        if (!(0, fs_extra_1.existsSync)(this.entriesDir))
             throw 'Entries Dir Not Found, previous process failed';
         var get = fs.readdirSync(this.entriesDir).map(function (file) {
             return path.join(_this.entriesDir, file);
@@ -216,7 +216,7 @@ var BloggerParser = /** @class */ (function (_super) {
                 };
                 var extname = path.extname(file);
                 if (extname == '.json') {
-                    var read = (0, fs_1.readFileSync)(file).toString();
+                    var read = (0, fs_extra_1.readFileSync)(file).toString();
                     var json = JSON.parse(read);
                     // build hexo header post
                     if (typeof json == 'object') {
@@ -266,16 +266,16 @@ var BloggerParser = /** @class */ (function (_super) {
                                 // site title
                                 buildPost.headers.webtitle = config_1["default"].webtitle;
                                 if (buildPost.permalink.length > 0) {
-                                    var saveFile = path.join('build/hexo-blogger-xml/results/', buildPost.permalink.replace(/\.html$/, '.json'));
+                                    var saveFile = path.join(this.buildDir, 'results', buildPost.permalink.replace(/\.html$/, '.json'));
                                     results.push(buildPost);
                                     (0, util_1.writeFileSync)(saveFile, JSON.stringify(buildPost, null, 2));
                                 }
                             }
                         }
                         catch (e) {
-                            //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
-                            (0, util_1.writeFileSync)(path.join('build/hexo-blogger-xml/errors/', 'error-' + (0, path_1.basename)(file)), JSON.stringify(json, null, 2));
-                            (0, util_1.writeFileSync)(path.join('build/hexo-blogger-xml/errors/', 'error-body-' + (0, path_1.basename)(file, '.json') + '.html'), buildPost.content);
+                            //writeFileSync(path.join(this.buildDir, 'errors', "error.log"), JSON.safeStringify(e));
+                            (0, util_1.writeFileSync)(path.join(this.buildDir, 'errors', 'error-' + (0, upath_1.basename)(file)), JSON.stringify(json, null, 2));
+                            (0, util_1.writeFileSync)(path.join(this.buildDir, 'errors', 'error-body-' + (0, upath_1.basename)(file, '.json') + '.html'), buildPost.content);
                             //buildPost.content
                             //console.log(json.entry.content);
                             throw e;
