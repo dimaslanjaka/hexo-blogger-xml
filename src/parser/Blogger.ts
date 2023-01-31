@@ -5,7 +5,7 @@ import he from 'he';
 import 'js-prototypes';
 import { JSDOM } from 'jsdom';
 import * as path from 'path';
-import { basename, dirname } from 'path';
+import { basename, dirname, join } from 'path';
 import { rimrafSync } from 'rimraf';
 import sanitize from 'sanitize-filename';
 import xml2js from 'xml2js';
@@ -43,7 +43,7 @@ export class BloggerParser extends EventEmitter {
    * ID Process
    */
   id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  buildDir = 'build/hexo-blogger-xml';
+  buildDir = 'tmp/hexo-blogger-xml';
   entriesDir = path.join(this.buildDir, 'entries');
   private document: Document;
   parseXmlJsonResult: objResult[] = [];
@@ -80,12 +80,12 @@ export class BloggerParser extends EventEmitter {
     // save the xml after modifications
     const xmlString = this.document.documentElement.outerHTML;
 
-    writeFileSync('build/hexo-blogger-xml/rss.xml', xmlString);
-    writeFileSync('build/hexo-blogger-xml/inner.xml', this.document.documentElement.innerHTML);
+    writeFileSync(join(this.buildDir, 'rss.xml'), xmlString);
+    writeFileSync(join(this.buildDir, 'inner.xml'), this.document.documentElement.innerHTML);
     const entries = this.document.documentElement.getElementsByTagName('entry');
 
     if (entries.length) {
-      writeFileSync('build/hexo-blogger-xml/entry.xml', entries[0].innerHTML);
+      writeFileSync(join(this.buildDir, 'entry.xml'), entries[0].innerHTML);
     }
   }
 
@@ -262,23 +262,20 @@ export class BloggerParser extends EventEmitter {
                 buildPost.headers.webtitle = config.webtitle;
 
                 if (buildPost.permalink.length > 0) {
-                  const saveFile = path.join(
-                    'build/hexo-blogger-xml/results/',
-                    buildPost.permalink.replace(/\.html$/, '.json')
-                  );
+                  const saveFile = path.join(this.buildDir, 'results', buildPost.permalink.replace(/\.html$/, '.json'));
 
                   results.push(buildPost);
                   writeFileSync(saveFile, JSON.stringify(buildPost, null, 2));
                 }
               }
             } catch (e) {
-              //writeFileSync(path.join("build/hexo-blogger-xml/errors/", "error.log"), JSON.safeStringify(e));
+              //writeFileSync(path.join(this.buildDir, 'errors', "error.log"), JSON.safeStringify(e));
               writeFileSync(
-                path.join('build/hexo-blogger-xml/errors/', 'error-' + basename(file)),
+                path.join(this.buildDir, 'errors', 'error-' + basename(file)),
                 JSON.stringify(json, null, 2)
               );
               writeFileSync(
-                path.join('build/hexo-blogger-xml/errors/', 'error-body-' + basename(file, '.json') + '.html'),
+                path.join(this.buildDir, 'errors', 'error-body-' + basename(file, '.json') + '.html'),
                 buildPost.content
               );
 
