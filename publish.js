@@ -16,7 +16,8 @@ if (typeof version == "object") {
       console.log("Updating version");
       version.result.build++;
       packages.version = version.toString();
-      writeFileSync("./package.json", JSON.stringify(packages, null, 2));
+      // write update version
+      // writeFileSync("./package.json", JSON.stringify(packages, null, 2));
       console.log("Compiling...");
       exec("tsc -p tsconfig.publish.json", (err, stdout, stderr) => {
         if (!err) {
