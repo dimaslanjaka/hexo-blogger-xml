@@ -51,6 +51,7 @@ var jsdom_1 = require("jsdom");
 var path = __importStar(require("path"));
 var rimraf_1 = require("rimraf");
 var sanitize_filename_1 = __importDefault(require("sanitize-filename"));
+var sbg_utility_1 = __importDefault(require("sbg-utility"));
 var upath_1 = require("upath");
 var xml2js_1 = __importDefault(require("xml2js"));
 var config_1 = __importDefault(require("../config"));
@@ -84,10 +85,10 @@ var BloggerParser = /** @class */ (function (_super) {
         // clean build dir
         _this.clean();
         // write ignore to buildDir
-        (0, util_1.writeFileSync)(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
-        (0, fs_extra_1.mkdirSync)(_this.entriesDir, { recursive: true });
+        sbg_utility_1["default"].writefile(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
+        // mkdirSync(this.entriesDir, { recursive: true });
         if ((0, node_username_1["default"])() == 'dimaslanjaka') {
-            (0, util_1.writeFileSync)(path.join(_this.entriesDir, _this.id), new Date().toString());
+            sbg_utility_1["default"].writefile(path.join(_this.entriesDir, _this.id), new Date().toString());
         }
         // read xml
         var xmlStr = (0, fs_extra_1.readFileSync)(xmlFile).toString();
