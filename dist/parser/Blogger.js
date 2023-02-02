@@ -46,7 +46,6 @@ var events_1 = require("events");
 var fs = __importStar(require("fs"));
 var fs_extra_1 = require("fs-extra");
 var he_1 = __importDefault(require("he"));
-require("js-prototypes");
 var jsdom_1 = require("jsdom");
 var path = __importStar(require("path"));
 var rimraf_1 = require("rimraf");

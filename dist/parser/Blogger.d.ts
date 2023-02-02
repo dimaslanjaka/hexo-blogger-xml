@@ -2,7 +2,6 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
 import * as fs from 'fs';
-import 'js-prototypes';
 import { PostHeader } from '../types/post-header';
 import './JSON';
 interface objResult {
@@ -48,7 +47,7 @@ export declare class BloggerParser extends EventEmitter {
      */
     modifyHtml(content: string): {
         thumbnail: string;
-        content: any;
+        content: string;
         description: string;
     };
     getParsedXml(): objResult[];
