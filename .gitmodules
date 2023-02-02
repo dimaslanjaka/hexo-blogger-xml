@@ -1,10 +1,4 @@
-[submodule "packages/js-prototypes"]
-	path = packages/js-prototypes
-	url = https://github.com/dimaslanjaka/js-prototypes
 [submodule "test/demo"]
 	path = test/demo
 	url = https://github.com/dimaslanjaka/site
 	branch = test-demo
-[submodule "packages/@types"]
-	path = packages/@types
-	url = https://github.com/dimaslanjaka/nodejs-package-types.git
