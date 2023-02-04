@@ -26,7 +26,7 @@
     "update:postinstall": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/postinstall.js > postinstall.js",
     "update:packer": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/packer.js > packer.js",
     "update": "run-s update:** && npx npm-check-updates -u -x hexo,chalk && node postinstall.js",
-    "pack": "node packer.js"
+    "pack": "node packer.js --yarn"
   },
   "engines": {
     "node": ">=8"
