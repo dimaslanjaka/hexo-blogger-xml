@@ -62,7 +62,7 @@
     "@types/he": "^1.2.0",
     "@types/hexo": "https://github.com/dimaslanjaka/nodejs-package-types/tarball/hexo",
     "@types/jsdom": "^21.1.0",
-    "@types/node": "^18.13.0",
+    "@types/node": "^18.14.0",
     "@types/xml2js": "^0.4.11",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
