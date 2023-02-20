@@ -5,14 +5,14 @@ class versionParser {
   result = {
     major: 0,
     minor: 0,
-    build: 0,
+    build: 0
   };
   /**
    * Version Parser Constructor
    * @param {string} str
    */
   constructor(str) {
-    if (typeof str == "string") this.parseVersion(str);
+    if (typeof str == 'string') this.parseVersion(str);
   }
 
   /**
@@ -21,11 +21,11 @@ class versionParser {
    * @returns
    */
   parseVersion(str) {
-    if (typeof str != "string") {
+    if (typeof str != 'string') {
       //return false;
-      throw "argument required string, found " + typeof str;
+      throw 'argument required string, found ' + typeof str;
     }
-    var arr = str.split(".");
+    var arr = str.split('.');
 
     // parse int or default to 0
     this.result.major = parseInt(arr[0]) || 0;

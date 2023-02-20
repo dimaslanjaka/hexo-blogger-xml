@@ -1,8 +1,8 @@
-import YAML from "yaml";
+import YAML from 'yaml';
 
 class ParserYaml {
-  static fromObject(jsonObject: object) {
-    const doc = new YAML.Document();
+  static fromObject(jsonObject: Record<string, any>) {
+    const doc = new YAML.Document<any>();
     doc.contents = jsonObject;
     //console.log(doc.toString());
     return doc.toString();

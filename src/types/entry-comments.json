@@ -3,15 +3,9 @@
     "$": {
       "xmlns": "http://www.w3.org/2005/Atom"
     },
-    "id": [
-      "blog-5851622161565243701.post-2722626703326997800"
-    ],
-    "published": [
-      "2021-09-22T11:54:59.035-07:00"
-    ],
-    "updated": [
-      "2021-09-22T11:54:59.035-07:00"
-    ],
+    "id": ["blog-5851622161565243701.post-2722626703326997800"],
+    "published": ["2021-09-22T11:54:59.035-07:00"],
+    "updated": ["2021-09-22T11:54:59.035-07:00"],
     "category": [
       {
         "$": {
@@ -55,15 +49,9 @@
     ],
     "author": [
       {
-        "name": [
-          "Dimas Lanjaka"
-        ],
-        "uri": [
-          "https://www.blogger.com/profile/07981649157148639830"
-        ],
-        "email": [
-          "noreply@blogger.com"
-        ],
+        "name": ["Dimas Lanjaka"],
+        "uri": ["https://www.blogger.com/profile/07981649157148639830"],
+        "email": ["noreply@blogger.com"],
         "gd:image": [
           {
             "$": {

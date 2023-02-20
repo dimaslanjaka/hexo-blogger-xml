@@ -15,7 +15,7 @@ JSON.safeStringify = (obj, indent = 2) => {
   const retVal = JSON.stringify(
     obj,
     (key, value) =>
-      typeof value === "object" && value !== null
+      typeof value === 'object' && value !== null
         ? cache.includes(value)
           ? undefined // Duplicate reference found, discard key
           : cache.push(value) && value // Store value in our collection
@@ -32,10 +32,10 @@ export function simpleStringify(object) {
     if (!object.hasOwnProperty(prop)) {
       continue;
     }
-    if (typeof object[prop] == "object") {
+    if (typeof object[prop] == 'object') {
       continue;
     }
-    if (typeof object[prop] == "function") {
+    if (typeof object[prop] == 'function') {
       continue;
     }
     simpleObject[prop] = object[prop];

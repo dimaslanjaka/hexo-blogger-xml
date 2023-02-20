@@ -1,4 +1,4 @@
-import * as os from "os";
+import * as os from 'os';
 
 const getEnvironmentVariable = () => {
   const { env } = process;
@@ -20,7 +20,7 @@ const getUsernameFromOsUserInfo = () => {
 };
 
 // eslint-disable-next-line no-unused-vars
-const cleanWindowsCommand = (string) => string.replace(/^.*\\/, "");
+const cleanWindowsCommand = (string) => string.replace(/^.*\\/, '');
 
 // eslint-disable-next-line no-unused-vars
 const makeUsernameFromId = (userId) => `no-username-${userId}`;

@@ -1,5 +1,5 @@
-import { existsSync, PathLike, readFileSync } from "fs";
-import { JSDOM } from "jsdom";
+import { existsSync, PathLike, readFileSync } from 'fs';
+import { JSDOM } from 'jsdom';
 
 export function fromFile(path: string | PathLike) {
   if (existsSync(path)) {
@@ -15,5 +15,5 @@ export function fromString(str: string) {
 
 export function title(str: string) {
   const dom = new JSDOM(str);
-  return dom.window.document.querySelector("title").textContent;
+  return dom.window.document.querySelector('title').textContent;
 }
