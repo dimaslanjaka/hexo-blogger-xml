@@ -13,7 +13,8 @@
     "CHANGELOG.md",
     "README.md",
     "*.json",
-    "packages"
+    "packages",
+    "!**/*.tsbuildinfo"
   ],
   "scripts": {
     "pretest": "rm -rf dist",
