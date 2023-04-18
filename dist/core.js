@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var chalk_1 = __importDefault(require("chalk"));
 var events_1 = require("events");
 var fs_1 = require("fs");
@@ -35,8 +35,8 @@ var core = /** @class */ (function (_super) {
         var self = this;
         //console.log(existsSync(xml), xml.endsWith(".xml"), xml);
         if ((0, fs_1.existsSync)(xml) && xml.endsWith('.xml')) {
-            console.log('processing', chalk_1["default"].magenta(xml));
-            var parser = new Blogger_1["default"](xml);
+            console.log('processing', chalk_1.default.magenta(xml));
+            var parser = new Blogger_1.default(xml);
             if (Array.isArray(hostname) && hostname.length > 0) {
                 parser.setHostname(hostname);
             }
@@ -49,10 +49,10 @@ var core = /** @class */ (function (_super) {
             var parsed_1 = parser.parseEntry().getJsonResult();
             //console.log(parsed.getParsedXml().length, "total posts");
             if (typeof callback == 'function') {
-                parsed_1["export"](output, callback);
+                parsed_1.export(output, callback);
             }
         }
     };
     return core;
 }(events_1.EventEmitter));
-exports["default"] = core;
+exports.default = core;

@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.title = exports.fromString = exports.fromFile = void 0;
 var fs_1 = require("fs");
 var jsdom_1 = require("jsdom");

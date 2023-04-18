@@ -40,7 +40,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.BloggerParser = void 0;
 var events_1 = require("events");
 var fs = __importStar(require("fs"));
@@ -65,7 +65,7 @@ var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
 var url_1 = __importDefault(require("./url"));
 var util_1 = require("./util");
 var yaml_1 = __importDefault(require("./yaml"));
-var BloggerParser = /** @class */ (function (_super) {
+var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
     __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
         var _this = _super.call(this) || this;
@@ -84,10 +84,10 @@ var BloggerParser = /** @class */ (function (_super) {
         // clean build dir
         _this.clean();
         // write ignore to buildDir
-        sbg_utility_1["default"].writefile(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
+        sbg_utility_1.default.writefile(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
         // mkdirSync(this.entriesDir, { recursive: true });
-        if ((0, node_username_1["default"])() == 'dimaslanjaka') {
-            sbg_utility_1["default"].writefile(path.join(_this.entriesDir, _this.id), new Date().toString());
+        if ((0, node_username_1.default)() == 'dimaslanjaka') {
+            sbg_utility_1.default.writefile(path.join(_this.entriesDir, _this.id), new Date().toString());
         }
         // read xml
         var xmlStr = (0, fs_extra_1.readFileSync)(xmlFile).toString();
@@ -151,7 +151,7 @@ var BloggerParser = /** @class */ (function (_super) {
         var _loop_1 = function (index) {
             var element = feeds[index];
             var title = element.getElementsByTagName('title')[0].innerHTML;
-            var excludeTitle = excludeTitle_json_1["default"].map(function (title) {
+            var excludeTitle = excludeTitle_json_1.default.map(function (title) {
                 return title.toLowerCase().trim();
             });
             // skip if contains default title
@@ -159,20 +159,20 @@ var BloggerParser = /** @class */ (function (_super) {
                 return "continue";
             /** CONTENT PROCESS START **/
             var content = element.getElementsByTagName('content')[0].innerHTML;
-            content = he_1["default"].decode(content);
+            content = he_1.default.decode(content);
             /** CONTENT PROCESS END **/
             // write post with decoded entities
             var obj = {
                 entry: { content: '', id: [] }
             };
             //let decodedContent = he.decode(content);
-            xml2js_1["default"].parseString(element.outerHTML, function (err, result) {
+            xml2js_1.default.parseString(element.outerHTML, function (err, result) {
                 obj = result;
             });
             obj.entry.content = content;
             obj.entry.id[0] = obj.entry.id[0].replace('tag:blogger.com,1999:', '');
             //writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
-            (0, util_1.writeFileSync)(path.join(this_1.entriesDir, (0, sanitize_filename_1["default"])(title) + '.json'), JSON.stringify(obj, null, 2));
+            (0, util_1.writeFileSync)(path.join(this_1.entriesDir, (0, sanitize_filename_1.default)(title) + '.json'), JSON.stringify(obj, null, 2));
         };
         var this_1 = this;
         for (var index = 0; index < feeds.length; index++) {
@@ -236,7 +236,7 @@ var BloggerParser = /** @class */ (function (_super) {
                                 buildPost.headers.title = json.entry.title[0]._.trim();
                                 // post language simple
                                 var titleTest = buildPost.headers.title.toLocaleLowerCase();
-                                if (new RegExp('s?' + id_json_1["default"].join('|') + 's?', 'gmu').test(titleTest)) {
+                                if (new RegExp('s?' + id_json_1.default.join('|') + 's?', 'gmu').test(titleTest)) {
                                     buildPost.headers.lang = 'id';
                                 }
                                 // post thumbnail/cover
@@ -251,7 +251,7 @@ var BloggerParser = /** @class */ (function (_super) {
                                 // post categories
                                 json.entry.category.forEach(function (category) {
                                     var cat = category.$.term.trim();
-                                    if (!url_1["default"].isValidURL(cat))
+                                    if (!url_1.default.isValidURL(cat))
                                         buildPost.headers.tags.push(cat);
                                 });
                                 // post published
@@ -262,9 +262,9 @@ var BloggerParser = /** @class */ (function (_super) {
                                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                                 //console.log(contentStr.textContent);
                                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                                buildPost.headers.subtitle = (0, trim_whitespaces_1["default"])((0, remove_double_quotes_1["default"])(mod.description)).replace(new RegExp('[^a-zA-Z., ]', 'm'), '');
+                                buildPost.headers.subtitle = (0, trim_whitespaces_1.default)((0, remove_double_quotes_1.default)(mod.description)).replace(new RegExp('[^a-zA-Z., ]', 'm'), '');
                                 // site title
-                                buildPost.headers.webtitle = config_1["default"].webtitle;
+                                buildPost.headers.webtitle = config_1.default.webtitle;
                                 if (buildPost.permalink.length > 0) {
                                     var saveFile = path.join(this.buildDir, 'results', buildPost.permalink.replace(/\.html$/, '.json'));
                                     results.push(buildPost);
@@ -352,7 +352,7 @@ var BloggerParser = /** @class */ (function (_super) {
         var contentStr = parserhtml.window.document.documentElement.querySelector('div,p,span');
         //console.log(contentStr.textContent);
         if (contentStr) {
-            description = (0, util_1.truncate)(he_1["default"].decode(contentStr.textContent), 140, '').trim();
+            description = (0, util_1.truncate)(he_1.default.decode(contentStr.textContent), 140, '').trim();
         }
         else {
             description = (0, util_1.truncate)(content, 140, '').trim();
@@ -376,7 +376,7 @@ var BloggerParser = /** @class */ (function (_super) {
      *   return content; // return back the modified content
      * })
      */
-    BloggerParser.prototype["export"] = function (dir, callback) {
+    BloggerParser.prototype.export = function (dir, callback) {
         var _this = this;
         if (dir === void 0) { dir = 'source/_posts'; }
         var self = this;
@@ -385,13 +385,13 @@ var BloggerParser = /** @class */ (function (_super) {
             var postPath = path.join(dir, post.permalink.replace(/.html$/, '.md'));
             //let postPathTest = path.join(dir, "test.md");
             //console.log(post.headers);
-            var postHeader = yaml_1["default"].fromObject(_this.objTrim(post.headers));
+            var postHeader = yaml_1.default.fromObject(_this.objTrim(post.headers));
             //console.log(postHeader);
             if (typeof callback == 'function') {
                 post.content = callback(post.content, post.headers);
             }
             //post.content = this.stripFooterFeed(post.content);
-            var postResult = new StringBuilder_1["default"]('---')
+            var postResult = new StringBuilder_1.default('---')
                 .appendLine(postHeader)
                 .appendLine('---')
                 .append('\n\n')
@@ -440,7 +440,7 @@ var BloggerParser = /** @class */ (function (_super) {
         parser.clean();
         var parsed = parser.parseEntry().getJsonResult();
         console.log(file, parsed.getParsedXml().length, 'total posts');
-        parsed["export"](outputDir, callback);
+        parsed.export(outputDir, callback);
     };
     BloggerParser.prototype.toString = function () {
         return JSON.stringify(this.getParsedXml(), null, 4);
@@ -448,5 +448,4 @@ var BloggerParser = /** @class */ (function (_super) {
     BloggerParser.debug = false;
     return BloggerParser;
 }(events_1.EventEmitter));
-exports.BloggerParser = BloggerParser;
-exports["default"] = BloggerParser;
+exports.default = BloggerParser;

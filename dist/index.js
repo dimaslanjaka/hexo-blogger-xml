@@ -16,16 +16,16 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.gulpCore = void 0;
 var hexo_core_1 = __importDefault(require("./hexo-core"));
 __exportStar(require("./exports"), exports);
 var gulp_core_1 = require("./gulp-core");
-__createBinding(exports, gulp_core_1, "default", "gulpCore");
+Object.defineProperty(exports, "gulpCore", { enumerable: true, get: function () { return __importDefault(gulp_core_1).default; } });
 //hexo.extend.filter.register("after_render:html", require("./lib/parser"), 5);
 //hexo.extend.filter.register("after_render:html", require("./dist/hexo.test.js"), 5);
 if (typeof hexo != 'undefined') {
-    (0, hexo_core_1["default"])(hexo);
+    (0, hexo_core_1.default)(hexo);
     /*if (existsSync(path.join(__dirname, "./build/dist/hexo-core.js"))) {
       //console.log("development mode");
       require(path.join(__dirname, "./build/dist/hexo-core.js"))(hexo);

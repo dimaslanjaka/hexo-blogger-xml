@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 function default_1(str) {
     //return str.replace(/[\\$'"]/g, "\\$&");
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
@@ -27,4 +27,4 @@ function default_1(str) {
         }
     });
 }
-exports["default"] = default_1;
+exports.default = default_1;
