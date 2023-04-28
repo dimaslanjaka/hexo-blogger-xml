@@ -1,4 +1,3 @@
-import Hexo from 'hexo';
 import { LooseObject } from './types/post-header';
 export interface BloggerXmlConfig extends LooseObject {
     /**

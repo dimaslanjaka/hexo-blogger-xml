@@ -46,6 +46,9 @@
   ],
   "author": "Dimas Lanjaka <dimaslanjaka@gmail.com> (http://webmanajemen.com)",
   "license": "MIT",
+  "peerDependencies": {
+    "hexo": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
     "fs-extra": "^11.1.1",
@@ -61,7 +64,6 @@
   },
   "devDependencies": {
     "@types/he": "^1.2.0",
-    "@types/hexo": "https://github.com/dimaslanjaka/nodejs-package-types/tarball/hexo",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^18.15.12",
     "@types/xml2js": "^0.4.11",
