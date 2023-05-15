@@ -2,9 +2,6 @@ name: Test Demo
 
 on:
   push:
-    branches: [monorepo]
-    paths:
-      - "**/dist"
   workflow_dispatch:
 
 jobs:
