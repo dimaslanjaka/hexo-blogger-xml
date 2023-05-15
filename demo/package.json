@@ -16,7 +16,6 @@
     "node": ">=8"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
     "hexo": "^5.0.0",
     "hexo-blogger-xml": "file:../",
     "hexo-generator-archive": "^1.0.0",
