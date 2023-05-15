@@ -104,6 +104,7 @@ theme: landscape #hexo-theme-amp
 deploy:
   type: ""
 
+# hexo-blogger-xml
 blogger_xml:
   site_title: "My Site Title"
   callback: "./scripts/post_callback.js"
