@@ -1,0 +1,55 @@
+name: Build master branch
+
+on:
+  push:
+    branches: [monorepo]
+    paths:
+      - "**/dist"
+
+jobs:
+  build:
+    env:
+      NODE_OPTIONS: '--max_old_space_size=8192' #8192 4096 --expose-gc
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      node_version: 14.x
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: "true"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+      - name: Cache NPM dependencies
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./node_modules
+            ./dist
+            ~/.npm
+          key: |
+            ${{ runner.os }}-${{ env.node_version }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.node_version }}
+      - name: Copy Master
+        run: |
+          cp -rfi ./*.{json,js} ./build/
+          cp -rfi ./packages/ ./build/
+          cat ./README.md <(echo) ./CHANGELOG.md > ./build/readme.md
+          cp -rfi ./src ./build/src
+          cp -rfi ./gulpfile.ts ./build/gulpfile.ts
+          cp -rfi ./img ./build/img
+          cp -rfi ./toBuild/.gitignore ./build/.gitignore
+          npx gulp
+      - name: Test build package using npm
+        run: cd build && npm install
+      #- name: Test hexo demo (./build/demo)
+      #run: cd build/demo && npm install && npx hexo generate
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: master # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
