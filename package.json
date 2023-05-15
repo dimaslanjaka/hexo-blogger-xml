@@ -29,7 +29,8 @@
     "update:ci": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/.github/workflows/build-release.yml > .github/workflows/build-release.yml",
     "update:ncu": "npx npm-check-updates -u -x hexo,chalk,jsdom",
     "update": "run-s \"update:**\"",
-    "pack": "node packer.js --yarn"
+    "pack": "node packer.js --yarn",
+    "clean": "rm -rf dist && npm run build"
   },
   "engines": {
     "node": ">=8"
