@@ -1,9 +1,9 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import { EventEmitter } from 'events';
-import * as fs from 'fs';
-import { PostHeader } from '../types/post-header';
-import './JSON';
+import { EventEmitter } from "events";
+import * as fs from "fs";
+import { PostHeader } from "../types/post-header";
+import "./JSON";
 interface objResult {
     permalink: string;
     headers: PostHeader;
@@ -11,8 +11,8 @@ interface objResult {
 }
 export declare interface BloggerParser {
     on<U extends keyof BloggerParser>(event: U, listener: BloggerParser[U]): this;
-    on(event: 'lastExport', listener: (arg: Record<any, any>) => any): this;
-    on(event: 'write-post', listener: (arg: string) => any): void;
+    on(event: "lastExport", listener: (arg: Record<any, any>) => any): this;
+    on(event: "write-post", listener: (arg: string) => any): void;
 }
 export declare class BloggerParser extends EventEmitter {
     static debug: boolean;
@@ -20,7 +20,6 @@ export declare class BloggerParser extends EventEmitter {
      * ID Process
      */
     id: string;
-    buildDir: string;
     entriesDir: string;
     private document;
     parseXmlJsonResult: objResult[];

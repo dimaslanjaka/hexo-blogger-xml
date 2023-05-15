@@ -65,6 +65,8 @@ var trim_whitespaces_1 = __importDefault(require("./trim_whitespaces"));
 var url_1 = __importDefault(require("./url"));
 var util_1 = require("./util");
 var yaml_1 = __importDefault(require("./yaml"));
+var HexoBase = typeof hexo !== "undefined" ? hexo.base_dir : process.cwd();
+var buildDir = path.join(HexoBase, "tmp/hexo-blogger-xml");
 var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
     __extends(BloggerParser, _super);
     function BloggerParser(xmlFile) {
@@ -72,11 +74,16 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         /**
          * ID Process
          */
-        _this.id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        _this.buildDir = 'tmp/hexo-blogger-xml';
-        _this.entriesDir = path.join(_this.buildDir, 'entries');
+        _this.id = Math.random().toString(36).substring(2, 15) +
+            Math.random().toString(36).substring(2, 15);
+        _this.entriesDir = path.join(buildDir, "entries");
         _this.parseXmlJsonResult = [];
-        _this.hostname = ['webmanajemen.com', 'git.webmanajemen.com', 'web-manajemen.blogspot', 'dimaslanjaka.github.io'];
+        _this.hostname = [
+            "webmanajemen.com",
+            "git.webmanajemen.com",
+            "web-manajemen.blogspot",
+            "dimaslanjaka.github.io",
+        ];
         if (!(0, fs_extra_1.existsSync)(xmlFile))
             throw "".concat(xmlFile, " not found");
         // reset result
@@ -84,9 +91,9 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         // clean build dir
         _this.clean();
         // write ignore to buildDir
-        sbg_utility_1.default.writefile(path.join((0, upath_1.dirname)(_this.entriesDir), '.gitignore'), '*');
+        sbg_utility_1.default.writefile(path.join((0, upath_1.dirname)(_this.entriesDir), ".gitignore"), "*");
         // mkdirSync(this.entriesDir, { recursive: true });
-        if ((0, node_username_1.default)() == 'dimaslanjaka') {
+        if ((0, node_username_1.default)() == "dimaslanjaka") {
             sbg_utility_1.default.writefile(path.join(_this.entriesDir, _this.id), new Date().toString());
         }
         // read xml
@@ -97,14 +104,14 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         var DOMParser = dom.window.DOMParser;
         var parser = new DOMParser();
         // Create document by parsing XML
-        _this.document = parser.parseFromString(xmlStr, 'text/xml');
+        _this.document = parser.parseFromString(xmlStr, "text/xml");
         // save the xml after modifications
         var xmlString = _this.document.documentElement.outerHTML;
-        (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'rss.xml'), xmlString);
-        (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'inner.xml'), _this.document.documentElement.innerHTML);
-        var entries = _this.document.documentElement.getElementsByTagName('entry');
+        (0, util_1.writeFileSync)((0, upath_1.join)(buildDir, "rss.xml"), xmlString);
+        (0, util_1.writeFileSync)((0, upath_1.join)(buildDir, "inner.xml"), _this.document.documentElement.innerHTML);
+        var entries = _this.document.documentElement.getElementsByTagName("entry");
         if (entries.length) {
-            (0, util_1.writeFileSync)((0, upath_1.join)(_this.buildDir, 'entry.xml'), entries[0].innerHTML);
+            (0, util_1.writeFileSync)((0, upath_1.join)(buildDir, "entry.xml"), entries[0].innerHTML);
         }
         return _this;
     }
@@ -147,10 +154,10 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
      * @returns void
      */
     BloggerParser.prototype.parseEntry = function () {
-        var feeds = this.document.documentElement.getElementsByTagName('entry');
+        var feeds = this.document.documentElement.getElementsByTagName("entry");
         var _loop_1 = function (index) {
             var element = feeds[index];
-            var title = element.getElementsByTagName('title')[0].innerHTML;
+            var title = element.getElementsByTagName("title")[0].innerHTML;
             var excludeTitle = excludeTitle_json_1.default.map(function (title) {
                 return title.toLowerCase().trim();
             });
@@ -158,21 +165,21 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
             if (excludeTitle.includes(title.toLowerCase().trim()))
                 return "continue";
             /** CONTENT PROCESS START **/
-            var content = element.getElementsByTagName('content')[0].innerHTML;
+            var content = element.getElementsByTagName("content")[0].innerHTML;
             content = he_1.default.decode(content);
             /** CONTENT PROCESS END **/
             // write post with decoded entities
             var obj = {
-                entry: { content: '', id: [] }
+                entry: { content: "", id: [] },
             };
             //let decodedContent = he.decode(content);
             xml2js_1.default.parseString(element.outerHTML, function (err, result) {
                 obj = result;
             });
             obj.entry.content = content;
-            obj.entry.id[0] = obj.entry.id[0].replace('tag:blogger.com,1999:', '');
+            obj.entry.id[0] = obj.entry.id[0].replace("tag:blogger.com,1999:", "");
             //writeFileSync(path.join(this.entriesDir, sanitize(title) + ".xml"), element.outerHTML);
-            (0, util_1.writeFileSync)(path.join(this_1.entriesDir, (0, sanitize_filename_1.default)(title) + '.json'), JSON.stringify(obj, null, 2));
+            (0, util_1.writeFileSync)(path.join(this_1.entriesDir, (0, sanitize_filename_1.default)(title) + ".json"), JSON.stringify(obj, null, 2));
         };
         var this_1 = this;
         for (var index = 0; index < feeds.length; index++) {
@@ -183,7 +190,7 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
     BloggerParser.prototype.getJsonResult = function () {
         var _this = this;
         if (!(0, fs_extra_1.existsSync)(this.entriesDir))
-            throw 'Entries Dir Not Found, previous process failed';
+            throw "Entries Dir Not Found, previous process failed";
         var get = fs.readdirSync(this.entriesDir).map(function (file) {
             return path.join(_this.entriesDir, file);
         });
@@ -192,38 +199,38 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         if (Array.isArray(get) && get.length > 0) {
             get.forEach(function (file) {
                 var buildPost = {
-                    permalink: '',
+                    permalink: "",
                     headers: {
-                        title: '',
-                        webtitle: '',
-                        subtitle: '',
-                        lang: 'en',
+                        title: "",
+                        webtitle: "",
+                        subtitle: "",
+                        lang: "en",
                         date: new Date().toISOString(),
-                        type: 'post',
+                        type: "post",
                         tags: [],
                         author: {
-                            nick: '',
-                            link: '',
-                            email: ''
+                            nick: "",
+                            link: "",
+                            email: "",
                         },
                         modified: new Date().toISOString(),
                         category: [],
                         comments: true,
-                        cover: '',
-                        location: ''
+                        cover: "",
+                        location: "",
                     },
-                    content: ''
+                    content: "",
                 };
                 var extname = path.extname(file);
-                if (extname == '.json') {
+                if (extname == ".json") {
                     var read = (0, fs_extra_1.readFileSync)(file).toString();
                     var json = JSON.parse(read);
                     // build hexo header post
-                    if (typeof json == 'object') {
+                    if (typeof json == "object") {
                         buildPost.content = json.entry.content;
                         try {
                             // post permalink
-                            if (typeof json.entry.link[4] != 'undefined') {
+                            if (typeof json.entry.link[4] != "undefined") {
                                 buildPost.permalink = new URL(json.entry.link[4].$.href).pathname;
                                 // modify html body (Content)
                                 var mod = self.modifyHtml(json.entry.content);
@@ -236,8 +243,8 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
                                 buildPost.headers.title = json.entry.title[0]._.trim();
                                 // post language simple
                                 var titleTest = buildPost.headers.title.toLocaleLowerCase();
-                                if (new RegExp('s?' + id_json_1.default.join('|') + 's?', 'gmu').test(titleTest)) {
-                                    buildPost.headers.lang = 'id';
+                                if (new RegExp("s?" + id_json_1.default.join("|") + "s?", "gmu").test(titleTest)) {
+                                    buildPost.headers.lang = "id";
                                 }
                                 // post thumbnail/cover
                                 //buildPost.headers.cover = t.getFirstImg(buildPost.content);
@@ -245,8 +252,12 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
                                 // post author
                                 buildPost.headers.author = {
                                     nick: json.entry.author[0].name[0],
-                                    link: typeof json.entry.author[0].uri != 'undefined' ? json.entry.author[0].uri[0] : '',
-                                    email: typeof json.entry.author[0].email != 'undefined' ? json.entry.author[0].email[0] : ''
+                                    link: typeof json.entry.author[0].uri != "undefined"
+                                        ? json.entry.author[0].uri[0]
+                                        : "",
+                                    email: typeof json.entry.author[0].email != "undefined"
+                                        ? json.entry.author[0].email[0]
+                                        : "",
                                 };
                                 // post categories
                                 json.entry.category.forEach(function (category) {
@@ -262,20 +273,20 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
                                 //const contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
                                 //console.log(contentStr.textContent);
                                 //buildPost.headers.subtitle = truncate(he.decode(contentStr.textContent), 140, "").trim();
-                                buildPost.headers.subtitle = (0, trim_whitespaces_1.default)((0, remove_double_quotes_1.default)(mod.description)).replace(new RegExp('[^a-zA-Z., ]', 'm'), '');
+                                buildPost.headers.subtitle = (0, trim_whitespaces_1.default)((0, remove_double_quotes_1.default)(mod.description)).replace(new RegExp("[^a-zA-Z., ]", "m"), "");
                                 // site title
                                 buildPost.headers.webtitle = config_1.default.webtitle;
                                 if (buildPost.permalink.length > 0) {
-                                    var saveFile = path.join(this.buildDir, 'results', buildPost.permalink.replace(/\.html$/, '.json'));
+                                    var saveFile = path.join(buildDir, "results", buildPost.permalink.replace(/\.html$/, ".json"));
                                     results.push(buildPost);
                                     (0, util_1.writeFileSync)(saveFile, JSON.stringify(buildPost, null, 2));
                                 }
                             }
                         }
                         catch (e) {
-                            //writeFileSync(path.join(this.buildDir, 'errors', "error.log"), JSON.safeStringify(e));
-                            (0, util_1.writeFileSync)(path.join(this.buildDir, 'errors', 'error-' + (0, upath_1.basename)(file)), JSON.stringify(json, null, 2));
-                            (0, util_1.writeFileSync)(path.join(this.buildDir, 'errors', 'error-body-' + (0, upath_1.basename)(file, '.json') + '.html'), buildPost.content);
+                            //writeFileSync(path.join(buildDir, 'errors', "error.log"), JSON.safeStringify(e));
+                            (0, util_1.writeFileSync)(path.join(buildDir, "errors", "error-" + (0, upath_1.basename)(file)), JSON.stringify(json, null, 2));
+                            (0, util_1.writeFileSync)(path.join(buildDir, "errors", "error-body-" + (0, upath_1.basename)(file, ".json") + ".html"), buildPost.content);
                             //buildPost.content
                             //console.log(json.entry.content);
                             throw e;
@@ -303,7 +314,7 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         if (find1) {
             find1.remove();
         }
-        var find2 = parserhtml.window.document.getElementsByClassName('blogger-post-footer');
+        var find2 = parserhtml.window.document.getElementsByClassName("blogger-post-footer");
         if (find2.length > 0) {
             for (var i = 0; i < find2.length; i++) {
                 var item = find2.item(i);
@@ -311,8 +322,8 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
             }
         }
         // get first img
-        var firstImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png';
-        var find = parserhtml.window.document.getElementsByTagName('img');
+        var firstImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
+        var find = parserhtml.window.document.getElementsByTagName("img");
         if (find.length > 0) {
             for (var i = 0; i < find.length; i++) {
                 var item = find.item(i);
@@ -334,14 +345,14 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
                     }
                 });
                 if (process_1) {
-                    link.setAttribute('rel', 'noopener noreferer nofollow');
+                    link.setAttribute("rel", "noopener noreferer nofollow");
                     //if (t.hostname.includes(link.href.h))
                     //console.log(link.outerHTML);
                 }
             }
         };
         // find all hyperlinks
-        var links = parserhtml.window.document.getElementsByTagName('a');
+        var links = parserhtml.window.document.getElementsByTagName("a");
         if (links.length > 0) {
             for (var i = 0; i < links.length; i++) {
                 processLink(links.item(i));
@@ -349,18 +360,18 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
         }
         // post description
         var description;
-        var contentStr = parserhtml.window.document.documentElement.querySelector('div,p,span');
+        var contentStr = parserhtml.window.document.documentElement.querySelector("div,p,span");
         //console.log(contentStr.textContent);
         if (contentStr) {
-            description = (0, util_1.truncate)(he_1.default.decode(contentStr.textContent), 140, '').trim();
+            description = (0, util_1.truncate)(he_1.default.decode(contentStr.textContent), 140, "").trim();
         }
         else {
-            description = (0, util_1.truncate)(content, 140, '').trim();
+            description = (0, util_1.truncate)(content, 140, "").trim();
         }
         return {
             thumbnail: firstImg,
             content: parserhtml.window.document.body.innerHTML,
-            description: description
+            description: description,
         };
     };
     BloggerParser.prototype.getParsedXml = function () {
@@ -378,34 +389,34 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
      */
     BloggerParser.prototype.export = function (dir, callback) {
         var _this = this;
-        if (dir === void 0) { dir = 'source/_posts'; }
+        if (dir === void 0) { dir = "source/_posts"; }
         var self = this;
         var parsedList = this.getParsedXml();
         var processResult = function (post) {
-            var postPath = path.join(dir, post.permalink.replace(/.html$/, '.md'));
+            var postPath = path.join(dir, post.permalink.replace(/.html$/, ".md"));
             //let postPathTest = path.join(dir, "test.md");
             //console.log(post.headers);
             var postHeader = yaml_1.default.fromObject(_this.objTrim(post.headers));
             //console.log(postHeader);
-            if (typeof callback == 'function') {
+            if (typeof callback == "function") {
                 post.content = callback(post.content, post.headers);
             }
             //post.content = this.stripFooterFeed(post.content);
-            var postResult = new StringBuilder_1.default('---')
+            var postResult = new StringBuilder_1.default("---")
                 .appendLine(postHeader)
-                .appendLine('---')
-                .append('\n\n')
+                .appendLine("---")
+                .append("\n\n")
                 .append(post.content)
                 .toString();
             //const postResult = `---\n${postHeader}\n---\n\n${post.content}`;
             (0, util_1.writeFileSync)(postPath, postResult);
-            self.emit('write-post', postPath);
+            self.emit("write-post", postPath);
         };
         parsedList.forEach(function (i, idx, array) {
             processResult(i);
             if (idx === array.length - 1) {
                 //console.log("Last callback call at index " + idx + " with value " + i);
-                _this.emit('lastExport', { item: i, id: idx, array: array });
+                _this.emit("lastExport", { item: i, id: idx, array: array });
             }
         });
         //processResult(parsedList[0]);
@@ -417,7 +428,7 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
      * @param obj
      */
     BloggerParser.prototype.objTrim = function (obj) {
-        Object.keys(obj).map(function (k) { return (obj[k] = typeof obj[k] == 'string' ? obj[k].trim() : obj[k]); });
+        Object.keys(obj).map(function (k) { return (obj[k] = typeof obj[k] == "string" ? obj[k].trim() : obj[k]); });
         return obj;
     };
     BloggerParser.prototype.parse_url = function (url) {
@@ -434,12 +445,12 @@ var BloggerParser = exports.BloggerParser = /** @class */ (function (_super) {
      * @param callback
      */
     BloggerParser.prototype.auto = function (file, outputDir, callback) {
-        if (outputDir === void 0) { outputDir = 'source/_posts'; }
+        if (outputDir === void 0) { outputDir = "source/_posts"; }
         var parser = new BloggerParser(file);
         //parser.setHostname("webmanajemen.com");
         parser.clean();
         var parsed = parser.parseEntry().getJsonResult();
-        console.log(file, parsed.getParsedXml().length, 'total posts');
+        console.log(file, parsed.getParsedXml().length, "total posts");
         parsed.export(outputDir, callback);
     };
     BloggerParser.prototype.toString = function () {
