@@ -1,21 +1,39 @@
 {
+  "terminal.integrated.env.linux": {
+    "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin:${workspaceFolder}/bin"
+  },
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:PATH};${workspaceFolder}\\node_modules\\.bin;${workspaceFolder}\\bin"
+  },
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll": true,
+    "source.organizeImports": false
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "eslint.lintTask.enable": true,
+  "npm.packageManager": "yarn",
+  "eslint.packageManager": "yarn",
+  "code-runner.respectShebang": true,
+  "code-runner.executorMapByGlob": {
+    "*.{test,spec}.{ts,js}": "npx c8 --reporter=lcovonly mocha --timeout=7000000",
+    "*.build.js": "yarn build && node -r ts-node/register"
   },
-  "editor.formatOnSave": true,
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.runInTerminal": true,
+  "workbench.localHistory.exclude": {
+    "**/dist/**": true
+  },
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
     "**/node_modules": true
   },
-  "npm.packageManager": "yarn",
-  "eslint.packageManager": "yarn"
+  "search.exclude": {
+    "**/dist": true,
+    "**/node_modules": true
+  },
+  "git.enabled": true,
+  "git.detectSubmodules": true,
+  "git.ignoreLimitWarning": true,
+  "git.ignoredRepositories": ["packages/hexo-cli/assets", "packages/hexo-theme-landscape"]
 }

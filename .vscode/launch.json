@@ -5,65 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npx hexo server --development",
-      "name": "[DEV] Demo Server",
-      "cwd": "${workspaceFolder}/test/demo/",
-      "env": {
-        "NODE_ENV": "development"
-      },
+      "command": "yarn install && yarn workspace wmi exec \"hexo clean && hexo server\"",
+      "name": "install-clean-serve",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npx hexo server",
-      "name": "[PROD] Demo Server",
-      "cwd": "${workspaceFolder}/test/demo/",
+      "command": "yarn install && yarn workspace wmi exec \"node hexo-test.js\"",
+      "name": "install-test",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "gulp blogger",
-      "name": "Gulp Test",
-      "cwd": "${workspaceFolder}/../../",
+      "command": "yarn workspace wmi exec \"node hexo-test.js\"",
+      "name": "test",
       "request": "launch",
       "type": "node-terminal"
-    },
-    {
-      "command": "npx tsc -p tsconfig.json",
-      "name": "Compile tsconfig.json",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "npx tsc -p tsconfig.publish.json",
-      "name": "Compile tsconfig.publish.json",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "args": [
-        "default"
-      ],
-      "name": "Gulp default",
-      "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "pwa-node"
-    },
-    {
-      "type": "pwa-node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/dist/test",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": [
-        "${workspaceFolder}/build/dist/**/*.js"
-      ]
     }
   ]
 }
