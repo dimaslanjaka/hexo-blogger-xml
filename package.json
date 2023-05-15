@@ -1,8 +1,9 @@
 {
   "name": "hexo-blogger-xml",
-  "version": "1.0.26",
+  "version": "1.0.29",
   "description": "Import xml blogger to hexo",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src",
@@ -12,19 +13,23 @@
     "CHANGELOG.md",
     "README.md",
     "*.json",
-    "packages"
+    "packages",
+    "!**/*.tsbuildinfo"
   ],
   "scripts": {
-    "pretest": "rm -rf dist build",
+    "pretest": "rm -rf dist",
     "test": "npm run build && npm run test:ts && npm run test:gulp",
     "test:ts": "npx ts-node src/test.ts",
     "test:gulp": "npx gulp",
     "eslint": "eslint .",
-    "build": "npm run build:dev && npm run build:prod",
-    "build:prod": "tsc -p tsconfig.publish.json",
-    "build:dev": "tsc -p tsconfig.json",
-    "lint": "eslint --ext .js,.jsx,.ts,.d.ts,.tsx ./",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.d.ts,.tsx ./"
+    "lint": "npx eslint --fix src/**/*",
+    "build": "tsc -p tsconfig.publish.json",
+    "update:postinstall": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/postinstall.js > postinstall.js",
+    "update:packer": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/packer.js > packer.js",
+    "update:ci": "curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/.github/workflows/build-release.yml > .github/workflows/build-release.yml",
+    "update:ncu": "npx npm-check-updates -u -x hexo,chalk,jsdom",
+    "update": "run-s \"update:**\"",
+    "pack": "node packer.js --yarn"
   },
   "engines": {
     "node": ">=8"
@@ -42,33 +47,40 @@
   ],
   "author": "Dimas Lanjaka <dimaslanjaka@gmail.com> (http://webmanajemen.com)",
   "license": "MIT",
+  "peerDependencies": {
+    "hexo": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
+  },
   "dependencies": {
-    "chalk": "^5.2.0",
+    "fs-extra": "^11.1.1",
     "he": "^1.2.0",
-    "js-prototypes": "github:dimaslanjaka/js-prototypes",
-    "jsdom": "^21.1.0",
-    "merge2": "^1.4.1",
+    "jsdom": "21",
     "moment": "^2.29.4",
-    "rimraf": "^4.1.2",
+    "rimraf": "^5.0.0",
     "sanitize-filename": "^1.6.3",
-    "xml2js": "^0.4.23",
-    "yaml": "^2.2.1"
+    "sbg-utility": "^1.1.0",
+    "upath": "^2.0.1",
+    "xml2js": "^0.5.0",
+    "yaml": "^2.2.2"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/he": "^1.2.0",
-    "@types/hexo": "file:packages/@types/hexo",
-    "@types/lodash": "^4.14.191",
-    "@types/merge2": "^1.4.0",
-    "@types/node": "^18.14.0",
-    "@types/rimraf": "^3.0.2",
-    "@types/sax": "^1.2.4",
+    "@types/hexo": "https://github.com/dimaslanjaka/hexo/raw/1a61a20/releases/hexo.tgz",
+    "@types/jsdom": "^21.1.1",
+    "@types/node": "^20.1.4",
     "@types/xml2js": "^0.4.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
+    "ansi-colors": "^4.1.3",
+    "axios": "^1.4.0",
+    "cross-spawn": "https://github.com/dimaslanjaka/node-cross-spawn/raw/private/release/cross-spawn.tgz",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "glob": "^10.2.3",
     "gulp": "^4.0.2",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "hexo": "^6.3.0",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
-    "typescript": "~4.9.5"
-  }
+    "typescript": "~5.0.4"
+  },
+  "packageManager": "yarn@3.5.1"
 }
