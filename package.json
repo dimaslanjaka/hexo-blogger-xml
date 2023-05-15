@@ -57,7 +57,7 @@
     "moment": "^2.29.4",
     "rimraf": "^5.0.0",
     "sanitize-filename": "^1.6.3",
-    "sbg-utility": "workspace:^",
+    "sbg-utility": "^1.1.0",
     "upath": "^2.0.1",
     "xml2js": "^0.5.0",
     "yaml": "^2.2.2"
