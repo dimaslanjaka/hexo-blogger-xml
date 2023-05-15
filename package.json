@@ -64,6 +64,7 @@
     "yaml": "^2.2.2"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11",
     "@types/he": "^1.2.0",
     "@types/hexo": "https://github.com/dimaslanjaka/hexo/raw/1a61a20/releases/hexo.tgz",
     "@types/jsdom": "^21.1.1",
