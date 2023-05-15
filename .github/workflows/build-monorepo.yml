@@ -1,10 +1,5 @@
 name: Build Monorepo
 
-# automated packer.js
-# repo    : https://github.com/dimaslanjaka/nodejs-package-types/blob/main/.github/workflows/build-release.yml
-# raw     : https://raw.githubusercontent.com/dimaslanjaka/nodejs-package-types/main/.github/workflows/build-release.yml
-# update  : curl -L https://github.com/dimaslanjaka/nodejs-package-types/raw/main/.github/workflows/build-release.yml > .github/workflows/build-release.yml
-
 on:
   push:
     branches: [ "monorepo" ]
