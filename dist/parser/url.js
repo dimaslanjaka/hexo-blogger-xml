@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var url = /** @class */ (function (_super) {
     __extends(url, _super);
     function url() {
@@ -37,4 +37,4 @@ var url = /** @class */ (function (_super) {
     };
     return url;
 }(URL));
-exports["default"] = url;
+exports.default = url;

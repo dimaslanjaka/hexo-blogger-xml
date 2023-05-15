@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = require("fs");
 var path_1 = __importStar(require("path"));
 var Blogger_1 = __importDefault(require("./parser/Blogger"));
@@ -70,7 +70,7 @@ var hexoCore = function (hexo) {
             var xmlPath = (0, path_1.join)(root.toString(), xmlList[xmlKey].toString());
             if ((0, fs_1.existsSync)(xmlPath)) {
                 console.log('processing', xmlPath);
-                var parser = new Blogger_1["default"](xmlPath);
+                var parser = new Blogger_1.default(xmlPath);
                 parser.on('write-post', function (postPath) {
                     console.log('post written', postPath);
                     createLog.paths.push(postPath);
@@ -81,12 +81,12 @@ var hexoCore = function (hexo) {
                 var parsed = parser.parseEntry().getJsonResult();
                 console.log(parsed.getParsedXml().length, 'total posts');
                 if (typeof bloggerConfig.callback == 'string') {
-                    var scriptCall = path_1["default"].resolve(path_1["default"].join(root, bloggerConfig.callback));
+                    var scriptCall = path_1.default.resolve(path_1.default.join(root, bloggerConfig.callback));
                     if (!(0, fs_1.existsSync)(scriptCall)) {
-                        scriptCall = path_1["default"].resolve(path_1["default"].join(process.cwd(), bloggerConfig.callback));
+                        scriptCall = path_1.default.resolve(path_1.default.join(process.cwd(), bloggerConfig.callback));
                     }
                     if ((0, fs_1.existsSync)(scriptCall)) {
-                        parsed["export"](bloggerConfig.output, require(scriptCall));
+                        parsed.export(bloggerConfig.output, require(scriptCall));
                     }
                 }
             }
@@ -95,5 +95,5 @@ var hexoCore = function (hexo) {
         (0, util_1.writeFileSync)(cacheloc, JSON.stringify(createLog));
     });
 };
-exports["default"] = hexoCore;
+exports.default = hexoCore;
 module.exports = hexoCore;
