@@ -6,9 +6,10 @@ on:
     paths-ignore:
       - '**/*.tgz'
       - '**/*.gz'
-      - '**/release/**'
+      - '**/release*/**'
       - '**garbage-collector**'
       - '**codeql**'
+      - "**/dist/**"
   pull_request:
     types:
       - closed
