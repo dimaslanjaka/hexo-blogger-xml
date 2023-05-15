@@ -7,13 +7,12 @@
 **/tmp/
 *.log
 .idea/
-#**/yarn.lock
+**/yarn.lock
 **/package-lock.json
 .nyc_output/
 coverage/
 .tmp*
 ##.vscode
-dist/
 *.log
 releases/package-lock.json
 releases/hexo-shortcodes.tgz
