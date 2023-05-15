@@ -18,10 +18,11 @@ on:
     types:
       - closed
     paths-ignore:
-      - '**/release/**'
+      - '**/release*/**'
       - '**/*.tgz'
       - '**/*.gz'
       - '**/test*/**'
+      - '**/dist/**'
   workflow_dispatch:
 
 # run single job
