@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import chalk from 'ansi-colors';
 import { exec } from 'child_process';
 import { readdirSync } from 'fs';
 import gulp, { TaskFunctionCallback } from 'gulp';
