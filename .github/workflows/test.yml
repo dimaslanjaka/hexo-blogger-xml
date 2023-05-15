@@ -17,6 +17,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: monorepo
+          submodule: recursive
       - name: Get npm cache directory
         id: npm-cache-dir
         run: echo "::set-output name=dir::$(npm config get cache)"

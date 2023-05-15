@@ -18,8 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: "true"
+          submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: monorepo
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.node_version }}
