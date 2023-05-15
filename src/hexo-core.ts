@@ -45,8 +45,7 @@ const hexoCore = function (hexo: Hexo) {
   const config = hexo.config;
   // if config blogger_xml found, continue process otherwise cancel by return
   if (!config['blogger_xml']) {
-    hexo.log.error('hexo blogger xml not set');
-    return;
+    throw new Error('hexo blogger xml config not set, config_yml.blogger_xml');
   }
 
   let continueParse = true;
