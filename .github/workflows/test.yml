@@ -1,0 +1,43 @@
+name: Test Demo
+
+on:
+  push:
+    branches: [monorepo]
+    paths:
+      - "**/dist"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x] # 16.x unsupported
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: echo "::set-output name=dir::$(npm config get cache)"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache NPM dependencies
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.npm-cache-dir.outputs.dir }}
+            ./node_modules
+            ~/.npm
+          key: |
+            ${{ runner.os }}-${{ matrix.node-version }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}
+            ${{ runner.os }}-
+      - name: Install Global Packages
+        run: npm i -g typescript gulp-cli hexo-cli
+      - name: Test Hexo Demo
+        run: cd demo && npm install && hexo generate
