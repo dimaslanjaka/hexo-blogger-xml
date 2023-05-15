@@ -38,8 +38,7 @@ var hexoCore = function (hexo) {
     var config = hexo.config;
     // if config blogger_xml found, continue process otherwise cancel by return
     if (!config['blogger_xml']) {
-        hexo.log.error('hexo blogger xml not set');
-        return;
+        throw new Error('hexo blogger xml config not set, config_yml.blogger_xml');
     }
     var continueParse = true;
     var cacheloc = (0, path_1.join)(config.source_dir.toString(), 'hexo-blogger-xml.json');
