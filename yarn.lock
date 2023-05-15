@@ -366,6 +366,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/minimist@npm:^1":
+  version: 1.2.2
+  resolution: "@types/minimist@npm:1.2.2"
+  checksum: b8da83c66eb4aac0440e64674b19564d9d86c80ae273144db9681e5eeff66f238ade9515f5006ffbfa955ceff8b89ad2bd8ec577d7caee74ba101431fb07045d
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:^20.1.4":
   version: 20.1.4
   resolution: "@types/node@npm:20.1.4"
@@ -3077,7 +3084,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"git-command-helper@npm:*, git-command-helper@npm:^1.2.2":
+"git-command-helper@npm:*, git-command-helper@npm:^1.2.2, git-command-helper@npm:^1.2.3":
   version: 1.2.3
   resolution: "git-command-helper@npm:1.2.3"
   dependencies:
@@ -3461,6 +3468,7 @@ __metadata:
     "@types/he": ^1.2.0
     "@types/hexo": "https://github.com/dimaslanjaka/hexo/raw/1a61a20/releases/hexo.tgz"
     "@types/jsdom": ^21.1.1
+    "@types/minimist": ^1
     "@types/node": ^20.1.4
     "@types/xml2js": ^0.4.11
     "@typescript-eslint/eslint-plugin": ^5.59.5
@@ -3472,10 +3480,12 @@ __metadata:
     eslint-config-prettier: ^8.8.0
     eslint-plugin-prettier: ^4.2.1
     fs-extra: ^11.1.1
+    git-command-helper: ^1.2.3
     glob: ^10.2.3
     gulp: ^4.0.2
     he: ^1.2.0
     jsdom: 21
+    minimist: ^1.2.8
     moment: ^2.29.4
     prettier: ^2.8.8
     rimraf: ^5.0.0
