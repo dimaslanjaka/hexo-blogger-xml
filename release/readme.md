@@ -2,10 +2,10 @@
 ## Releases
 | version | tarball url |
 | :--- | :--- |
-| 1.0.27 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/727d18b/release/hexo-blogger-xml-1.0.27.tgz |
-| 1.0.28 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/727d18b/release/hexo-blogger-xml-1.0.28.tgz |
-| 1.0.29 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/44f5040/release/hexo-blogger-xml-1.0.29.tgz |
-| latest | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/fd1ce21/release/hexo-blogger-xml.tgz |
+| 1.0.27 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/8abf17e/release/hexo-blogger-xml-1.0.27.tgz |
+| 1.0.28 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/8abf17e/release/hexo-blogger-xml-1.0.28.tgz |
+| 1.0.29 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/c532fd8/release/hexo-blogger-xml-1.0.29.tgz |
+| latest | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/1f2f88a/release/hexo-blogger-xml.tgz |
 | latest | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/monorepo/release/hexo-blogger-xml.tgz |
 
 use this tarball with `resolutions`:
