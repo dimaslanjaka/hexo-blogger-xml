@@ -18,7 +18,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "hexo": "^5.0.0",
-    "hexo-blogger-xml": "git+https://github.com/dimaslanjaka/hexo-blogger-xml.git",
+    "hexo-blogger-xml": "file:../",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^2.0.0",
