@@ -1,8 +1,8 @@
 # hexo-blogger-xml
 Import content/article from blogger to hexo without losing SEO
 
-![compiler build status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/npm.yml/badge.svg?branch=compiler)
-![compiler test status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/test.yml/badge.svg?branch=compiler)
+![compiler build status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/build-monorepo.yml/badge.svg?branch=monorepo)
+![compiler test status](https://github.com/dimaslanjaka/hexo-blogger-xml/actions/workflows/test.yml/badge.svg?branch=monorepo)
 
 # Feature
 - Migrate from blogger to hexo
@@ -144,7 +144,7 @@ permalink: /2021/09/post-with-description.html
 #!/bin/bash
 
 # remove what's there
-rm source/_posts/*.md 
+rm source/_posts/*.md
 
 # download blogs
 node_modules/.bin/hexo migrate blogger 'http://blog.meredrica.org/feeds/posts/default?alt=json&max-results=10000'
