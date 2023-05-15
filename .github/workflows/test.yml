@@ -40,4 +40,7 @@ jobs:
       - name: Install Global Packages
         run: npm i -g typescript gulp-cli hexo-cli
       - name: Test Hexo Demo
-        run: cd demo && npm install && hexo generate
+        run: |
+          cd demo
+          npm install
+          hexo generate
