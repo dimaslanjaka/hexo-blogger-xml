@@ -1,6 +1,25 @@
-# Release `hexo-blogger-xml` Tarball
+# Release `hexo-blogger-xml` tarball
+## Releases
+| version | tarball url |
+| :--- | :--- |
+| 1.0.27 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/ab06ea3/release/hexo-blogger-xml-1.0.27.tgz |
+| 1.0.28 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/ab06ea3/release/hexo-blogger-xml-1.0.28.tgz |
+| 1.0.29 | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/a2ac914/release/hexo-blogger-xml-1.0.29.tgz |
+| latest | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/c58d68e/release/hexo-blogger-xml.tgz |
+| latest | https://github.com/dimaslanjaka/hexo-blogger-xml/raw/monorepo/release/hexo-blogger-xml.tgz |
 
-## Get URL of `hexo-blogger-xml` Release Tarball
+use this tarball with `resolutions`:
+```json
+{
+  "resolutions": {
+    "hexo-blogger-xml": "<url of tarball>"
+  }
+}
+```
+
+## Releases
+
+    ## Get URL of `hexo-blogger-xml` Release Tarball
 - select tarball file
 ![gambar](https://user-images.githubusercontent.com/12471057/203216375-8af4b5d9-00c2-40fb-8d3d-d220beaabd46.png)
 - copy raw url
