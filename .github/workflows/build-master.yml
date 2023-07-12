@@ -51,7 +51,7 @@ jobs:
       #- name: Test hexo demo (./build/demo)
       #run: cd build/demo && npm install && npx hexo generate
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: master # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
