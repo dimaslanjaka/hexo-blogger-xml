@@ -37,7 +37,7 @@ jobs:
 
     name: Build Monorepo
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # repository: dimaslanjaka/nodejs-package-types
           token: ${{ secrets.ACCESS_TOKEN }}
