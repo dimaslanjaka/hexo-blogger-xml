@@ -43,6 +43,7 @@ blogger_xml:
   thumbnail: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
   # script path relative path from hexo root directory
   # callback flow https://github.com/dimaslanjaka/hexo-blogger-xml/blob/f0d1ccfcb25eaae7a132f883dbec81e2224c8fb1/src/hexo-core.ts#L94-L101
+  # example https://github.com/dimaslanjaka/hexo-blogger-xml/blob/b3afd9b/demo/scripts/post_callback.js
   callback: "./scripts/post_callback.js"
   # Your blog domain and subdomain to seo external link, and bellow list is an internal link based on domains
   hostname:
