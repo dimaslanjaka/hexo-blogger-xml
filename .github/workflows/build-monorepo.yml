@@ -115,7 +115,7 @@ jobs:
           echo "machine=$machine" >> $GITHUB_ENV
 
       - name: initialize nodejs
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
           token: ${{ secrets.ACCESS_TOKEN }}
